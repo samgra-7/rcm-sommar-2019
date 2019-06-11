@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <!--Leflet-->
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.4.0/dist/leaflet.css" integrity="sha512-puBpdR0798OZvTTbP4A8Ix/l+A4dHDD0DGqYW6RQ+9jxkRFclaxxQb/SJAWZfWAkuyeQUytO7+7N4QKrDh+drA==" crossorigin=""/>
+    <script src="https://unpkg.com/leaflet@1.4.0/dist/leaflet.js" integrity="sha512-QVftwZFqvtRNi0ZyCtsznlKSWOStnDORoefr1enyq5mVL4tmKB3S/EnC3rRJcxCPavG10IcrVGSmPh6Qw5lwrg==" crossorigin=""></script>
+    <!--Custom styling-->
+    <link rel="stylesheet" href="stylesheets/style.css" />
+    <link rel="stylesheet" href="stylesheets/map.css" />
+    <!--JQuery script-->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <!-- Styling script-->
+    <script src="https://use.fontawesome.com/440d818026.js"></script>
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.7.2/css/all.css" integrity="sha384-fnmOCqbTlWIlj8LyTjo7mOUStjsKC4pOpQbqyi7RrhN7udi9RwhKkMHpvLbHG9Sr" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-draw@1.0.2/dist/leaflet.draw.css" />
+    <!--EasyButton js -->
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.css">
+    <script src="https://cdn.jsdelivr.net/npm/leaflet-easybutton@2/src/easy-button.js"></script>
+    <script src="https://unpkg.com/leaflet-draw@1.0.2/dist/leaflet.draw.js"></script>
+
+
+  </head>
+  <body>
+    <div id=map-container class="map-container">
+      <div id="mapid" class="map">
+      <!-- Search bar -->
+        <div id="search-container">
+          <input type="text" id="searchbar">
+            <div id="suggestion-field"></div>
+        </div>
+  
+
+      <!-- Station field to the right and button -->
+      <div id="station-list" class="info"></div>
+      <div class="button-container">
+          <button class="button-two" onclick="openewgraphtab()">Grafer</button> 
+          <button class="button-two" id="stationlist-button" onclick="updateStationField()">Visa valda stationer</button>
+          <button class="button-two" onclick="removeAllStations()">Ta bort alla valda stationer</button>
+      </div>
+    
+    </div>
+      
+
+    <!--Map scripts-->
+    <script src="javascripts/map/countyData.js"></script>
+    <script src="javascripts/map/countyNames.js"></script>
+    <script src="javascripts/map/stations.js"></script>
+    <script src="javascripts/graph/getWeatherData.js"></script>
+    <script src="javascripts/map/weatherData.js"></script>
+    <script src="javascripts/map/boundaryCanvas.js"></script>
+    <script src="javascripts/map/markers.js"></script>
+    <script src="javascripts/map/map.js"></script>
+    <script src="javascripts/map/drawTools.js"></script>
+    <script src="javascripts/map/chosenStationField.js"></script>
+    <script src="javascripts/map/stationPopup.js"></script>
+    <script src="javascripts/map/searchStation.js"></script>
+    <script src="javascripts/map/mapTileLayer.js"></script>
+    <script>
+      async function main (){
+        await getLatestAvgCountyWeatherData();
+        await drawMap();
+        await getStations();
+        await getAllLatestWeatherData(); 
+        await createLayers(stationsData);
+      }
+      main();
+
+      function openewgraphtab(){
+        var w = window.open("/graph");
+      }
+    
+    </script>
+  </body>
+</html>

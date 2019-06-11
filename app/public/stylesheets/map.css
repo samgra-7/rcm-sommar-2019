@@ -1,0 +1,160 @@
+
+/* .map-container {
+    width: 100%; 
+    height: 100%;
+} */
+
+#mapid { 
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        position: absolute;
+        
+        
+    }.info { 
+        padding: 6px 8px; 
+        font: 14px/16px Arial, Helvetica, sans-serif; 
+        background: #E8E8E8; 
+        box-shadow: 0 0 15px rgba(0,0,0,0.2); 
+        border-radius: 5px; 
+    }.info h4 { 
+        margin: 0 0 5px; 
+        color: #555; }
+	.legend { 
+        width: 55px;
+		text-align: left; 
+		line-height: 20px; 
+        color: #555; 
+    }.legend i { 
+        width: 20px; 
+        height: 20px; 
+        float: left; 
+        margin-right: 4px; 
+        opacity: 0.7; 
+    }
+.leaflet-top.leaflet-right {
+
+    right: 21vw;
+    
+}
+.button {
+    display: inline-block;
+    border-radius: 4px;
+    background-color: #BEBEBE;
+    border: none;
+    text-align: center;
+    padding: 10px;
+    width: 90%;
+    cursor: pointer;
+    margin-top: 5px;
+}
+
+.button:hover {
+    background-color: gray;
+}
+.add-button {
+    border-radius: 4px;
+    background-color: #98cf3f;
+    border: none;
+    text-align: center;
+    padding: 10px;
+    width: 90%;
+    cursor: pointer;
+    margin-top: 5px;
+}
+.add-button:hover {
+    background-color: #92B558;   
+}
+
+.remove-button {
+    border-radius: 4px;
+    background-color: #d53939;
+    border: none;
+    text-align: center;
+    padding: 10px;
+    width: 90%;
+    cursor: pointer;
+    margin-top: 5px;
+}
+.remove-button:hover {
+    background-color: #c74848;
+}
+.button-container {
+    color: black;
+    display: none;
+    float: right;
+    top: 89%;
+    z-index: 500;
+    position: relative;
+    margin-right: 2px;
+
+}
+
+.button-two {
+    padding-top: 25px;
+    padding-bottom: 25px;
+    padding-right: 10px;
+    padding-left: 10px;
+}
+
+#station-list {
+    height: 100vh;
+    min-width: 20vw;
+    display: none;
+    overflow-y: scroll;
+    float:right;
+    position: relative;
+    z-index: 500;
+
+}
+
+.station-box {
+    padding-bottom: 15px;
+    padding-left: 25px;
+    color: #555;
+    border: 2px solid gray;     
+    margin-left: 10px;
+    margin-top: 2px;   
+}
+
+#search-container{
+    margin-left: 5%;
+    margin-right: 10%;
+    margin-top: 10px;
+    width: 30%;
+    float: left;
+    position: relative; 
+    z-index: 500;
+}
+#searchbar{
+    width: 75%;
+    float:left;
+    height: 40px;
+    display: block;
+    border: 1px solid black;
+    border-radius: 4px;
+    padding-left: 10px;
+    position: absolute;
+    
+}
+
+#suggestion-field{
+    background: transparent;
+    margin-top: 50px;
+    margin-left: 5px;
+    display: block;
+    max-height: 300px;
+    overflow-y: scroll;
+    position: absolute;
+}
+
+.suggestion-box{
+    margin-top: 5px;
+    padding-left: 10px;
+    padding-bottom: 10px;
+    padding-top: 10px;
+    border: 1px black solid;
+    border-radius: 3px;
+    background: lightblue;
+}
