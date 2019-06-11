@@ -1,0 +1,1 @@
+/home/aron/xml_to_influx/target/debug/xml_to_influx: /home/aron/xml_to_influx/src/auth.rs /home/aron/xml_to_influx/src/database.rs /home/aron/xml_to_influx/src/fetch.rs /home/aron/xml_to_influx/src/main.rs /home/aron/xml_to_influx/src/parse_xml.rs

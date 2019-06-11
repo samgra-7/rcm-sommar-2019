@@ -6,6 +6,14 @@ var test = require('../database/testConnection');
 var station = require('../database/getStationData');
 var weather = require('../database/getWeatherData');
 var province = require('../database/getProvinceData');
+var influx = require('../database/test');
+
+/* GET weather data */
+router.get('/getInflux',  function(req, res, next) {
+    influx.getInflux(req,res,next);
+});
+
+
 
 
 /* GET test connection */

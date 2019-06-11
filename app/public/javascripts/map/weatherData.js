@@ -2,6 +2,20 @@
  * Updates the latest weather data for a specific station.
  * @param {*} station_id the station id of a specific station.
  */
+
+
+async function getInflux() {
+
+    await $.getJSON("/api/getInflux",  function(data) {
+        
+        influxdata = data; 
+        console.log(influxdata);
+    });
+
+
+}
+
+
 async function getLatestWeatherData(station_id) {
    await $.getJSON("/api/getLatestWeatherData",  function(data) {
         latestWeatherData = data; 
