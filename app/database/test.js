@@ -36,7 +36,6 @@ module.exports = {
 
                 
             influx.query(`select * from station`)
-            .then( result => console.log(result))
             .then( result => response.status(200).json(result) )
             .catch( error => response.status(500).json({ error }) );
             
