@@ -1,0 +1,1 @@
+{"rustc":16999587455730583623,"features":"[]","target":2566696992061739666,"profile":9935990280773120926,"path":222537045448766649,"deps":[["rand_core v0.3.1","rand_core",18064763557911305246]],"local":[{"Precalculated":"0.1.1"},{"MtimeBased":[[1560845327,770317373],"build/rand_chacha-5b059d616f8d8823/invoked.timestamp"]}],"rustflags":[],"edition":"Edition2015"}

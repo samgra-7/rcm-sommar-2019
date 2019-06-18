@@ -1,0 +1,1 @@
+/home/aron/rcm-sommar-2019/backend/target/debug/xml_to_mysql: /home/aron/rcm-sommar-2019/backend/src/auth.rs /home/aron/rcm-sommar-2019/backend/src/database.rs /home/aron/rcm-sommar-2019/backend/src/fetch.rs /home/aron/rcm-sommar-2019/backend/src/main.rs /home/aron/rcm-sommar-2019/backend/src/parse_xml.rs

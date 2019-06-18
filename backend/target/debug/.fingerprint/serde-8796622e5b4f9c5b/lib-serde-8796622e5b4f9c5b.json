@@ -1,0 +1,1 @@
+{"rustc":16999587455730583623,"features":"[\"default\", \"std\"]","target":11663484283761229911,"profile":9935990280773120926,"path":7649202137842128037,"deps":[],"local":[{"Precalculated":"1.0.89"},{"MtimeBased":[[1560845326,734327665],"build/serde-1d05ba3c57c493da/invoked.timestamp"]}],"rustflags":[],"edition":"Edition2015"}
