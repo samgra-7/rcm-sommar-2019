@@ -53,18 +53,23 @@ module.exports = {
             console.log(err)
         })
         
-    },getAllLatestWeatherData : function(req, res, next, length){
-        
-
+    },getAllLatestWeatherData : function(req, res, next){ //(req, res, next, length)
         let auth = authorization.Authorization;
         auth.increaseMutex();
         
         // ssh to database server and then connect to db
         mysqlssh.connect(auth.ssh, auth.database).then(client => {
-            const sql = "SELECT * FROM weather_data ORDER BY id DESC LIMIT ?";
+            const sql_old = "SELECT * FROM weather_data ORDER BY id DESC LIMIT ?";
 
-
-            client.query(sql, [[parseInt(length)]], function (err, results) {
+            const sql = `select t.station_id, t.id, t.timestamp, t.road_temperature, t.air_temperature, t.air_humidity, t.wind_speed, t.wind_direction
+            from weather_data t
+            inner join(
+                select station_id, max(id) as MaxID
+                from weather_data
+                group by station_id    
+            ) tm on t.station_id = tm.station_id and t.id = tm.MaxID`
+            
+            client.query(sql, function (err, results) { //   client.query(sql, [[parseInt(length)]], function (err, results) {
                 if (err) throw err
                 
                 // convert timestamp and windspeed to wanted units

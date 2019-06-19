@@ -31,18 +31,27 @@ module.exports = {
                         AS t ORDER BY t.county_number ASC";
                     
 
-            var sql = `select * from 
+            var sql_oldversion = `select * from 
                                 (select g.id, g.station_id, g.air_temperature, g.road_temperature, t.county_number from 
-                                    (SELECT w.id,w.station_id, w.air_temperature, w.road_temperature FROM weather_data w order by w.id desc limit 550) 
+                                    (SELECT w.id,w.station_id, w.air_temperature, w.road_temperature FROM weather_data w order by w.id desc LIMIT 550) 
                                     as g inner join 
                                     (select s.id, s.county_number from station_data s) 
                                 as t on g.station_id = t.id) 
                             as h order by h.county_number asc`;
 
+            //This query kinda works
+            var sql = `select t.station_id, t.id, t.road_temperature, t.air_temperature, station_data.county_number 
+            from weather_data t
+            inner join(
+                select station_id, max(id) as MaxID
+                from weather_data
+                group by station_id    
+            ) tm on t.station_id = tm.station_id and t.id = tm.MaxID
+            inner join
+            station_data on t.station_id = station_data.id order by station_data.county_number asc`;
+
             client.query(sql, function (err, results) {
                 if (err) throw err
-                 
-                
                 
                 let temperatures = [];
                 

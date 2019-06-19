@@ -50,7 +50,7 @@ router.get('/getLatestWeatherData', function(req, res, next) {
 
 /* GET weather data */
 router.get('/getAllLatestWeatherData',  function(req, res, next) {
-    weather.getAllLatestWeatherData(req,res,next, req.query.length);
+    weather.getAllLatestWeatherData(req,res,next);
 });
 
 /* GET weather data over time */
