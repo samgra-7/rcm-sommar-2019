@@ -8,7 +8,7 @@ use crate::parse_xml::{StationData, WeatherData};
 
 pub fn insert_friction_data(pool: Pool, url: &str) {
 
-    let mut insert_stmt = pool.prepare(r"LOAD DATA INFILE ".to_owned() + url + " INTO TABLE friction_data;").unwrap();
+    let mut insert_stmt = pool.prepare(r"LOAD DATA LOCAL INFILE ".to_owned() + url + " INTO TABLE friction_data;").unwrap();
     for row in insert_stmt.execute(()).unwrap() {
         let cell = from_row::<u8>(row.unwrap());
     }
@@ -88,7 +88,7 @@ pub fn create_mysql_tables(pool: Pool) {
 
 
     pool.prep_exec(r"CREATE TABLE IF NOT EXISTS station_data (
-                        id CHAR(20) NOT NULL,
+                        id INT NOT NULL,
                         lat FLOAT DEFAULT NULL,
                         lon FLOAT DEFAULT NULL,
                         name VARCHAR(30) DEFAULT NULL,
@@ -110,15 +110,13 @@ pub fn create_mysql_tables(pool: Pool) {
                     FOREIGN KEY (station_id) REFERENCES station_data (id)
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: weather_data");
     pool.prep_exec(r"CREATE TABLE IF NOT EXISTS friction_data (
-                id INT NOT NULL AUTO_INCREMENT,
-                operation_location CHAR(20) DEFAULT NULL,
-                data_supplier CHAR(20) DEFAULT NULL,
-                timestamp TIMESTAMP NULL DEFAULT NULL,
-                road_number INT(10) DEFAULT NULL,
-                position GEOMETRY DEFAULT NULL,
-                road_class INT(10) DEFAULT NULL,
-                friction_data FLOAT DEFAULT NULL,
-                PRIMARY KEY (id)
-                ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: friction_data");
+                    operation_location TEXT DEFAULT NULL,
+                    data_supplier TEXT DEFAULT NULL,
+                    timestamp TIMESTAMP NULL DEFAULT NULL,
+                    road_number TEXT DEFAULT NULL,
+                    position TEXT NOT NULL,
+                    road_class TEXT DEFAULT NULL,
+                    friction_data TEXT DEFAULT NULL
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: friction_data");
 }
 

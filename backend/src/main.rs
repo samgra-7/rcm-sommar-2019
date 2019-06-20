@@ -23,8 +23,10 @@ fn main() {
     database::create_mysql_tables(pool.clone());
     let station_pool = pool.clone();
     let weather_pool = pool.clone();
+    let friction_pool = pool.clone();
 
-    database::insert_friction_data(station_pool, "E6 10 februari 2019.txt");
+    database::insert_friction_data(friction_pool, "e6.txt");
+
 
     
     // Station data fetched once every day from DATEX II, parsed and inserted to MYSQL
