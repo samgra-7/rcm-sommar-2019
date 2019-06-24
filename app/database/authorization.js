@@ -10,9 +10,9 @@ class Authorization{
             };
     
         this.ssh = {
-            host: '130.240.204.191',
-            user: 'bugmana',
-            privateKey: fs.readFileSync(process.env.HOME + '/.ssh/id_rsa')
+            host: 'localhost',
+            user: 'aron',
+            privateKey: fs.readFileSync(process.env.HOME + '/.ssh/id')
         };
 
         this.mutex = 0;
