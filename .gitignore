@@ -1,3 +1,2 @@
-auth.rs
-node_modules
-target
+backend/target/
+node_modules/

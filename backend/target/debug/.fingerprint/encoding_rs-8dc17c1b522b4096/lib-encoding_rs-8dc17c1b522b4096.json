@@ -1,1 +1,0 @@
-{"rustc":16999587455730583623,"features":"[]","target":528316025579483669,"profile":9935990280773120926,"path":4189847791818290791,"deps":[["cfg-if v0.1.7","cfg_if",2800314578110091869]],"local":[{"Precalculated":"0.8.17"},{"MtimeBased":[[1560845326,870326314],"build/encoding_rs-9cbf95cd460e1977/invoked.timestamp"]}],"rustflags":[],"edition":"Edition2015"}
