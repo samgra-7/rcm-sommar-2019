@@ -1,2 +1,2 @@
-node_modules
-/home/aron/rcm-sommar-2019/backend/target
+backend/target/
+node_modules/
