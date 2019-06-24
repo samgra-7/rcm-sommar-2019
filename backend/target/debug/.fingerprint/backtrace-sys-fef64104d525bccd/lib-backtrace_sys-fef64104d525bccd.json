@@ -1,1 +1,0 @@
-{"rustc":16999587455730583623,"features":"[]","target":4811090176907112609,"profile":9935990280773120926,"path":3101967154429499577,"deps":[["libc v0.2.50","libc",18345750237082018965]],"local":[{"Precalculated":"0.1.28"},{"MtimeBased":[[1560845329,142303744],"build/backtrace-sys-edd3b6958a39ea38/invoked.timestamp"]}],"rustflags":[],"edition":"Edition2015"}
