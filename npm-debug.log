@@ -4,7 +4,7 @@
 3 info using node@v8.10.0
 4 verbose stack Error: ENOENT: no such file or directory, open '/home/aron/rcm-sommar-2019/package.json'
 5 verbose cwd /home/aron/rcm-sommar-2019
-6 error Linux 4.18.0-16-generic
+6 error Linux 4.18.0-22-generic
 7 error argv "/usr/bin/node" "/usr/bin/npm" "start"
 8 error node v8.10.0
 9 error npm  v3.5.2

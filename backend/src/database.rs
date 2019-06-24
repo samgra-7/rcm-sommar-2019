@@ -1,4 +1,4 @@
-use mysql::{Pool, Opts};
+use mysql::{Pool, Opts, PooledConn};
 use mysql::OptsBuilder;
 use mysql::chrono::{DateTime, FixedOffset};
 use mysql::from_row;
@@ -6,14 +6,10 @@ use mysql::from_row;
 use crate::parse_xml::{StationData, WeatherData};
 
 
-pub fn insert_friction_data(pool: Pool, url: &str) {
+pub fn insert_friction_data(mut conn: PooledConn, url: &str) {
+    conn.query(r"LOAD DATA LOCAL INFILE ".to_owned() + "'" + url + "'" + " INTO TABLE friction_data LINES TERMINATED BY '\r\n';").unwrap();
 
-    let mut insert_stmt = pool.prepare(r"LOAD DATA LOCAL INFILE ".to_owned() + url + " INTO TABLE friction_data;").unwrap();
-    for row in insert_stmt.execute(()).unwrap() {
-        let cell = from_row::<u8>(row.unwrap());
-    }
 }
-
 
 // Insert the data to MYSQL, TABLE assumed to exist
 pub fn insert_station_data(pool: Pool, station_data: Vec<StationData>) {
