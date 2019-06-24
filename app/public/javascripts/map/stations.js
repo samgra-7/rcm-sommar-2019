@@ -73,7 +73,7 @@ function addStation(station, marker, button){
     chosenStations.push(station);
     if((chosenStations.length + chosenCounties.length > 10) && warningFlag){
         warningFlag = false;
-        alert("letning, många stationer har valts. Detta kan göra graferna otydliga.");
+        alert("Varning, många stationer har valts. Detta kan göra graferna otydliga.");
     }
     
 }

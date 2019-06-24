@@ -1,5 +1,6 @@
 const mysqlssh = require('mysql-ssh');
 const authorization = require('./authorization');
+var async = require("async");
 
 
 
@@ -26,9 +27,8 @@ module.exports = {
                         (select station_id from weather_data as w order by w.id desc limit 894) as g)`;
             const sql =`select * from station_data where id in (select distinct station_id from weather_data)`
             
-            client.query(sql, function (err, results, fields) {
+            client.query(sql, function (err, results) {
                 if (err) throw err
-                
                 
                 // send data back to client
                 res.send(results);
@@ -38,7 +38,7 @@ module.exports = {
                 if(auth.getMutex() == 0){
                     mysqlssh.close()
                 }
-            })
+            });
 
         }).catch(err => {
             console.log(err)

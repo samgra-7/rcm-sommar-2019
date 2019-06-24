@@ -12,9 +12,8 @@ async function getLatestWeatherData(station_id) {
  * Updates the latest weather data for all stations
  */
 async function getAllLatestWeatherData() {
-
-    await $.getJSON("/api/getAllLatestWeatherData",  function(data) {
-         latestWeatherData = data; 
+    await $.getJSON("/api/getAllLatestWeatherData",  function(data) {    
+        latestWeatherData = data; 
      });
  }
 

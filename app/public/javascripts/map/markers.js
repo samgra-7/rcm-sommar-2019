@@ -56,16 +56,15 @@ let layerGroups = [];
  */
 function addStationToLayer(station, layerNumber){
     const id = "marker"+station.id;
-    var marker = L.marker([station.lon, station.lat],{myCustomId: id});
+    var marker = L.marker([station.lat, station.lon],{myCustomId: id});
     marker.setIcon(icon);
-
+    console.log(station);
 
     if(!layerGroups[layerNumber]) {
         layerGroups[layerNumber] = new L.layerGroup();
     }
 
     layerGroups[layerNumber].addLayer(marker);    
-    
     marker.bindPopup(addPopup(station,marker));
     marker.on('click', function(){
         if(marker.getPopup().isOpen()){
