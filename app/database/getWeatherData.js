@@ -117,7 +117,7 @@ module.exports = {
                     if (err) throw err
                     
                     let filtered_result = [];
-                    
+                    console.log(results);
                     // calculate the time difference between the first and last result
                     let time_diff = results[results.length - 1].timestamp.getTime() - results[0].timestamp.getTime();
 

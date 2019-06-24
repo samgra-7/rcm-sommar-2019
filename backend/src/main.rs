@@ -17,16 +17,18 @@ mod database;
 fn main() {
 
     let opts = database::get_opts(auth::USER_DB, auth::PASS_DB, auth::ADDR_DB, auth::NAME_DB);
-
     // Create new pool connections 
     let pool = mysql::Pool::new(opts).expect("Pool failed to get opts!");
     database::create_mysql_tables(pool.clone());
     let station_pool = pool.clone();
     let weather_pool = pool.clone();
-    // let friction_pool = pool.clone();
+    let friction_pool = pool.clone();
 
-    // database::insert_friction_data(pool.get_conn().unwrap(), "e6.txt");
-
+    database::insert_friction_data(pool.get_conn().unwrap(), "e6.txt");
+    // let station_data = parse_xml::parse_station("station_data_cache.xml");
+    // for i in station_data {
+    //     println!("{:?}", i.latitude.clone());
+    // }
 
     
     // Station data fetched once every day from DATEX II, parsed and inserted to MYSQL
@@ -71,7 +73,7 @@ fn main() {
     station_thread.join().unwrap();
     
 
-    // database::create_mysql_tables(opts);
+   
 
 
 }

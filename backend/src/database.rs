@@ -84,9 +84,9 @@ pub fn create_mysql_tables(pool: Pool) {
 
 
     pool.prep_exec(r"CREATE TABLE IF NOT EXISTS station_data (
-                        id INT NOT NULL,
-                        lat FLOAT DEFAULT NULL,
-                        lon FLOAT DEFAULT NULL,
+                        id CHAR(20) NOT NULL,
+                        lat DECIMAL(10, 8) DEFAULT NULL,
+                        lon DECIMAL(11, 8) DEFAULT NULL,
                         name VARCHAR(30) DEFAULT NULL,
                         road_number INT(10) DEFAULT NULL,
                         county_number INT(10) DEFAULT NULL,
@@ -94,13 +94,13 @@ pub fn create_mysql_tables(pool: Pool) {
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: station_data");
     pool.prep_exec(r"CREATE TABLE IF NOT EXISTS weather_data (
                     id INT NOT NULL AUTO_INCREMENT,
-                    station_id CHAR(20) NOT NULL,
+                    station_id CHAR(20) DEFAULT NULL,
                     timestamp TIMESTAMP NULL DEFAULT NULL,
                     road_temperature FLOAT DEFAULT NULL,
                     air_temperature FLOAT DEFAULT NULL,
                     air_humidity FLOAT DEFAULT NULL,
                     wind_speed FLOAT DEFAULT NULL,
-                    wind_direction CHAR(10) DEFAULT NULL,
+                    wind_direction VARCHAR(10) DEFAULT NULL,
                     PRIMARY KEY (id),
                     KEY station_id (station_id),
                     FOREIGN KEY (station_id) REFERENCES station_data (id)
