@@ -27,7 +27,6 @@ var warningFlag = true;
  */
 async function getStations() {
     await $.getJSON("/api/getStationData", function(stations) {
-
         stationsData = stations;
     });    
 }

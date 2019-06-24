@@ -22,8 +22,9 @@ module.exports = {
         mysqlssh.connect(auth.ssh, auth.database).then(client => {
             
             // get all station data that have weather data
-            const sql = `select * from station_data where id in (select distinct station_id from 
+            const sql_old = `select * from station_data where id in (select distinct station_id from 
                         (select station_id from weather_data as w order by w.id desc limit 894) as g)`;
+            const sql =`select * from station_data where id in (select distinct station_id from weather_data)`
             
             client.query(sql, function (err, results, fields) {
                 if (err) throw err

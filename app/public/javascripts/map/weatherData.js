@@ -13,7 +13,7 @@ async function getLatestWeatherData(station_id) {
  */
 async function getAllLatestWeatherData() {
 
-    await $.getJSON("/api/getAllLatestWeatherData", {length: stationsData.length},  function(data) {
+    await $.getJSON("/api/getAllLatestWeatherData",  function(data) {
          latestWeatherData = data; 
      });
  }
