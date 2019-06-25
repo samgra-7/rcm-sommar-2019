@@ -1,11 +1,4 @@
-// lock and unlock map dragging when hovering over suggestion-field
-$("#station-list").mouseenter( function(){
-    map.dragging.disable();
-}).mouseleave(function(){
-    map.dragging.enable();
-});
-
-/**
+    /**
  * When a station is added, the station will appear in the chosen station/county list.
  * @param {JSON} station a JSON object with station data
  * @param {*} marker a station L.Marker 
@@ -100,7 +93,7 @@ function zoomToChosenStation(index){
  * @param {JSON} station a specific station in stationData array.
  */ 
 function zoomToStation(station){
-    var latlng = L.latLng(station.lon, station.lat);
+    var latlng = L.latLng(station.lat, station.lon);
     map.flyTo(latlng, 9,{
         animate: true,
         duration: 2
