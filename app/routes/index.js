@@ -8,11 +8,21 @@ router.get('/', function(req, res, next) {
 });
 
 router.get('/map', function(req, res, next) {
-  res.render('login', { title: 'RCM'});
+  if(req.session.loggedin) {
+    res.render('map', { title: 'RCM Map'});
+  } else {
+    res.send('Please login to view this page!');
+  }
+  res.end();
 })
 
 router.get('/graph', function(req, res, next) {
-  res.render('graph', { title: 'RCM' });
+  if(req.session.loggedin) {
+    res.render('graph', { title: 'RCM Graphs' });
+  } else {
+    res.send('Please login to view this page!');
+  }
+  res.end();
 });
 
 router.post('/', function(req, res) {
