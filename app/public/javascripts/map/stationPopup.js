@@ -11,19 +11,36 @@ function addPopup(station, marker) {
   if(index == -1){
     console.log("ERROR");
   }else{
+
     
-    popupContent.innerHTML  = 
-    '<table id = "marker-data" >' +
-    '<tr> <td> Station </td><td>' + station.name +'</td></tr>' + 
-    '<tr> <td> Län: </td><td>' + countyNames[station.county_number] + '</td></tr>' + 
-    '<tr> <td>Lufttemperatur: </td><td>' + latestWeatherData[index]['air_temperature']+ "\xB0C"+
-    '<tr> <td>Vägtemperatur: </td><td>'+latestWeatherData[index]['road_temperature'] + "\xB0C" +
-    '<tr> <td>Luftfuktighet: </td><td>'+latestWeatherData[index]['air_humidity'] + "%" +
-    '<tr> <td>Vindhastighet: </td><td>'+latestWeatherData[index]['wind_speed'] + "m/s" +
-    '<tr> <td>Vindriktning: </td><td>' + windDirection(latestWeatherData[index]['wind_direction']) + 
-    '</table>';
+var obj = {
+  station: [station.name,""],
+  Län: [countyNames[station.county_number],""],
+  Lufttemperatur: [latestWeatherData[index]['air_temperature'],"\xB0C"],
+  Vägtemperatur: [latestWeatherData[index]['road_temperature'],"\xB0C"],
+  Luftfuktighet: [latestWeatherData[index]['air_humidity'],"%"],
+  Nederbördstyp: [latestWeatherData[index]['precipitation_type'],""],
+  Nederbördsmängd: [latestWeatherData[index]['precipitation_millimetres'] ,"mm"],
+  Vindhastighet: [latestWeatherData[index]['wind_speed'],"m/s"],
+  Vindriktning: [windDirection(latestWeatherData[index]['wind_direction']),""]
+};
+ 
+  var strings = "";
+  Object.keys(obj).forEach(function(key){
+    if(obj[key][0] != null){
+      strings+='<tr> <td>'+ key +'</td> <td>'+ obj[key][0] + obj[key][1] +'</td> </tr>'
+    }
+  });
+
+   var htmlvar = '<table id = "marker-data" >' +strings + '</table>'
+   strings = "" 
+
+    popupContent.innerHTML  = htmlvar;
+
   }
-    //console.log(windDirection(latestWeatherData[index]['wind_direction']));
+
+
+ 
 
 
   

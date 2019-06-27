@@ -61,7 +61,7 @@ module.exports = {
         mysqlssh.connect(auth.ssh, auth.database).then(client => {
             const sql_old = "SELECT * FROM weather_data ORDER BY id DESC LIMIT ?";
 
-            const sql = `select t.station_id, t.id, t.timestamp, t.road_temperature, t.air_temperature, t.air_humidity, t.wind_speed, t.wind_direction
+            const sql = `select t.station_id, t.id, t.timestamp, t.road_temperature, t.air_temperature, t.precipitation_type, t.precipitation_millimetres, t.air_humidity, t.wind_speed, t.wind_direction
             from weather_data t
             inner join(
                 select station_id, max(id) as MaxID

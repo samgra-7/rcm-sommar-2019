@@ -4,15 +4,15 @@ class Authorization{
     constructor(){
         this.database = {
             host: 'localhost',
-            user: 'java',
+            user: 'root',
             password: 'password',
             database: 'db'
             };
     
         this.ssh = {
             host: 'localhost',
-            user: 'aron',
-            privateKey: fs.readFileSync(process.env.HOME + '/.ssh/id')
+            user: 'ubuntu',
+            privateKey: fs.readFileSync(process.env.HOME + '/.ssh/id_rsa')
         };
 
         this.mutex = 0;
