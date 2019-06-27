@@ -40,8 +40,9 @@ pub fn insert_station_data(pool: Pool, station_data: Vec<StationData>) {
 pub fn insert_weather_data(pool: Pool, weather_data: Vec<WeatherData>) {
 
     let insert_stmt = r"INSERT IGNORE INTO weather_data 
-                        (station_id, timestamp, air_temperature, road_temperature, air_humidity, wind_speed, wind_direction) 
-                        VALUES (:station_id, NULLIF(:timestamp,''), NULLIF(:air_temperature,''), NULLIF(:road_temperature, ''),
+                        (station_id, timestamp, air_temperature, road_temperature, precipitation_type, precipitation_millimetres, air_humidity, wind_speed, wind_direction) 
+                        VALUES (:station_id, NULLIF(:timestamp, ''), NULLIF(:air_temperature, ''), NULLIF(:road_temperature, ''),
+                        NULLIF(:precipitation_type, '') ,NULLIF(:precipitation_millimetres, ''),
                         NULLIF(:air_humidity, ''), NULLIF(:wind_speed, ''), NULLIF(:wind_direction, ''));";
     
     for mut stmt in pool.prepare(insert_stmt).into_iter() { 
@@ -53,6 +54,8 @@ pub fn insert_weather_data(pool: Pool, weather_data: Vec<WeatherData>) {
                 "timestamp" => DateTime::<FixedOffset>::parse_from_rfc3339(&i.timestamp.clone()).unwrap().naive_utc(),
                 "air_temperature" => i.air_temperature.clone(),
                 "road_temperature" => i.road_temperature.clone(),
+                "precipitation_type" => i.precipitation_type.clone(),
+                "precipitation_millimetres" => i.precipitation_millimetres.clone(),
                 "air_humidity" => i.air_humidity.clone(),
                 "wind_speed" => i.wind_speed.clone(),
                 "wind_direction" => i.wind_direction.clone(),
@@ -84,7 +87,7 @@ pub fn create_mysql_tables(pool: Pool) {
 
 
     pool.prep_exec(r"CREATE TABLE IF NOT EXISTS station_data (
-                        id CHAR(20) NOT NULL,
+                        id VARCHAR(50) NOT NULL,
                         lat DECIMAL(10, 8) DEFAULT NULL,
                         lon DECIMAL(11, 8) DEFAULT NULL,
                         name VARCHAR(30) DEFAULT NULL,
@@ -94,9 +97,11 @@ pub fn create_mysql_tables(pool: Pool) {
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: station_data");
     pool.prep_exec(r"CREATE TABLE IF NOT EXISTS weather_data (
                     id INT NOT NULL AUTO_INCREMENT,
-                    station_id CHAR(20) DEFAULT NULL,
+                    station_id VARCHAR(50) DEFAULT NULL,
                     timestamp TIMESTAMP NULL DEFAULT NULL,
                     road_temperature FLOAT DEFAULT NULL,
+                    precipitation_type VARCHAR(10) DEFAULT NULL,
+                    precipitation_millimetres FLOAT DEFAULT NULL,
                     air_temperature FLOAT DEFAULT NULL,
                     air_humidity FLOAT DEFAULT NULL,
                     wind_speed FLOAT DEFAULT NULL,
