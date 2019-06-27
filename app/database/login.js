@@ -19,14 +19,18 @@ module.exports = {
     // ssh to database server and then connect to db
     mysqlssh.connect(auth.ssh, auth.database).then(client => {
         
-        let secret_key = [SHA256(req.body.secret_key).toString("hex")];
+        let secret_key = [SHA256("keon135ntaik304ngaop3" + req.body.secret_key).toString("hex")];
         let sql = 'SELECT * FROM secrets WHERE password = ?';
-
         client.query(sql, secret_key, function (err, results) {
             if (err) throw err
-            console.log(results);
-            // send data back to client
-            res.send(results);
+
+            if(results.length > 0) {
+                req.session.loggedin = true;
+                res.redirect('/map');
+            } else {
+                res.send('Incorrect secret!');
+            }
+            res.end();
 
 
             auth.decreaseMutex();
