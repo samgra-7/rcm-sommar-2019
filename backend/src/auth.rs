@@ -5,7 +5,7 @@ pub const PASS_DATEX: &'static str = "DatexLTU2018#";
 
 
 
-pub const USER_DB: &'static str = "root";
+pub const USER_DB: &'static str = "mysql";
 pub const PASS_DB: &'static str = "password";
 pub const ADDR_DB: &'static str = "127.0.0.1";
 pub const NAME_DB: &'static str = "db";
