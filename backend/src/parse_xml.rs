@@ -1,10 +1,6 @@
 /*
 Parse given file, tags are static and need to modified if new unknown XML file is given.
 If DATEX II XML file structure is changed parsing will most likely stop working.
-
-TODO: weather_data XML file has precipitationType ex. snow/rain and precipitationIntensity that are not parsed
-because of the original MYSQL table structure!
-
 */
 
 use quick_xml::Reader;
@@ -25,6 +21,8 @@ pub struct WeatherData {
     pub station_id: String,
     pub timestamp: String,
     pub road_temperature: String,
+    pub precipitation_type: String,
+    pub precipitation_millimetres: String,
     pub air_temperature: String,
     pub air_humidity: String,
     pub wind_speed: String,
@@ -148,6 +146,8 @@ pub fn parse_weather(xmlfile: &str) -> Vec<WeatherData> {
                         station_id: String::new(),
                         timestamp: String::new(),
                         road_temperature: String::new(),
+                        precipitation_type: String::new(),
+                        precipitation_millimetres: String::new(),
                         air_temperature: String::new(),
                         air_humidity: String::new(),
                         wind_speed: String::new(),
@@ -183,7 +183,17 @@ pub fn parse_weather(xmlfile: &str) -> Vec<WeatherData> {
                         let weather = weather_data.last_mut().expect("Failed to get pointer, roadSurfaceTemperature");
                         weather.road_temperature = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read text at roadSurfaceTemperature");
                         
-                    }            
+                    }
+                    (State::Root, b"precipitationType") => {
+                        let weather = weather_data.last_mut().expect("Failed to get pointer, precipitationType");
+                        weather.precipitation_type = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read text at precipitationType");
+                        
+                    }
+                    (State::Root, b"millimetresPerHourIntensity") => {
+                        let weather = weather_data.last_mut().expect("Failed to get pointer, millimetresPerHourIntensity");
+                        weather.precipitation_millimetres = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read text at millimetresPerHourIntensity");
+                        
+                    }                    
                     (State::Root, b"relativeHumidity") => state = State::Humidity,
                     (State::Humidity, b"percentage") => {
                         let weather = weather_data.last_mut().expect("Failt to get pointer, relativeHumidity");
