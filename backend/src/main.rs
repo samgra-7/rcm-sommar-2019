@@ -24,7 +24,7 @@ fn main() {
     let weather_pool = pool.clone();
     // let friction_pool = pool.clone();
 
-    // database::insert_friction_data(pool.get_conn().unwrap(), "e6.txt");
+    database::insert_friction_data(pool.get_conn().unwrap(), "e6.txt");
     // let station_data = parse_xml::parse_station("station_data_cache.xml");
     // for i in station_data {
     //     println!("{:?}", i.latitude.clone());

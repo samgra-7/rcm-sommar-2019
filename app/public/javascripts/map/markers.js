@@ -6,6 +6,12 @@ const icon = L.divIcon({
     iconAnchor: [12, 24],
     popupAnchor: [-5, -25],
 });
+
+const frictionIcon = L.divIcon({
+    className: 'fas fa-road',
+    iconAnchor: [12, 24],
+    popupAnchor: [-5, -25],
+});
 /**
  * The station marker icon when a station is chosen.
  */
@@ -61,6 +67,18 @@ function removeMarkerOnZoom(group){
  * Should contain layergroups of markers.
  */
 let layerGroups = [];
+let frictionLayer = new L.layerGroup();
+
+function createFrictionLayer(frictionData) {
+    // console.log(frictionData);
+    for (var i = 0; i < frictionData.length; i++) {
+        console.log(frictionData[i]);
+        var marker = L.marker([frictionData[i].lat, frictionData[i].lon]);
+        frictionLayer.addLayer(marker);
+        marker.setIcon(frictionIcon);
+    }
+    map.addLayer(frictionLayer);
+}
 
 /**
  * Adds a station to a specific layer group.
@@ -113,5 +131,5 @@ function createLayers(stations){
             }
         }
     }
-    map.addLayer(layerGroups[0])
+    map.addLayer(layerGroups[0]);
 }

@@ -56,6 +56,7 @@
     <script src="javascripts/map/stationPopup.js"></script>
     <script src="javascripts/map/searchStation.js"></script>
     <script src="javascripts/map/mapTileLayer.js"></script>
+    <script src="javascripts/map/frictionData.js"></script>
     <script>
       async function main (){
         await getLatestAvgCountyWeatherData();
@@ -63,8 +64,12 @@
         await getStations();
         await getAllLatestWeatherData();
         await createLayers(stationsData);
+        await getAllFrictionData();
+        await createFrictionLayer(frictionData);
+
       }
       main();
+     
 
       function openewgraphtab(){
         var w = window.open("/graph");
