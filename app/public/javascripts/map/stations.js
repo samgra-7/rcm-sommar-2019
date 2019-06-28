@@ -44,7 +44,16 @@ function removeStation(station, marker, button){
     if(i != undefined) {
         button.innerText = "Lägg till";
         button.className = "add-button";
-        marker.setIcon(icon);
+        let index = getLatestWeatherIndex(station);
+        if(latestWeatherData[index]['precipitation_type'] == "rain"){
+          marker.setIcon(rainIcon);
+        }
+        else if(latestWeatherData[index]['precipitation_type'] == "snow"){
+          marker.setIcon(snowIcon);
+        }
+        else {
+          marker.setIcon(icon);
+        }
         $('div[class=station-box][id="' + station.id + '"]').remove()
         chosenStations.splice(i, 1);
 

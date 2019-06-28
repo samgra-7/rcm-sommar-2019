@@ -10,9 +10,22 @@ const icon = L.divIcon({
  * The station marker icon when a station is chosen.
  */
 const selectedIcon = L.divIcon({
-    className: 'fas fa-map-pin fa-3x',
-    iconAnchor: [15, 34],
+    className: 'fas fa-check-circle fa-2x',
+    iconAnchor: [16, 23],
     popupAnchor: [-5, -35]
+});
+
+const rainIcon = L.divIcon({
+    className: 'fas fa-umbrella fa-2x',
+    iconAnchor: [16, 24],
+    popupAnchor: [-4, -30]
+
+});
+const snowIcon = L.divIcon({
+    className: 'far fa-snowflake fa-2x',
+    iconAnchor: [12, 24],
+    popupAnchor: [-5, -25]
+
 });
 
 /**

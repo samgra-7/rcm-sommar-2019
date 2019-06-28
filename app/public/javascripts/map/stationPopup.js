@@ -28,6 +28,12 @@ var obj = {
   var strings = "";
   Object.keys(obj).forEach(function(key){
     if(obj[key][0] != null){
+      if(obj[key][0] == "rain") {
+        marker.setIcon(rainIcon);
+      }
+      if(obj[key[0] == "snow"]) {
+        marker.setIcon(snowIcon);
+      }
       strings+='<tr> <td>'+ key +'</td> <td>'+ obj[key][0] + obj[key][1] +'</td> </tr>'
     }
   });
