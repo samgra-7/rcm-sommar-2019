@@ -14,14 +14,14 @@ function addPopup(station, marker) {
 
     
 var obj = {
-  station: [station.name,""],
+  Station: [station.name,""],
   Län: [countyNames[station.county_number],""],
   Lufttemperatur: [latestWeatherData[index]['air_temperature'],"\xB0C"],
   Vägtemperatur: [latestWeatherData[index]['road_temperature'],"\xB0C"],
   Luftfuktighet: [latestWeatherData[index]['air_humidity'],"%"],
   Nederbördstyp: [latestWeatherData[index]['precipitation_type'],""],
-  Nederbördsmängd: [latestWeatherData[index]['precipitation_millimetres'] ,"mm"],
-  Vindhastighet: [latestWeatherData[index]['wind_speed'],"m/s"],
+  Nederbördsmängd: [latestWeatherData[index]['precipitation_millimetres'] ," mm"],
+  Vindhastighet: [latestWeatherData[index]['wind_speed']," m/s"],
   Vindriktning: [windDirection(latestWeatherData[index]['wind_direction']),""]
 };
  

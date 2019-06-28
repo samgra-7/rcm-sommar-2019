@@ -11,7 +11,7 @@ class Authorization{
     
         this.ssh = {
             host: 'localhost',
-            user: 'ubuntu',
+            user: 'aron',
             privateKey: fs.readFileSync(process.env.HOME + '/.ssh/id')
         };
 
