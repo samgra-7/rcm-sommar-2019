@@ -23,7 +23,9 @@ module.exports = {
         mysqlssh.connect(auth.ssh, auth.database).then(client => {
             
             // get all station data that have weather data
-            const sql =`select * from friction_data LIMIT 10;`
+            // const sql =`select * from friction_data LIMIT 10;`
+            const sql =`select * from friction_data;`
+
             
             client.query(sql, function (err, results) {
                 if (err) throw err

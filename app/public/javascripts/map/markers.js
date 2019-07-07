@@ -39,10 +39,12 @@ const snowIcon = L.divIcon({
  * @param {*} group a Leaflet layer group with markers.
  */
 function addMarkerOnZoom(group){
-    for(var i = 0; i <= group; i++){
-        if(!map.hasLayer(layerGroups[i])){
-            if(map.getZoom() < 10){
-                map.addLayer(layerGroups[i]);
+    if(layerGroups.length != 0) {
+        for(var i = 0; i <= group; i++){
+            if(!map.hasLayer(layerGroups[i])){
+                if(map.getZoom() < 10){
+                    map.addLayer(layerGroups[i]);
+                }
             }
         }
     }
@@ -53,14 +55,15 @@ function addMarkerOnZoom(group){
  * @param {*} group a Leaflet layer group with markers.
  */
 function removeMarkerOnZoom(group){
-    for(var i = 9; i > group; i--){
-        if(map.hasLayer(layerGroups[i])){
-            if(map.getZoom() < 10){
-                map.removeLayer(layerGroups[i]);
+    if(layerGroups.length != 0) {
+        for(var i = 9; i > group; i--){
+            if(map.hasLayer(layerGroups[i])){
+                if(map.getZoom() < 10){
+                    map.removeLayer(layerGroups[i]);
+                }
             }
         }
     }
-    
 }
 
 /**
@@ -72,7 +75,7 @@ let frictionLayer = new L.layerGroup();
 function createFrictionLayer(frictionData) {
     // console.log(frictionData);
     for (var i = 0; i < frictionData.length; i++) {
-        console.log(frictionData[i]);
+        // console.log(frictionData[i]);
         var marker = L.marker([frictionData[i].lat, frictionData[i].lon]);
         frictionLayer.addLayer(marker);
         marker.setIcon(frictionIcon);
@@ -111,6 +114,7 @@ function addStationToLayer(station, layerNumber){
  * @param {*} stations station data JSON array.
  */
 function createLayers(stations){
+    map.removeLayer(frictionLayer);
     // add every tenth station to the first layer
     for(var i = 0; i< stations.length; i+=10){
         addStationToLayer(stations[i], 0);

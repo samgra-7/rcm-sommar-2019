@@ -109,6 +109,15 @@ function drawRoads(){
     }
 }
 
+function drawFriction() {
+    for (let i = 0; i < layerGroups.length; i++) {
+        map.removeLayer(layerGroups[i]);
+
+    }
+    layerGroups = [];
+    createFrictionLayer(frictionData);
+}
+
 /**
  * Modifies the county polyline css.
  * @param {*} event the triggered event from user input.
@@ -271,6 +280,35 @@ const stateChangingButton = L.easyButton({
                     layer.setStyle({fillOpacity : 0.7 }) 
                     noColor = false;
                });
+            }
+        }
+    ]
+}).addTo(map);
+
+
+const toggleFrictionData = L.easyButton({
+    states: 
+    [
+        {
+            stateName: 'Friction',
+            icon:      'fas fa-road',
+            title:     'Vägmätningar',
+            onClick: function(btn, map) {
+                btn.state('Weather');
+                stateChangingButton.state('Byt till väderstationer');
+                noColor = false;
+                drawFriction();
+            }
+        },
+        {
+            stateName: 'Weather',        
+            icon:      'fas fa-sun',               
+            title:     'Väderstationer',      
+            onClick: function(btn, map) { 
+                btn.state('Friction');
+                stateChangingButton.state('Byt till vägmätningar');
+                noColor = false;
+                createLayers(stationsData);
             }
         }
     ]
