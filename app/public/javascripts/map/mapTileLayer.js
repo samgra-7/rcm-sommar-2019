@@ -109,13 +109,13 @@ function drawRoads(){
     }
 }
 
-function drawFriction() {
+function drawFriction(filteredfrictionData) {
     for (let i = 0; i < layerGroups.length; i++) {
         map.removeLayer(layerGroups[i]);
 
     }
     layerGroups = [];
-    createFrictionLayer(frictionData);
+    createFrictionLayer(filteredfrictionData);
 }
 
 /**
@@ -289,7 +289,7 @@ const toggleFriction = L.control({position: 'topleft'});
 
 toggleFriction.onAdd = function (map) {
    var div = L.DomUtil.create('div');
-   div.innerHTML = '<select><option>RoadCloud</option><option>Volvo Cars</option><option>NIRA Dynamics</option></select>';
+   div.innerHTML = '<select><option>WeatherStationData</option><option>RoadCloud</option><option>Volvo Cars</option><option>NIRA Dynamics</option></select>';
    div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
    return div;
 };
@@ -297,9 +297,12 @@ toggleFriction.addTo(map);
 
 $('select').change(function(){
     $('select option:selected').each(function(){
-        getFrictionData($(this).text());
-        
-
+        if($(this).text()=="WeatherStationData"){
+            createLayers(stationsData);
+        }
+        else{
+            getFrictionData($(this).text());
+        }
     });
 });
 

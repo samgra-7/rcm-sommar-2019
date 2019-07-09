@@ -1,4 +1,5 @@
 var frictionData = [];
+var filteredfrictionData = [];
 
 
 async function getAllFrictionData() {
@@ -9,6 +10,7 @@ async function getAllFrictionData() {
 
 async function getFrictionData(reporter) {
     await $.getJSON("/api/getFrictionData", {reporter}, function(data) {
-        console.log(data);
+        filteredfrictionData = data;
     });
+    await drawFriction(filteredfrictionData)
 }

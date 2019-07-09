@@ -72,11 +72,10 @@ function removeMarkerOnZoom(group){
 let layerGroups = [];
 let frictionLayer = new L.layerGroup();
 
-function createFrictionLayer(frictionData) {
-    // console.log(frictionData);
-    for (var i = 0; i < frictionData.length; i++) {
-        // console.log(frictionData[i]);
-        var marker = L.marker([frictionData[i].lat, frictionData[i].lon]);
+
+function createFrictionLayer(filteredfrictionData) {
+    for (var i = 0; i < filteredfrictionData.length; i+=100) {
+        var marker = L.marker([filteredfrictionData[i].lat, filteredfrictionData[i].lon]);
         frictionLayer.addLayer(marker);
         marker.setIcon(frictionIcon);
     }
@@ -114,7 +113,7 @@ function addStationToLayer(station, layerNumber){
  * @param {*} stations station data JSON array.
  */
 function createLayers(stations){
-    map.removeLayer(frictionLayer);
+    //map.removeLayer(frictionLayer);
     // add every tenth station to the first layer
     for(var i = 0; i< stations.length; i+=10){
         addStationToLayer(stations[i], 0);
