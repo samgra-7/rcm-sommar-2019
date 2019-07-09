@@ -113,7 +113,7 @@ function addStationToLayer(station, layerNumber){
  * @param {*} stations station data JSON array.
  */
 function createLayers(stations){
-    //map.removeLayer(frictionLayer);
+    map.removeLayer(frictionLayer);
     // add every tenth station to the first layer
     for(var i = 0; i< stations.length; i+=10){
         addStationToLayer(stations[i], 0);
