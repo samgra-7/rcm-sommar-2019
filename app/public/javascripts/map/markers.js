@@ -71,15 +71,21 @@ function removeMarkerOnZoom(group){
  */
 let layerGroups = [];
 let frictionLayer = new L.layerGroup();
-
+var myRenderer = L.canvas({ padding: 0.5 });
 
 function createFrictionLayer(filteredfrictionData) {
-    for (var i = 0; i < filteredfrictionData.length; i+=100) {
-        var marker = L.marker([filteredfrictionData[i].lat, filteredfrictionData[i].lon]);
-        frictionLayer.addLayer(marker);
-        marker.setIcon(frictionIcon);
-    }
-    map.addLayer(frictionLayer);
+
+for (var i = 0; i < filteredfrictionData.length; i += 1) { 
+	L.circleMarker([filteredfrictionData[i].lat, filteredfrictionData[i].lon], {
+  	renderer: myRenderer
+  }).addTo(map).bindPopup('marker ' + i);
+}
+    // for (var i = 0; i < filteredfrictionData.length; i+=100) {
+    //     var marker = L.marker([filteredfrictionData[i].lat, filteredfrictionData[i].lon]);
+    //     frictionLayer.addLayer(marker);
+    //     marker.setIcon(frictionIcon);
+    // }
+    // map.addLayer(frictionLayer);
 }
 
 /**
@@ -113,7 +119,8 @@ function addStationToLayer(station, layerNumber){
  * @param {*} stations station data JSON array.
  */
 function createLayers(stations){
-    map.removeLayer(frictionLayer);
+    //map.removeLayer(frictionLayer);
+    map.removeLayer(myRenderer)
     // add every tenth station to the first layer
     for(var i = 0; i< stations.length; i+=10){
         addStationToLayer(stations[i], 0);
