@@ -285,31 +285,21 @@ const stateChangingButton = L.easyButton({
     ]
 }).addTo(map);
 
+const toggleFriction = L.control({position: 'topleft'});
 
-const toggleFrictionData = L.easyButton({
-    states: 
-    [
-        {
-            stateName: 'Friction',
-            icon:      'fas fa-road',
-            title:     'Vägmätningar',
-            onClick: function(btn, map) {
-                btn.state('Weather');
-                stateChangingButton.state('Byt till väderstationer');
-                noColor = false;
-                drawFriction();
-            }
-        },
-        {
-            stateName: 'Weather',        
-            icon:      'fas fa-sun',               
-            title:     'Väderstationer',      
-            onClick: function(btn, map) { 
-                btn.state('Friction');
-                stateChangingButton.state('Byt till vägmätningar');
-                noColor = false;
-                createLayers(stationsData);
-            }
-        }
-    ]
-}).addTo(map);
+toggleFriction.onAdd = function (map) {
+   var div = L.DomUtil.create('div');
+   div.innerHTML = '<select><option>RoadCloud</option><option>Volvo Cars</option><option>NIRA Dynamics</option></select>';
+   div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+   return div;
+};
+toggleFriction.addTo(map);
+
+$('select').change(function(){
+    $('select option:selected').each(function(){
+        getFrictionData($(this).text());
+        
+
+    });
+});
+

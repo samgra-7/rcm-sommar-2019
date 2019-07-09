@@ -6,3 +6,9 @@ async function getAllFrictionData() {
         frictionData = data;
     });    
 }
+
+async function getFrictionData(reporter) {
+    await $.getJSON("/api/getFrictionData", {reporter}, function(data) {
+        console.log(data);
+    });
+}
