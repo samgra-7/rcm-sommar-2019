@@ -85,9 +85,15 @@ for (var i = 0; i < filteredfrictionData.length; i += 1) {
       renderer: myRenderer
   }).addTo(map).bindPopup(popupfriction(filteredfrictionData[i]));
 }
+
+//Det är här för att det ska ladda snyggare. Motsvarande för att sätta igång är i maptilelayers.js i början av funktionen.
+geojson.eachLayer(function (layer) {    
+    layer.setStyle({fillOpacity :0 }) 
+    noColor = true;
+});
+
+info.remove(map);
 //'MeasurementValue: ' + filteredfrictionData[i].MeasurementValue
-
-
 
     // for (var i = 0; i < filteredfrictionData.length; i+=100) {
     //     var marker = L.marker([filteredfrictionData[i].lat, filteredfrictionData[i].lon]);

@@ -298,6 +298,11 @@ toggleFriction.addTo(map);
 $('select').change(function(){
     $('select option:selected').each(function(){
         if($(this).text()=="WeatherStationData"){
+            geojson.eachLayer(function (layer) {    
+                layer.setStyle({fillOpacity : 0.7 }) 
+                noColor = false;
+           });
+            info.addTo(map);
             createLayers(stationsData);
         }
         else{
