@@ -45,12 +45,7 @@ var obj = {
 
   }
 
-
- 
-
-
   
-
   // Leaflet require DOM therefor Jquery is not used
   let button = document.createElement("button");
   button.id = station.id;
@@ -70,6 +65,32 @@ var obj = {
 
   return popupContent;
 }
+/**
+ * 
+ * @param {*} filteredfrictionData return popup content for frictiondata circlemarkers
+ */
+function popupfriction(filteredfrictionData){
+let popupContent = document.createElement("table-data");
+
+var obj = {
+    Mätvärde: [filteredfrictionData.MeasurementValue,""],
+    Tid: [filteredfrictionData.MeasureTimeUTC,""],
+  };
+  var strings = "";
+  Object.keys(obj).forEach(function(key){
+    if(obj[key][0] != null){
+      strings+='<tr> <td>'+ key +'</td> <td>'+ obj[key][0] + obj[key][1] +'</td> </tr>'
+    }
+  });
+
+   var htmlvar = '<table id = "marker-data" >' +strings + '</table>'
+   strings = "" 
+
+popupContent.innerHTML  = htmlvar;
+return popupContent;
+}
+
+
 
 function windDirection(data) {
     if(data == 'north') {

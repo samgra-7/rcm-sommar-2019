@@ -5,8 +5,8 @@ const map = L.map('mapid').setView([62.97519757003264, 15.864257812499998], 5);
 map.doubleClickZoom.disable(); 
 
 map.createPane("circlemarkers");
-map.getPane("circlemarkers").style.zIndex = 650;
-
+map.getPane("circlemarkers").style.zIndex = 400;
+//map.getPane('circlemarkers').style.pointerEvents = 'none';
 
 /**
  * Holds all the average weather data.

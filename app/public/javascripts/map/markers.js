@@ -73,22 +73,28 @@ function removeMarkerOnZoom(group){
 let layerGroups = [];
 let frictionLayer = new L.layerGroup();
 let myRenderer = L.canvas({ padding: 0.5, pane: "circlemarkers", });
+//let myRenderer = new L.layerGroup();
 
 function createFrictionLayer(filteredfrictionData) {
 map.removeLayer(myRenderer);
 myRenderer = L.canvas({ padding: 0.5, pane: "circlemarkers", });
+//myRenderer.clearLayers();
+
 for (var i = 0; i < filteredfrictionData.length; i += 1) { 
 	L.circleMarker([filteredfrictionData[i].lat, filteredfrictionData[i].lon], {
       renderer: myRenderer
-  }).addTo(map).bindPopup('MeasurementValue: ' + filteredfrictionData[i].MeasurementValue);
+  }).addTo(map).bindPopup(popupfriction(filteredfrictionData[i]));
 }
+//'MeasurementValue: ' + filteredfrictionData[i].MeasurementValue
+
+
 
     // for (var i = 0; i < filteredfrictionData.length; i+=100) {
     //     var marker = L.marker([filteredfrictionData[i].lat, filteredfrictionData[i].lon]);
     //     frictionLayer.addLayer(marker);
     //     marker.setIcon(frictionIcon);
     // }
-    // map.addLayer(frictionLayer);
+   // map.addLayer(frictionLayer);
    
 }
 
