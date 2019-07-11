@@ -70,11 +70,13 @@ function removeMarkerOnZoom(group){
  * Should contain layergroups of markers.
  */
 
-let layerGroups = [];
+var layerGroups = [];
+var circleGroup = [];
 let frictionCanvas = L.canvas({ padding: 0.5, pane: "circlemarkers", });
 //let frictionCanvas = new L.layerGroup();
 
 function createFrictionLayer(filteredfrictionData) {
+    circleGroup = [];
     map.removeLayer(frictionCanvas);
     frictionCanvas = L.canvas({ padding: 0.5, pane: "circlemarkers", });
     //frictionCanvas.clearLayers();
@@ -84,8 +86,11 @@ function createFrictionLayer(filteredfrictionData) {
         renderer: frictionCanvas
         });
         circle.bindPopup(popupfriction(filteredfrictionData[i], circle));
+        circleGroup.push(circle);
         circle.addTo(map);
+        
     }
+
 
     //Det är här för att det ska ladda snyggare. Motsvarande för att sätta igång är i maptilelayers.js i början av funktionen.
     geojson.eachLayer(function (layer) {    

@@ -170,9 +170,16 @@ function removeStationsOutsideDrawnItem() {
  * @param {*} lat_lngs The north east corner point and the south west corner point of a rectangle. 
  */
 function getStationbyDrawRect(lat_lngs) {
-    if(L.latLngBounds(lat_lngs).contains(frictionCanvas.getLatLng())) {
-        console.log(frictionCanvas);
+    if(circleGroup.length != 0) {
+        for(let i = 0; i < circleGroup.length; i++) {
+            if(L.latLngBounds(lat_lngs).contains(circleGroup[i].getLatLng())) {
+                addFriction(obj, circle, button)
+            }
+            
+        }
     }
+    
+
     for(let i = 0; i < layerGroups.length; i++) {
         let layer_group = layerGroups[i];
         layer_group.eachLayer(function(layer_elem){
@@ -181,6 +188,7 @@ function getStationbyDrawRect(lat_lngs) {
                     //StationID and button from the marker object
                     addMarked(layer_elem);
                 }
+                
             }
          });
     }
@@ -193,7 +201,6 @@ function getStationbyDrawRect(lat_lngs) {
  */
 function addMarked(layer_elem){
     var stationID = layer_elem._popup._content.lastChild.id;
-    console.log(stationID);
     const button = layer_elem._popup._content.lastChild;
     const station = stationsData.find(x => x.id === stationID);
     if(!chosenStations.includes(stationID)){
