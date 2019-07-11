@@ -170,8 +170,8 @@ function removeStationsOutsideDrawnItem() {
  * @param {*} lat_lngs The north east corner point and the south west corner point of a rectangle. 
  */
 function getStationbyDrawRect(lat_lngs) {
-    if(L.latLngBounds(lat_lngs).contains()) {
-
+    if(L.latLngBounds(lat_lngs).contains(frictionCanvas.getLatLng())) {
+        console.log(frictionCanvas);
     }
     for(let i = 0; i < layerGroups.length; i++) {
         let layer_group = layerGroups[i];

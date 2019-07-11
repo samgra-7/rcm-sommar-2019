@@ -71,7 +71,6 @@ function removeMarkerOnZoom(group){
  */
 
 let layerGroups = [];
-let frictionLayer = new L.layerGroup();
 let frictionCanvas = L.canvas({ padding: 0.5, pane: "circlemarkers", });
 //let frictionCanvas = new L.layerGroup();
 
