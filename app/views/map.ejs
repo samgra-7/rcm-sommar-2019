@@ -32,11 +32,11 @@
   
 
       <!-- Station field to the right and button -->
-      <div id="station-list" class="info"></div>
+      <div id="obj-list" class="info"></div>
       <div class="button-container">
           <button class="button-two" onclick="openewgraphtab()">Grafer</button> 
           <button class="button-two" id="stationlist-button" onclick="updateStationField()">Visa valda stationer</button>
-          <button class="button-two" onclick="removeAllStations()">Ta bort alla valda stationer</button>
+          <button class="button-two" onclick="removeAllObj()">Ta bort alla valda stationer</button>
       </div>
     
     </div>
@@ -53,10 +53,14 @@
     <script src="javascripts/map/map.js"></script>
     <script src="javascripts/map/drawTools.js"></script>
     <script src="javascripts/map/chosenStationField.js"></script>
-    <script src="javascripts/map/stationPopup.js"></script>
+    <script src="javascripts/map/popup.js"></script>
     <script src="javascripts/map/searchStation.js"></script>
     <script src="javascripts/map/mapTileLayer.js"></script>
     <script src="javascripts/map/frictionData.js"></script>
+    <script src="javascripts/map/chosenFrictionField.js"></script>
+    <script src="javascripts/map/friction.js"></script>
+
+
     <script>
       async function main (){
         await getLatestAvgCountyWeatherData();

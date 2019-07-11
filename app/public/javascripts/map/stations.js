@@ -54,7 +54,7 @@ function removeStation(station, marker, button){
         else {
           marker.setIcon(icon);
         }
-        $('div[class=station-box][id="' + station.id + '"]').remove()
+        $('div[class=obj-box][id="' + station.id + '"]').remove()
         chosenStations.splice(i, 1);
 
     }
@@ -90,10 +90,11 @@ function addStation(station, marker, button){
 /**
  * Removes all chosen stations, chosen counties, marked stations and all drawn figures.
  */
-function removeAllStations() {
-    $("#station-list .remove-button").click();
+function removeAllObj() {
+    $("#obj-list .remove-button").click();
     chosenStations = [];
     chosenCounties = [];
+    chosenFriction = [];
     markedStations = [];
     for(let i = 0; i < drawnRectLayers.length; i++){
         map.removeLayer(drawnRectLayers[i]);
@@ -141,7 +142,7 @@ function showStationBar() {
 function removeCounty(countyCode, button){
     button.innerText = "Lägg till";
     button.className = "add-button"
-    $('div[class=station-box][id="' + countyCode + '"]').remove();
+    $('div[class=obj-box][id="' + countyCode + '"]').remove();
     for(let i = 0; i < chosenCounties.length; i++) {
         if(chosenCounties[i] === countyCode) {
             chosenCounties.splice(i, 1);

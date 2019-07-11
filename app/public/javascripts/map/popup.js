@@ -38,8 +38,8 @@ var obj = {
     }
   });
 
-   var htmlvar = '<table id = "marker-data" >' +strings + '</table>'
-   strings = "" 
+    var htmlvar = '<table id = "marker-data" >' +strings + '</table>'
+    strings = "" 
 
     popupContent.innerHTML  = htmlvar;
 
@@ -67,14 +67,14 @@ var obj = {
 }
 /**
  * 
- * @param {*} filteredfrictionData return popup content for frictiondata circlemarkers
+ * @param {*} friction return popup content for frictiondata circlemarkers
  */
-function popupfriction(filteredfrictionData){
-let popupContent = document.createElement("table-data");
+function popupfriction(friction, circle){
+  let popupContent = document.createElement("table-data");
 
-var obj = {
-    Mätvärde: [filteredfrictionData.MeasurementValue,""],
-    Tid: [filteredfrictionData.MeasureTimeUTC,""],
+  var obj = {
+    Mätvärde: [friction.MeasurementValue,""],
+    Tid: [friction.MeasureTimeUTC,""],
   };
   var strings = "";
   Object.keys(obj).forEach(function(key){
@@ -83,11 +83,26 @@ var obj = {
     }
   });
 
-   var htmlvar = '<table id = "marker-data" >' +strings + '</table>'
-   strings = "" 
+  var htmlvar = '<table id = "marker-data" >' +strings + '</table>'
+  strings = ""
 
-popupContent.innerHTML  = htmlvar;
-return popupContent;
+  popupContent.innerHTML  = htmlvar;
+
+  let button = document.createElement("button");
+  button.id = friction.id;
+  if(chosenFriction.includes(friction)){
+    button.className = "remove-button";
+    button.innerText = "Ta bort";
+  }else{
+    button.className = "add-button";
+    button.innerText = "Lägg till";
+  }
+  button.addEventListener("click" , function() {
+        handleChosenFriction(friction, circle, this);
+  });
+  popupContent.appendChild(button);
+
+  return popupContent;
 }
 
 

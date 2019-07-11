@@ -73,7 +73,7 @@ function getSuggestionBox(station, index){
     zoomButton.style = "width: 45%;";
     zoomButton.innerHTML = "Gå till station";
     zoomButton.addEventListener('click',function(){
-        zoomToStation(stationsData[index]);
+        zoomToObj(stationsData[index]);
     });
     suggestionBox.appendChild(zoomButton);
 

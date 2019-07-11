@@ -5,7 +5,7 @@
  * @param {*} button a html button
  */
 function addStationBox(station, marker, button){
-    const stationBox = `<div id='${station.id}' class="station-box">
+    const stationBox = `<div id='${station.id}' class="obj-box">
                             <h3> Station: ${station.name}</h3> 
                       </div>`;
     const buttonList = $('<button/>', {
@@ -17,9 +17,9 @@ function addStationBox(station, marker, button){
     const buttonGoToStation = $('<button/>', {
         class: "button",
         text: "Gå till station",
-        click: function () { zoomToStation(station) }
+        click: function () { zoomToObj(station) }
     });
-    const $stationList = $("#station-list");
+    const $stationList = $("#obj-list");
     $stationList.append($(stationBox).append(buttonGoToStation, buttonList));
 }
 
@@ -30,7 +30,7 @@ function addStationBox(station, marker, button){
  * @param {*} coords the coordinates where the user clicked.
  */
 function addCountyBox(countyCode, button, coords) {
-    const countyBox = `<div id='${countyCode}' class="station-box">
+    const countyBox = `<div id='${countyCode}' class="obj-box">
                             <h3> Län: ${countyNames[countyCode]}</h3> 
                       </div>`;
     const buttonList = $('<button/>', {
@@ -44,21 +44,21 @@ function addCountyBox(countyCode, button, coords) {
         text: "Gå till Län",
         click: function () { zoomToCounty(coords) }
     });
-    const $stationList = $("#station-list");
-    $stationList.append($(countyBox).append(buttonGoToCounty, buttonList));
+    const $objList = $("#obj-list");
+    $objList.append($(countyBox).append(buttonGoToCounty, buttonList));
 }
 
 /**
  * This function will show or hide the station/county list
  */
 function updateStationField(){
-    const div = $("#station-list")
+    const div = $("#obj-list")
 
     if (div.is(":hidden")) {
-        $("#stationlist-button").text("Göm valda stationer")
+        $("#obj-button").text("Göm valda stationer")
         div.show();
     } else {
-        $("#stationlist-button").text("Visa valda stationer")
+        $("#obj-button").text("Visa valda stationer")
         div.hide();
     }
 }
@@ -75,35 +75,33 @@ function showStationFieldButton(){
  */
 function hideStationButton(){
     $(".button-container").hide();
-    $("#station-list:visible").hide();
-}
-
-/**
- * This function will zoom to a specific station marker based on the index argument.
- * @param {number} index of the chosen station in the chosenStation array.
- */
-function zoomToChosenStation(index){
-    let i = findIndexOfStation(chosenStations[index]);
-
-    zoomToStation(i);
+    $("#obj-list:visible").hide();
 }
 
 /** 
  * Zoom and pan the map to a specific station.
- * @param {JSON} station a specific station in stationData array.
+ * @param {JSON} obj a specific station in stationData array.
  */ 
-function zoomToStation(station){
-    var latlng = L.latLng(station.lat, station.lon);
-    map.flyTo(latlng, 9,{
+function zoomToObj(obj){
+    var latlng = L.latLng(obj.lat, obj.lon);
+    map.flyTo(latlng, 15,{
         animate: true,
-        duration: 2
+        duration: 5
     });
     
 }
 /**
  * Zoom and pan the map to a specific county based on user mouse click.
- * @param {*} coords the coordinates to the position where the user clicked.
+ * /**
+ * This function will zoom to a specific station marker based on the index argument.
+ * @param {number} index of the chosen station in the chosenStation array.
+ *
+ {*} coords the coordinates to the position where the user clicked.
+ *//**
+ * This function will zoom to a specific station marker based on the index argument.
+ * @param {number} index of the chosen station in the chosenStation array.
  */
+
 function zoomToCounty(coords){
     map.flyTo(coords, 7,{
         animate: true,
