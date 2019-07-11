@@ -129,9 +129,9 @@ map.on(L.Draw.Event.CREATED, function (event) {
  */
 function removeMarkedStations(){
     for(let i = 0; i < markedStations.length; i++){
-        let stationId = markedStations[i]._popup._content.lastChild.id;
+        let stationID = markedStations[i]._popup._content.lastChild.id;
         let button = markedStations[i]._popup._content.lastChild;
-        let station = stationByID(stationId);
+        const station = stationsData.find(x => x.id === stationID);
         removeStation(station, markedStations[i], button);
     }
     markedStations = [];
@@ -170,6 +170,9 @@ function removeStationsOutsideDrawnItem() {
  * @param {*} lat_lngs The north east corner point and the south west corner point of a rectangle. 
  */
 function getStationbyDrawRect(lat_lngs) {
+    if(L.latLngBounds(lat_lngs).contains()) {
+
+    }
     for(let i = 0; i < layerGroups.length; i++) {
         let layer_group = layerGroups[i];
         layer_group.eachLayer(function(layer_elem){
@@ -183,15 +186,17 @@ function getStationbyDrawRect(lat_lngs) {
     }
 }
 
+
 /**
  * Function to add markers, identical function for all types of drawn Items. Checks if a station is already chosen to avoid duplicates.
  * @param {*} layer_elem a drawn figure.
  */
 function addMarked(layer_elem){
     var stationID = layer_elem._popup._content.lastChild.id;
+    console.log(stationID);
     const button = layer_elem._popup._content.lastChild;
-    const station = stationByID(stationID);
-    if(!chosenStations.includes(station)){
+    const station = stationsData.find(x => x.id === stationID);
+    if(!chosenStations.includes(stationID)){
         if(!markedStations.includes(layer_elem)) {
             if(chosenCounties.length === 0 && chosenStations.length === 0){
                 showStationBar();
@@ -223,16 +228,4 @@ function getStationbyDrawCircle(circleLayer) {
          });
     }
 
-}
-
-/**
- * Use this method to get a station based on the station id.
- * @param {*} stationID the station id of a specific station.
- */
-function stationByID(stationID) {
-    for(let i = 0; i < stationsData.length; i++) {
-        if(stationsData[i].id == stationID) {
-            return stationsData[i];
-        }
-    }
 }

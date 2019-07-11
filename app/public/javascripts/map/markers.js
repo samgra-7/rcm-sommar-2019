@@ -6,6 +6,12 @@ const icon = L.divIcon({
     iconAnchor: [12, 24],
     popupAnchor: [-5, -25],
 });
+
+const frictionIcon = L.divIcon({
+    className: 'fas fa-road',
+    iconAnchor: [12, 24],
+    popupAnchor: [-5, -25],
+});
 /**
  * The station marker icon when a station is chosen.
  */
@@ -33,10 +39,12 @@ const snowIcon = L.divIcon({
  * @param {*} group a Leaflet layer group with markers.
  */
 function addMarkerOnZoom(group){
-    for(var i = 0; i <= group; i++){
-        if(!map.hasLayer(layerGroups[i])){
-            if(map.getZoom() < 10){
-                map.addLayer(layerGroups[i]);
+    if(layerGroups.length != 0) {
+        for(var i = 0; i <= group; i++){
+            if(!map.hasLayer(layerGroups[i])){
+                if(map.getZoom() < 10){
+                    map.addLayer(layerGroups[i]);
+                }
             }
         }
     }
@@ -47,20 +55,48 @@ function addMarkerOnZoom(group){
  * @param {*} group a Leaflet layer group with markers.
  */
 function removeMarkerOnZoom(group){
-    for(var i = 9; i > group; i--){
-        if(map.hasLayer(layerGroups[i])){
-            if(map.getZoom() < 10){
-                map.removeLayer(layerGroups[i]);
+    if(layerGroups.length != 0) {
+        for(var i = 9; i > group; i--){
+            if(map.hasLayer(layerGroups[i])){
+                if(map.getZoom() < 10){
+                    map.removeLayer(layerGroups[i]);
+                }
             }
         }
     }
-    
 }
 
 /**
  * Should contain layergroups of markers.
  */
+
 let layerGroups = [];
+let frictionLayer = new L.layerGroup();
+let frictionCanvas = L.canvas({ padding: 0.5, pane: "circlemarkers", });
+//let frictionCanvas = new L.layerGroup();
+
+function createFrictionLayer(filteredfrictionData) {
+    map.removeLayer(frictionCanvas);
+    frictionCanvas = L.canvas({ padding: 0.5, pane: "circlemarkers", });
+    //frictionCanvas.clearLayers();
+
+    for (var i = 0; i < filteredfrictionData.length; i += 1) { 
+        let circle = L.circleMarker([filteredfrictionData[i].lat, filteredfrictionData[i].lon], {
+        renderer: frictionCanvas
+        });
+        circle.bindPopup(popupfriction(filteredfrictionData[i], circle));
+        circle.addTo(map);
+    }
+
+    //Det är här för att det ska ladda snyggare. Motsvarande för att sätta igång är i maptilelayers.js i början av funktionen.
+    geojson.eachLayer(function (layer) {    
+        layer.setStyle({fillOpacity :0 }) 
+        noColor = true;
+    });
+
+    info.remove(map);
+   
+}
 
 /**
  * Adds a station to a specific layer group.
@@ -93,6 +129,8 @@ function addStationToLayer(station, layerNumber){
  * @param {*} stations station data JSON array.
  */
 function createLayers(stations){
+    //map.removeLayer(frictionLayer);
+    map.removeLayer(frictionCanvas)
     // add every tenth station to the first layer
     for(var i = 0; i< stations.length; i+=10){
         addStationToLayer(stations[i], 0);
@@ -113,5 +151,5 @@ function createLayers(stations){
             }
         }
     }
-    map.addLayer(layerGroups[0])
+    map.addLayer(layerGroups[0]);
 }

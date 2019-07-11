@@ -6,6 +6,17 @@ var test = require('../database/testConnection');
 var station = require('../database/getStationData');
 var weather = require('../database/getWeatherData');
 var province = require('../database/getProvinceData');
+var friction = require('../database/getFrictionData');
+
+
+router.get('/getFrictionData', function(req, res, next) {
+    reporter = req["query"]["reporter"];
+    friction.getFrictionData(req, res, next, reporter);
+})
+
+router.get('/getAllFrictionData', function(req, res, next) {
+    friction.getAllFrictionData(req, res, next);
+});
 
 
 /* GET test connection */

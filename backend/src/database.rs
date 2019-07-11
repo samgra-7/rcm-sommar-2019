@@ -7,7 +7,10 @@ use crate::parse_xml::{StationData, WeatherData};
 
 
 pub fn insert_friction_data(mut conn: PooledConn, url: &str) {
-    conn.query(r"LOAD DATA LOCAL INFILE ".to_owned() + "'" + url + "'" + " INTO TABLE friction_data LINES TERMINATED BY '\r\n';").unwrap();
+    conn.query(r"LOAD DATA LOCAL INFILE ".to_owned() + "'" + url + "'" + " INTO TABLE friction_data LINES TERMINATED BY '\r\n' IGNORE 1 LINES SET `lat`= REPLACE(`lat`, ',', '.'), `lon`=REPLACE(`lon`, ',', '.'), `MeasurementValue`=REPLACE(`MeasurementValue`, ',', '.');").unwrap();
+
+    //LOAD DATA LOCAL INFILE '/home/aron/rcm-sommar-2019/backend/e6.txt' INTO TABLE friction_data LINES TERMINATED BY '\r\n' IGNORE 1 LINES (`id`, `MeasureTimeUTC`, `ReportTimeUTC`, `lat`, `lon`, `RoadCondition`, `MeasurementType`, `NumberOfMeasurements`, `MeasurementValue`, `MeasurementConfidence`, `MeasurementsVelocity`, `ReporterOrganisation`, `EquipmentType`) SET `lat`= REPLACE(`lat`, ',', '.'), `lon`=REPLACE(`lon`, ',', '.');
+    //LOAD DATA LOCAL INFILE '/home/aron/rcm-sommar-2019/backend/e6.txt' INTO TABLE friction_data LINES TERMINATED BY '\r\n' IGNORE 1 LINES SET `lat`= REPLACE(`lat`, ',', '.'), `lon`=REPLACE(`lon`, ',', '.'), `MeasurementValue`=REPLACE(`MeasurementValue`, ',', '.');
 
 }
 
@@ -111,13 +114,19 @@ pub fn create_mysql_tables(pool: Pool) {
                     FOREIGN KEY (station_id) REFERENCES station_data (id)
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: weather_data");
     pool.prep_exec(r"CREATE TABLE IF NOT EXISTS friction_data (
-                    operation_location TEXT DEFAULT NULL,
-                    data_supplier TEXT DEFAULT NULL,
-                    timestamp TIMESTAMP NULL DEFAULT NULL,
-                    road_number TEXT DEFAULT NULL,
-                    position TEXT NOT NULL,
-                    road_class TEXT DEFAULT NULL,
-                    friction_data TEXT DEFAULT NULL
+                    id INT(7) NOT NULL,
+                    MeasureTimeUTC TIMESTAMP NULL DEFAULT NULL,
+                    ReportTimeUTC TIMESTAMP NULL DEFAULT NULL,
+                    lat TEXT DEFAULT NULL,
+                    lon TEXT DEFAULT NULL,
+                    RoadCondition INT DEFAULT NULL,
+                    MeasurementType INT DEFAULT NULL,
+                    NumberOfMeasurements INT DEFAULT NULL,
+                    MeasurementValue TEXT DEFAULT NULL,
+                    MeasurementConfidence INT DEFAULT NULL,
+                    MeasurementsVelocity INT DEFAULT NULL,
+                    ReporterOrganisation VARCHAR(50) DEFAULT NULL,
+                    EquipmentType VARCHAR(100) DEFAULT NULL
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: friction_data");
 }
 

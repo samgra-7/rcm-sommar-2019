@@ -98,7 +98,7 @@
     padding-left: 10px;
 }
 
-#station-list {
+#obj-list {
     height: 100vh;
     min-width: 20vw;
     display: none;
@@ -109,7 +109,7 @@
 
 }
 
-.station-box {
+.obj-box {
     padding-bottom: 15px;
     padding-left: 25px;
     color: #555;

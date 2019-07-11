@@ -71,7 +71,7 @@ const roadTileLayer = L.TileLayer.boundaryCanvas(swedenRoads, {
         '<a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>, ' +
         'Imagery © <a href="https://www.mapbox.com/">Mapbox</a>',
     id: 'mapbox.streets',
-    boundary: countyData
+    //boundary: countyData
 });
 
 /**
@@ -107,6 +107,15 @@ function drawRoads(){
         }).addTo(map);
         roadDrawn = 1;
     }
+}
+
+function drawFriction(filteredfrictionData) {
+    for (let i = 0; i < layerGroups.length; i++) {
+        map.removeLayer(layerGroups[i]);
+
+    }
+    layerGroups = [];
+    createFrictionLayer(filteredfrictionData);
 }
 
 /**
@@ -275,3 +284,30 @@ const stateChangingButton = L.easyButton({
         }
     ]
 }).addTo(map);
+
+const toggleFriction = L.control({position: 'topleft'});
+
+toggleFriction.onAdd = function (map) {
+   var div = L.DomUtil.create('div');
+   div.innerHTML = '<select><option>WeatherStationData</option><option>RoadCloud</option><option>Volvo Cars</option><option>NIRA Dynamics</option></select>';
+   div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+   return div;
+};
+toggleFriction.addTo(map);
+
+$('select').change(function(){
+    $('select option:selected').each(function(){
+        if($(this).text()=="WeatherStationData"){
+            geojson.eachLayer(function (layer) {    
+                layer.setStyle({fillOpacity : 0.7 }) 
+                noColor = false;
+           });
+            info.addTo(map);
+            createLayers(stationsData);
+        }
+        else{
+            getFrictionData($(this).text());
+        }
+    });
+});
+
