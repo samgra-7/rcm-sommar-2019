@@ -22,7 +22,7 @@ function removeFriction(obj, circle, button) {
 
     }
     // Toggle field
-    if(chosenStations.length === 0 && chosenCounties.length === 0) {
+    if(chosenFriction.length === 0) {
         updateStationField();
         hideStationButton();
     } 

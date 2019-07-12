@@ -171,6 +171,13 @@ function removeStationsOutsideDrawnItem() {
                     addMarkedFriction(circleGroup[i]);
                  }      
             }
+            for(let k = 0; k < drawnCircleLayers.length; k++){
+                let radius = drawnCircleLayers[k].getRadius();
+                let circleCenter = drawnCircleLayers[k].getLatLng(); 
+                if(Math.abs(circleCenter.distanceTo(circleGroup[i].getLatLng())) <= radius){
+                    addMarkedFriction(circleGroup[i]);
+                }      
+            }
         }
     }
     for(let i = 0; i < layerGroups.length; i++) {
