@@ -100,7 +100,8 @@ function createFrictionLayer(filteredfrictionData) {
     });
 
     info.remove(map);
-   
+    //temperatureScale.remove(map);
+    $( "#search-container" ).hide();
 }
 
 /**

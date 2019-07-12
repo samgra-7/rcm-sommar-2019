@@ -303,6 +303,8 @@ $('select').change(function(){
                 noColor = false;
            });
             info.addTo(map);
+            //temperatureScale.addTo(map);
+            $( "#search-container" ).show();
             createLayers(stationsData);
         }
         else{
