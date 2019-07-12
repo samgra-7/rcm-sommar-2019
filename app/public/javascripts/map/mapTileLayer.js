@@ -305,6 +305,7 @@ $('select').change(function(){
             info.addTo(map);
             //temperatureScale.addTo(map);
             $( "#search-container" ).show();
+            circleGroup = [];
             createLayers(stationsData);
         }
         else{
