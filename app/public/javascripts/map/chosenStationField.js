@@ -55,10 +55,10 @@ function updateStationField(){
     const div = $("#obj-list")
 
     if (div.is(":hidden")) {
-        $("#obj-button").text("Göm valda stationer")
+        $("#obj-button").text("Göm valda objekt")
         div.show();
     } else {
-        $("#obj-button").text("Visa valda stationer")
+        $("#obj-button").text("Visa valda objekt")
         div.hide();
     }
 }
