@@ -16,7 +16,7 @@ function removeFriction(obj, circle, button) {
     if(i != undefined) {
         button.innerText = "Lägg till";
         button.className = "add-button"; 
-        circle.setStyle({color: 'default'});       
+        circle.setStyle({color: '#0a7bf5'});       
         $('div[class=obj-box][id="' + obj.id + '"]').remove()
         chosenFriction.splice(i, 1);
 

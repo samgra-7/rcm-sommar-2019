@@ -83,7 +83,8 @@ function createFrictionLayer(filteredfrictionData) {
 
     for (var i = 0; i < filteredfrictionData.length; i += 1) { 
         let circle = L.circleMarker([filteredfrictionData[i].lat, filteredfrictionData[i].lon], {
-        renderer: frictionCanvas
+        renderer: frictionCanvas,
+        color: '#0a7bf5'
         });
         circle.bindPopup(popupfriction(filteredfrictionData[i], circle));
         circleGroup.push(circle);

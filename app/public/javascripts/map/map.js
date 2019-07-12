@@ -13,10 +13,7 @@ map.getPane("circlemarkers").style.zIndex = 400;
  */
 let averageData = [];
 
-/**
- * Holds all stations that are marked with the draw tools.
- */
-let markedStations = [];
+
 
 
 const southWest = L.latLng(54,0);
