@@ -4,117 +4,36 @@
  * Hide/show elements.
  */
 
+//object with paired up id from checkboxes and div id that contains button and canvas.
+var obj = {
+    '#airtemp': ["#type1"],
+    '#Road_temp': ["#type2"],
+    '#Air_humidity': ["#type3"],
+    '#Wind_speed': ["#type4"],
+    '#current_temp': ["#type5"],
+    '#current_road_temp': ["#type6"],
+    '#current_hum': ["#type7"],
+    '#current_windspeed': ["#type8"],
+    '#current_temp_prov': ["#type9"],
+    '#current_road_prov': ["#type10"],
+    '#overtime_road_prov': ["#type11"],
+    '#daggpunkt': ["#type12"]
+  };
+
 //Press the checkboxes to show or hide the graphs/buttons
+//uses the above obj list to create jquery click functions
 $(function () {
-        $("#airtemp").click(function () {
+    Object.keys(obj).forEach(function(key){
+        $(key).click(function () {
             if ($(this).is(":checked")) {
-                $("#type1").show();
-              
+                $(obj[key][0]).show();
             } else {
-                $("#type1").hide();
-                
+                $(obj[key][0]).hide();
             }
         });
-    $("#Road_temp").click(function () {
-            if ($(this).is(":checked")) {
-                $("#type2").show();
-              
-            } else {
-                $("#type2").hide();
-                
-            }
-        });
-    $("#Air_humidity").click(function () {
-            if ($(this).is(":checked")) {
-                $("#type3").show();
-              
-            } else {
-                $("#type3").hide();
-                
-            }
-        });
-    $("#Wind_speed").click(function () {
-            if ($(this).is(":checked")) {
-                $("#type4").show();
-              
-            } else {
-                $("#type4").hide();
-                
-            }
-        });
-    $("#current_temp").click(function () {
-            if ($(this).is(":checked")) {
-                $("#type5").show();
-              
-            } else {
-                $("#type5").hide();
-                
-            }
-        });
-    $("#current_road_temp").click(function () {
-		    if ($(this).is(":checked")) {
-		        $("#type6").show();
-		      
-		    } else {
-		        $("#type6").hide();
-		        
-		    }
-		});
-    $("#current_hum").click(function () {
-		    if ($(this).is(":checked")) {
-		        $("#type7").show();
-		      
-		    } else {
-		        $("#type7").hide();
-		        
-		    }
-	});
-   $("#current_windspeed").click(function () {
-		    if ($(this).is(":checked")) {
-		        $("#type8").show();
-		      
-		    } else {
-		        $("#type8").hide();
-		        
-		    }
-	});
-   $("#current_temp_prov").click(function () {
-		    if ($(this).is(":checked")) {
-		        $("#type9").show();
-		      
-		    } else {
-		        $("#type9").hide();
-		        
-		    }
-	});
-   $("#current_road_prov").click(function () {
-		    if ($(this).is(":checked")) {
-		        $("#type10").show();
-		      
-		    } else {
-		        $("#type10").hide();
-		        
-		    }
-  });
-  $("#overtime_road_prov").click(function () {
-		    if ($(this).is(":checked")) {
-		        $("#type11").show();
-		      
-		    } else {
-		        $("#type11").hide();
-		        
-		    }
-  });
-  $("#daggpunkt").click(function () {
-		    if ($(this).is(":checked")) {
-		        $("#type12").show();
-		      
-		    } else {
-		        $("#type12").hide();
-		        
-		    }
-  });
+      });
  });
+
 //hide elements functions
 function hide1(classvar){
   var appBanners = document.getElementsByClassName(classvar), i;
@@ -232,30 +151,7 @@ timeformat4.oninput = function() {
 function parseour(){
 var d2 = new Date(0)
   d2.setUTCSeconds(slider.value);
- /*if(d2.getMonth()<=9 && d2.getDate()>=9){
-  stoptime = d2.getFullYear()+"-"+0+(parseInt(d2.getMonth())+1).toString()+"-"+d2.getDate()+" "+d2.getHours()+":"+d2.getMinutes()+":"+d2.getSeconds();
-}
 
-if(d2.getDate()<=9 && d2.getMonth()>=9){
-  stoptime = d2.getFullYear()+"-"+(parseInt(d2.getMonth())+1).toString()+"-"+0+d2.getDate()+" "+d2.getHours()+":"+d2.getMinutes()+":"+d2.getSeconds();
-}
-
-if(d2.getDate()<=9 && d2.getMonth()<=9){
-  stoptime = d2.getFullYear()+"-"+0+(parseInt(d2.getMonth())+1).toString()+"-"+0+d2.getDate()+" "+d2.getHours()+":"+d2.getMinutes()+":"+d2.getSeconds();
-}
-if (d2.getDate()>=9 && d2.getMonth()>=9){
-stoptime = d2.getFullYear()+"-"+(parseInt(d2.getMonth())+1).toString()+"-"+d2.getDate()+" "+d2.getHours()+":"+d2.getMinutes()+":"+d2.getSeconds();}
-
-if(d2.getHours()){
-    stoptime=(stoptime.substring(0,10)+"0"+stoptime.substring(11,)+"Z");
-}
-
-if(d2.getMinutes()){
-    stoptime=(stoptime.substring(0,12)+"0"+stoptime.substring(13,)+"Z");
-}
-if(d2.getSeconds()){
-    stoptime=(stoptime.substring(0,14)+"0"+stoptime.substring(15,)+"Z");
-}*/
 stoptime =new Date(d2.getTime() - (d2.getTimezoneOffset() * 60000)).toISOString();
 stoptime = (stoptime.substring(0,10)+" "+stoptime.substring(11,19))
 output.innerHTML = stoptime;
@@ -271,33 +167,6 @@ document.getElementById('timeinput244').value =d2.getMinutes();
 function parseour1(){
 var d1 = new Date(0);
  d1.setUTCSeconds(slider1.value);
-/* 
- if(d1.getMonth()<=9 && d1.getDate()>=9){
-  starttime = d1.getFullYear()+"-"+0+(parseInt(d1.getMonth())+1).toString()+"-"+d1.getDate()+" "+d1.getHours()+":"+d1.getMinutes()+":"+d1.getSeconds();
-}
-console.log(d1.toLocaleString())
-console.log(d1.getHours());
-if(d1.getDate()<=9 && d1.getMonth()>=9){
-  starttime = d1.getFullYear()+"-"+(parseInt(d1.getMonth())+1).toString()+"-"+0+d1.getDate()+" "+d1.getHours()+":"+d1.getMinutes()+":"+d1.getSeconds();
-}
-
-if(d1.getDate()<=9 && d1.getMonth()<=9){
-  starttime = d1.getFullYear()+"-"+0+(parseInt(d1.getMonth())+1).toString()+"-"+0+d1.getDate()+" "+d1.getHours()+":"+d1.getMinutes()+":"+d1.getSeconds();
-}
-if (d1.getDate()>=9 && d1.getMonth()>=9){
-starttime = d1.getFullYear()+"-"+(parseInt(d1.getMonth())+1).toString()+"-"+d1.getDate()+" "+d1.getHours()+":"+d1.getMinutes()+":"+d1.getSeconds();
-}
-
- if(d1.getHours()<10){
-    starttime=(starttime.substring(0,11)+"0"+starttime.substring(11,));
-}
-
-if(d1.getMinutes()<10){
-    starttime=(starttime.substring(0,14)+"0"+starttime.substring(14,));
-}
-if(d1.getSeconds()<10){
-    starttime =(starttime.substring(0,18)+"0"+starttime.substring(18,));
-}*/
 
 starttime =new Date(d1.getTime() - (d1.getTimezoneOffset() * 60000)).toISOString();
 
