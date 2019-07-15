@@ -7,48 +7,17 @@
  * @param {*} stoptime Stop time to know which intervall to get data from
  */
 async function rungraphs(starttime, stoptime){
-	var a = new Date(starttime.substring(0,10)+"T"+starttime.substring(11,)+"Z");
-	var b = new Date(stoptime.substring(0,10)+"T"+stoptime.substring(11,)+"Z");
-	if(+a < +b){
-	//arrayclear
-	await cleararrays();
+    var a = new Date(starttime.substring(0,10)+"T"+starttime.substring(11,)+"Z");
+    var b = new Date(stoptime.substring(0,10)+"T"+stoptime.substring(11,)+"Z");
+    if(+a < +b){
+    //arrayclear
+    await cleararrays();
 	
-	//canvasclear
-	const canvasclearvar1 = document.getElementById('myChart1').getContext('2d');
-        canvasclearvar1.clearRect(0,0, document.getElementById('myChart1').width, document.getElementById('myChart1').height);
-
-	const canvasclearvar2 = document.getElementById('myChart2').getContext('2d');
-        canvasclearvar2.clearRect(0,0, document.getElementById('myChart2').width, document.getElementById('myChart2').height);
-
-	const canvasclearvar3 = document.getElementById('myChart3').getContext('2d');
-        canvasclearvar3.clearRect(0,0, document.getElementById('myChart3').width, document.getElementById('myChart3').height);
-
-	const canvasclearvar4 = document.getElementById('myChart4').getContext('2d');
-        canvasclearvar4.clearRect(0,0, document.getElementById('myChart4').width, document.getElementById('myChart4').height);
-
-	const canvasclearvar5 = document.getElementById('myChart5').getContext('2d');
-        canvasclearvar5.clearRect(0,0, document.getElementById('myChart5').width, document.getElementById('myChart5').height);
-
-	const canvasclearvar6 = document.getElementById('myChart6').getContext('2d');
-		    canvasclearvar6.clearRect(0,0, document.getElementById('myChart6').width, document.getElementById('myChart6').height);
-
-	const canvasclearvar7 = document.getElementById('myChart7').getContext('2d');
-		    canvasclearvar7.clearRect(0,0, document.getElementById('myChart7').width, document.getElementById('myChart7').height);
-
-	const canvasclearvar8 = document.getElementById('myChart8').getContext('2d');
-		    canvasclearvar8.clearRect(0,0, document.getElementById('myChart8').width, document.getElementById('myChart8').height);
-
-	const canvasclearvar9 = document.getElementById('myChart9').getContext('2d');
-		    canvasclearvar9.clearRect(0,0, document.getElementById('myChart9').width, document.getElementById('myChart9').height);
-
-	const canvasclearvar10 = document.getElementById('myChart10').getContext('2d');
-		    canvasclearvar10.clearRect(0,0, document.getElementById('myChart10').width, document.getElementById('myChart10').height);
-    
-  const canvasclearvar11 = document.getElementById('myChart11').getContext('2d');
-        canvasclearvar11.clearRect(0,0, document.getElementById('myChart11').width, document.getElementById('myChart11').height)
-
-  const canvasclearvar12 = document.getElementById('myChart12').getContext('2d');
-        canvasclearvar12.clearRect(0,0, document.getElementById('myChart12').width, document.getElementById('myChart12').height)
+    //canvasclear
+    for(var i=0;i<canvaschartidarray.length;i++){
+      clearcanvasfunc(canvaschartidarray[i]);
+    }
+  
     //functioncalls to get data
     
     if(stationsarrayid.length>0){
@@ -83,13 +52,22 @@ async function rungraphs(starttime, stoptime){
       show1("hidebut");
     }
 
-  if(chosenintcounties.length>0){
-    await roadtempprov()
+    if(chosenintcounties.length>0){
+      await roadtempprov()
 
-    await currentairtempgraphprov();
+      await currentairtempgraphprov();
 
-    await currentroadtempgraphprov();
-    show1("province");
+      await currentroadtempgraphprov();
+      show1("province");
+    }
   }
 }
+
+/**
+ * 
+ * @param {*} canvaschart This is the canvas id from graphs.ejs. Used to clear the canvas.
+ */
+function clearcanvasfunc(canvaschart){
+  const canvasclearvar1 = document.getElementById(canvaschart).getContext('2d');
+  canvasclearvar1.clearRect(0,0, document.getElementById(canvaschart).width, document.getElementById(canvaschart).height);
 }

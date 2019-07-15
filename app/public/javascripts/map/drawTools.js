@@ -8,6 +8,13 @@ let drawnRectLayers = [];
  */
 let drawnCircleLayers = []; 
 
+let markedFriction = [];
+
+/**
+ * Holds all stations that are marked with the draw tools.
+ */
+let markedStations = [];
+
 /**
  * Draw functionality
  */
@@ -112,12 +119,19 @@ map.on(L.Draw.Event.CREATED, function (event) {
     let type = event.layerType;
     if(type == 'circle') {
         drawnCircleLayers.push(layer);
-        getStationbyDrawCircle(layer);
+        getObjDrawCircle(layer);
     }
     if(type == 'rectangle') {
         let lat_lngs = [layer._latlngs[0],layer._latlngs[2]];
         drawnRectLayers.push(layer);
-        getStationbyDrawRect(lat_lngs);
+        let NElat = drawnRectLayers[0]._bounds._northEast.lat;
+        console.log(NElat);
+        let NElon = drawnRectLayers[0]._bounds._northEast.lng;
+        let SWlat = drawnRectLayers[0]._bounds._southWest.lat;
+        let SWlon = drawnRectLayers[0]._bounds._southWest.lng;
+
+        getFrictionDataRect(filteredfrictionData[0].ReporterOrganisation, SWlat, NElat, SWlon, NElon);
+        getObjDrawRect(lat_lngs);
         
     }
 
@@ -136,6 +150,16 @@ function removeMarkedStations(){
     }
     markedStations = [];
 }
+
+function removeMarkedFriction() {
+    for(let i = 0; i < markedFriction.length; i++) {
+        let circleID = markedFriction[i]._popup._content.lastChild.id;
+        let button = markedFriction[i]._popup._content.lastChild;
+        const friction = filteredfrictionData.find(x => x.id == circleID);
+        removeFriction(friction, markedFriction[i], button);
+    }
+    markedFriction = [];
+}
 //Loops through all layergroups and each layer within them. 
 //If the courners of a drawn rectangle contains the lats and longs of a marker, add that marker to markedStations and chosenStations
 //Checks the circle center and the radius, if it contains the lats and longs of a marker, add that marker to markedStations and chosenStations
@@ -144,6 +168,25 @@ function removeMarkedStations(){
  */
 function removeStationsOutsideDrawnItem() {
     removeMarkedStations();
+    removeMarkedFriction();
+
+    if(circleGroup.length != 0) {
+        for(let i = 0; i < circleGroup.length; i++) {
+
+            for(let j = 0; j < drawnRectLayers.length; j++){  
+                if(L.latLngBounds(drawnRectLayers[j]._latlngs).contains(circleGroup[i].getLatLng())) {
+                    addMarkedFriction(circleGroup[i]);
+                 }      
+            }
+            for(let k = 0; k < drawnCircleLayers.length; k++){
+                let radius = drawnCircleLayers[k].getRadius();
+                let circleCenter = drawnCircleLayers[k].getLatLng(); 
+                if(Math.abs(circleCenter.distanceTo(circleGroup[i].getLatLng())) <= radius){
+                    addMarkedFriction(circleGroup[i]);
+                }      
+            }
+        }
+    }
     for(let i = 0; i < layerGroups.length; i++) {
         let layer_group = layerGroups[i]; 
         layer_group.eachLayer(function(layer_elem){
@@ -169,10 +212,16 @@ function removeStationsOutsideDrawnItem() {
  * Called with create event, if the corners of a drawn rectangle contains any markers, add them to markedStations and chosenStations.
  * @param {*} lat_lngs The north east corner point and the south west corner point of a rectangle. 
  */
-function getStationbyDrawRect(lat_lngs) {
-    if(L.latLngBounds(lat_lngs).contains()) {
-
+function getObjDrawRect(lat_lngs) {
+    if(circleGroup.length != 0) {
+        for(let i = 0; i < circleGroup.length; i++) {
+            if(L.latLngBounds(lat_lngs).contains(circleGroup[i].getLatLng())) {
+                addMarkedFriction(circleGroup[i]);
+            
+            } 
+        }
     }
+
     for(let i = 0; i < layerGroups.length; i++) {
         let layer_group = layerGroups[i];
         layer_group.eachLayer(function(layer_elem){
@@ -180,12 +229,32 @@ function getStationbyDrawRect(lat_lngs) {
                 if(layer_elem instanceof L.Marker) {
                     //StationID and button from the marker object
                     addMarked(layer_elem);
+                    
                 }
+                
             }
          });
     }
 }
 
+function addMarkedFriction(circle) {
+    var circleID = circle._popup._content.lastChild.id;
+    var button = circle._popup._content.lastChild;
+    const friction = filteredfrictionData.find(x => x.id == circleID);
+    if(!chosenFriction.includes(circleID)){
+        if(!markedFriction.includes(circle)) {
+            if(chosenFriction.length === 0){
+                showStationBar();
+            }
+            markedFriction.push(circle);
+            addFriction(friction, circle, button);
+        } else {
+            console.log("Friction is already chosen");
+            //showStationBar();
+        } 
+    }
+
+}
 
 /**
  * Function to add markers, identical function for all types of drawn Items. Checks if a station is already chosen to avoid duplicates.
@@ -193,7 +262,6 @@ function getStationbyDrawRect(lat_lngs) {
  */
 function addMarked(layer_elem){
     var stationID = layer_elem._popup._content.lastChild.id;
-    console.log(stationID);
     const button = layer_elem._popup._content.lastChild;
     const station = stationsData.find(x => x.id === stationID);
     if(!chosenStations.includes(stationID)){
@@ -207,16 +275,23 @@ function addMarked(layer_elem){
             console.log("Station is already chosen");
             //showStationBar();
         } 
-    }    
-}
+    }
+}    
+
 
 /**
  * Gets the circleCenter and Radius of a drawn circle, if it contains any markers, add them to markedStations and chosenStations.
  * @param {*} circleLayer a drawn circle.
  */
-function getStationbyDrawCircle(circleLayer) {
+function getObjDrawCircle(circleLayer) {
     const radius = circleLayer.getRadius();
     const circleCenter = circleLayer.getLatLng();
+    for(let i = 0; i < circleGroup.length; i++) {
+        if(Math.abs(circleCenter.distanceTo(circleGroup[i].getLatLng())) <= radius){
+            addMarkedFriction(circleGroup[i]);                       
+            
+        }
+    }
     for(let i = 0; i < layerGroups.length; i++) {
         let layer_group = layerGroups[i];
         layer_group.eachLayer(function(layer_elem){

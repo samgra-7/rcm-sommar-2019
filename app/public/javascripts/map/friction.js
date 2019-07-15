@@ -11,18 +11,18 @@ function addFriction(obj, circle, button) {
 }
 
 function removeFriction(obj, circle, button) {
-    const i = chosenFriction.findIndex(x => x.id === obj.id);
+    const i = chosenFriction.findIndex(x => x.id == obj.id);
 
     if(i != undefined) {
         button.innerText = "Lägg till";
         button.className = "add-button"; 
-        circle.setStyle({color: 'default'});       
+        circle.setStyle({color: '#0a7bf5'});       
         $('div[class=obj-box][id="' + obj.id + '"]').remove()
         chosenFriction.splice(i, 1);
 
     }
     // Toggle field
-    if(chosenStations.length === 0 && chosenCounties.length === 0) {
+    if(chosenFriction.length === 0) {
         updateStationField();
         hideStationButton();
     } 

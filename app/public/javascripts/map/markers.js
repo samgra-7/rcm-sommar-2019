@@ -70,23 +70,28 @@ function removeMarkerOnZoom(group){
  * Should contain layergroups of markers.
  */
 
-let layerGroups = [];
-let frictionLayer = new L.layerGroup();
+var layerGroups = [];
+var circleGroup = [];
 let frictionCanvas = L.canvas({ padding: 0.5, pane: "circlemarkers", });
 //let frictionCanvas = new L.layerGroup();
 
 function createFrictionLayer(filteredfrictionData) {
+    circleGroup = [];
     map.removeLayer(frictionCanvas);
     frictionCanvas = L.canvas({ padding: 0.5, pane: "circlemarkers", });
     //frictionCanvas.clearLayers();
 
     for (var i = 0; i < filteredfrictionData.length; i += 1) { 
         let circle = L.circleMarker([filteredfrictionData[i].lat, filteredfrictionData[i].lon], {
-        renderer: frictionCanvas
+        renderer: frictionCanvas,
+        color: '#0a7bf5'
         });
         circle.bindPopup(popupfriction(filteredfrictionData[i], circle));
+        circleGroup.push(circle);
         circle.addTo(map);
+        
     }
+
 
     //Det är här för att det ska ladda snyggare. Motsvarande för att sätta igång är i maptilelayers.js i början av funktionen.
     geojson.eachLayer(function (layer) {    
@@ -95,7 +100,8 @@ function createFrictionLayer(filteredfrictionData) {
     });
 
     info.remove(map);
-   
+    //temperatureScale.remove(map);
+    $( "#search-container" ).hide();
 }
 
 /**

@@ -73,6 +73,7 @@ function popupfriction(friction, circle){
   let popupContent = document.createElement("table-data");
 
   var obj = {
+    id: [friction.id, ""],
     Mätvärde: [friction.MeasurementValue,""],
     Tid: [friction.MeasureTimeUTC,""],
   };

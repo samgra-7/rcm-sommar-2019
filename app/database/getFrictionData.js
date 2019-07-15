@@ -82,5 +82,68 @@ module.exports = {
         }).catch(err => {
             console.log(err)
         }) 
+    },
+
+     // Check connection to MySQL 
+     getFrictionDataRect : function(req, res, next, reporter, SWlat, NElat, SWlon, NElon){
+       
+        let auth = authorization.Authorization;
+        auth.increaseMutex();
+
+        // ssh to database server and then connect to db
+        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+            
+            // get all station data that have weather data
+            // const sql =`select * from friction_data LIMIT 10;`
+            const sql =`select * from friction_data where reporterOrganisation = ? and lat between ? and ? and lon between ? and ?;`
+            var values = [reporter, SWlat, NElat, SWlon, NElon];
+            
+            client.query(sql, values, function (err, results) {
+                if (err) throw err
+                // send data back to client
+                res.send(results);
+
+                auth.decreaseMutex();
+
+                if(auth.getMutex() == 0){
+                    mysqlssh.close()
+                }
+            });
+
+        }).catch(err => {
+            console.log(err)
+        }) 
+    },
+
+     // Check connection to MySQL 
+     getFrictionDataCirc : function(req, res, next, reporter, lat, lon, radius){
+       
+        let auth = authorization.Authorization;
+        auth.increaseMutex();
+
+        // ssh to database server and then connect to db
+        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+            
+            // get all station data that have weather data
+            // const sql =`select * from friction_data LIMIT 10;`
+            const sql =`select * from friction_data WHERE reporter = ? AND lat ;`
+
+            
+            client.query(sql, function (err, results) {
+                if (err) throw err
+                // send data back to client
+                res.send(results);
+
+                auth.decreaseMutex();
+
+                if(auth.getMutex() == 0){
+                    mysqlssh.close()
+                }
+            });
+
+        }).catch(err => {
+            console.log(err)
+        }) 
     }
+
 };

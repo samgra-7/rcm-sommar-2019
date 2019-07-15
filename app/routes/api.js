@@ -9,10 +9,20 @@ var province = require('../database/getProvinceData');
 var friction = require('../database/getFrictionData');
 
 
+router.get('/getFrictionDataRect', function(req, res, next) {
+    reporter = req["query"]["reporter"];
+    NElat = req["query"]["NElat"];
+    NElon = req["query"]["NElon"];
+    SWlat = req["query"]["SWlat"];
+    SWlon = req["query"]["SWlon"];
+    friction.getFrictionDataRect(req, res, next, reporter, SWlat, NElat, SWlon, NElon);
+
+});
+
 router.get('/getFrictionData', function(req, res, next) {
     reporter = req["query"]["reporter"];
     friction.getFrictionData(req, res, next, reporter);
-})
+});
 
 router.get('/getAllFrictionData', function(req, res, next) {
     friction.getAllFrictionData(req, res, next);
