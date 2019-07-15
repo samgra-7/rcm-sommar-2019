@@ -11,7 +11,7 @@ function addFriction(obj, circle, button) {
 }
 
 function removeFriction(obj, circle, button) {
-    const i = chosenFriction.findIndex(x => x.id === obj.id);
+    const i = chosenFriction.findIndex(x => x.id == obj.id);
 
     if(i != undefined) {
         button.innerText = "Lägg till";
