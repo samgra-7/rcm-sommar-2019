@@ -1,12 +1,12 @@
 /**
  * All drawn rectangles are stored in this array 
  */
-let drawnRectLayers = [];
+var drawnRectLayers = [];
 
 /**
  * All drawn circles are stored in this array 
  */
-let drawnCircleLayers = []; 
+var drawnCircleLayers = []; 
 
 let markedFriction = [];
 
@@ -124,13 +124,6 @@ map.on(L.Draw.Event.CREATED, function (event) {
     if(type == 'rectangle') {
         let lat_lngs = [layer._latlngs[0],layer._latlngs[2]];
         drawnRectLayers.push(layer);
-        let NElat = drawnRectLayers[0]._bounds._northEast.lat;
-        console.log(NElat);
-        let NElon = drawnRectLayers[0]._bounds._northEast.lng;
-        let SWlat = drawnRectLayers[0]._bounds._southWest.lat;
-        let SWlon = drawnRectLayers[0]._bounds._southWest.lng;
-
-        getFrictionDataRect(filteredfrictionData[0].ReporterOrganisation, SWlat, NElat, SWlon, NElon);
         getObjDrawRect(lat_lngs);
         
     }

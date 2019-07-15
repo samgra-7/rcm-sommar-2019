@@ -82,6 +82,11 @@
   <span class="checkmark"></span>
   <a id="jumper" href="#type11">Hoppa</a>
 </label> 
+<label id="prov13" class="container">Vägmätningar
+  <input type="checkbox" checked="checked" id="friction_data">
+  <span class="checkmark"></span>
+  <a id="jumper" href="#type13">Hoppa</a>
+</label> 
 </div>
     </div>
   </li>
@@ -171,10 +176,17 @@
    <canvas id="myChart11"></canvas>
  </div>
 
+ <div id="type13">
+  <button class ="province" id="Canvashidebutton" type="button" onclick="hideelements('type13','friction_data')">X</button> 
+   <canvas id="myChartFriction"></canvas>
+ </div>
+
  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
  <script src="javascripts/map/stations.js"></script>
  <script src="javascripts/map/countyNames.js"></script>
  <script src="javascripts/graph/getWeatherData.js"></script>
+ <script src="javascripts/graph/getFrictionData.js"></script>
+
  <script src="javascripts/graph/Options.js"></script>
  <script type="text/javascript" src="/javascripts/graph/graphs.js"></script>
  <script src="javascripts/graph/RunGraphs.js"></script>
@@ -200,6 +212,10 @@ var chosenCounties = window.opener.chosenCounties;
 for (var i=0; i<chosenCounties.length;i++){
   chosenintcounties.push(parseInt(chosenCounties[i]));
 }
+
+var boundsrect = window.opener.drawnRectLayers;
+var frictiondatafrommap = window.opener.filteredfrictionData;
+
 //Hide the elements at start, We show later after graph load
 hide1("hidebut");
 hide1("province");

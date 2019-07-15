@@ -60,6 +60,12 @@ async function rungraphs(starttime, stoptime){
       await currentroadtempgraphprov();
       show1("province");
     }
+
+    let NElat = boundsrect[0]._bounds._northEast.lat;
+    let NElon = boundsrect[0]._bounds._northEast.lng;
+    let SWlat = boundsrect[0]._bounds._southWest.lat;
+    let SWlon = boundsrect[0]._bounds._southWest.lng;
+    getFrictionDataRect(frictiondatafrommap[0].ReporterOrganisation, SWlat, NElat, SWlon, NElon);
   }
 }
 

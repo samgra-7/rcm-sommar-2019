@@ -795,6 +795,64 @@ function daggpunktfunc(){
 	}
 }
 
+
+
+var lineChartfriction1 = null;
+//function to create air_temp graph
+/**
+ * This function will generate air temp graph with the data in arrays generated from generatefuctions
+ */
+function airtemp(){
+if(lineChartfriction1 != null){
+	lineChartfriction1.destroy();
+}
+var speedCanvas = document.getElementById("myChartFriction");
+Chart.defaults.global.defaultFontFamily = "Lato";
+Chart.defaults.global.defaultFontSize = 18;
+
+
+
+var speedData = {
+  labels: datagraftimestampair,
+  datasets: datagrafair
+};
+
+var chartOptions = {
+    scales: {
+        xAxes: [{
+            ticks: {
+                fontSize: 15
+            }
+        }]
+    },
+    title:{
+	display:true,
+	text: "Vägmätningar",
+  legend: {
+    display: true,
+    position: 'top',
+    labels: {
+      boxWidth: 80,
+      fontColor: 'black',
+    }
+}
+
+  }
+
+
+};
+
+lineChartfriction1 = new Chart(speedCanvas, {
+  type: 'line',
+  data: speedData,
+  options: chartOptions
+});
+lineChartfriction1.update();
+}
+
+
+
+
 //clear all the arrays
 /**
  * This will clear all the arrays and set the booleans to true
