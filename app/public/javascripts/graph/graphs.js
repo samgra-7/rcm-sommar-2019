@@ -803,7 +803,7 @@ var datagrafrictiontimestamp = [];
  * Collects data and send to generate function
  * @param {*} frictiondata frictiondata 
  */
-function datamultieplegraf(frictiondata){
+function datamultieplegraffriction(frictiondata){
 	var datagraffriction = [];
 	for(var i = 0; i < frictiondata.length; i++){
 		datagraffriction.push(frictiondata[i].MeasurementValue);

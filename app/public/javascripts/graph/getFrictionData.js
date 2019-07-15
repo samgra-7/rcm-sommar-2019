@@ -1,7 +1,6 @@
 async function getFrictionDataRect(reporter, SWlat, NElat, SWlon, NElon ) {		
 	await $.getJSON("/api/getFrictionDataRect", {reporter, SWlat, NElat, SWlon, NElon}, function(data) {
-		datamultieplegraf(data);
-		console.log(data)
+		datamultieplegraffriction(data);
     });	
 }
 
