@@ -797,12 +797,51 @@ function daggpunktfunc(){
 
 
 
+var datafrictiongraf = [];
+var datagrafrictiontimestamp = [];	
+/**
+ * Collects data and send to generate function
+ * @param {*} frictiondata frictiondata 
+ */
+function datamultieplegraf(frictiondata){
+	var datagraffriction = [];
+	for(var i = 0; i < frictiondata.length; i++){
+		datagraffriction.push(frictiondata[i].MeasurementValue);
+		datagrafrictiontimestamp.push(frictiondata[i].MeasureTimeUTC.slice(2,10)+" "+frictiondata[i].MeasureTimeUTC.slice(11,16));
+	}
+	checktruefalse=false;
+	generatedataFriction(datagraffriction)
+}
+
+function generatedataFriction(datagraf){
+		var colorforline = '#' + Math.random().toString(16).slice(2, 8).toUpperCase();
+		var dataFirst = {
+			label: "Friktionsvärde",
+			data: datagraf,
+			lineTension: 0.3,
+			fill: false,
+			borderColor: colorforline,
+			backgroundColor: 'transparent',
+			pointBorderColor: colorforline,
+			pointBackgroundColor: 'lightgreen',
+			pointRadius: 1,
+			pointHoverRadius: 5,
+			pointHitRadius: 2,
+			pointBorderWidth: 1,
+			pointStyle: 'rect'
+		};
+
+		datafrictiongraf.push(dataFirst);
+
+}
+
+
 var lineChartfriction1 = null;
 //function to create air_temp graph
 /**
  * This function will generate air temp graph with the data in arrays generated from generatefuctions
  */
-function airtemp(){
+function frictiondata(){
 if(lineChartfriction1 != null){
 	lineChartfriction1.destroy();
 }
@@ -813,8 +852,8 @@ Chart.defaults.global.defaultFontSize = 18;
 
 
 var speedData = {
-  labels: datagraftimestampair,
-  datasets: datagrafair
+  labels: datagrafrictiontimestamp, 
+  datasets: datafrictiongraf 
 };
 
 var chartOptions = {
@@ -881,6 +920,8 @@ function cleararrays(){
 	datagraftimestamptempprovnotsliced = [];
 	checktruefalsetempprov=true;
 	currentdaggpunkt = []
+	datafrictiongraf = [];
+	datagrafrictiontimestamp = [];	
 }
 
 
