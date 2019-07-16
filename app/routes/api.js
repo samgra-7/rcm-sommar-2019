@@ -8,7 +8,13 @@ var weather = require('../database/getWeatherData');
 var province = require('../database/getProvinceData');
 var friction = require('../database/getFrictionData');
 
+/* GET LATEST FROM FRICTION_DATA WITH ID */
+router.get('/getLatestFrictionData', function(req, res, next) {
+    friction_id = req["query"]["friction_id"];
+    friction.getLatestFrictionData(req,res,next,friction_id);
+});
 
+/* GET FROM FRICTION_DATA WITH COORDINATES BOUNDS FROM DRAW RECT TOOL */
 router.get('/getFrictionDataRect', function(req, res, next) {
     reporter = req["query"]["reporter"];
     NElat = req["query"]["NElat"];
@@ -19,11 +25,13 @@ router.get('/getFrictionDataRect', function(req, res, next) {
 
 });
 
+/* GET FROM FRICTION BY REPORTERORG  */
 router.get('/getFrictionData', function(req, res, next) {
     reporter = req["query"]["reporter"];
     friction.getFrictionData(req, res, next, reporter);
 });
 
+/* GET ALL FROM FRICTION DATA */
 router.get('/getAllFrictionData', function(req, res, next) {
     friction.getAllFrictionData(req, res, next);
 });

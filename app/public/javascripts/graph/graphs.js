@@ -795,6 +795,58 @@ function daggpunktfunc(){
 	}
 }
 
+/* FRICTION SECTION */
+
+var currentdatafriction = [];
+/**
+ * 
+ * @param {*} datatempvar Data to be put into the datafirst variable used to show it in the graph
+ */
+function generatedataforbarfriction(datatempvar,frictionid){
+	var colorforbar = '#' + Math.random().toString(16).slice(2, 8).toUpperCase();
+    var dataFirst = {
+    label: "123",
+    backgroundColor: colorforbar,
+    borderColor: colorforbar,
+    data: [datatempvar]
+  };
+  currentdatafriction.push(dataFirst);
+	
+
+}
+/**
+ * Collects data and send to generate function
+ * @param {*} frictiondata This is the current frictiondata sent in
+ */
+function databarchartfrictiondata(frictiondata){
+	var datatempvar = frictiondata[0].MeasurementValue;
+	var frictionid = frictiondata[0].id;
+	generatedataforbarfriction(datatempvar,frictionid);
+}
+
+var chartFrictionCurrent = null;
+/**
+ * This function will generate current air temp graph with the data in arrays generated from generatefuctions
+ */
+function currentfrictiongraph(){
+	if(chartFrictionCurrent!=null){
+		chartFrictionCurrent.destroy();
+	}
+	var ctx = document.getElementById('myChartCurrentFriction').getContext('2d');
+	chartFrictionCurrent = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+		//labels: stations,
+		datasets: currentdatafriction
+	    },
+
+	    options: {
+			title:{
+	display:true,
+	text: "Nuvarande vägmätningar"}
+	}
+	});
+}
 
 
 var datafrictiongraf = [];

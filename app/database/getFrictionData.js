@@ -144,6 +144,48 @@ module.exports = {
         }).catch(err => {
             console.log(err)
         }) 
+    },
+    getLatestFrictionData : function(req, res, next, friction_id){
+        
+
+        let auth = authorization.Authorization;
+        let friction_data = [];
+        auth.increaseMutex();
+        // ssh to database server and then connect to db
+        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+            const sql = "SELECT * FROM friction_data WHERE id = ?";
+
+            // do a async loop through the station_id list
+            async.each(friction_id, function(id, callback){
+
+                // get latest row of station weather data
+                const values =  [[id]];
+
+                client.query(sql, [values], function (err, results) {
+                    if (err) throw err
+                    
+                    // convert timestamp and windspeed to wanted units
+                    
+                    friction_data.push(results);
+                    callback();
+                    
+                })
+            
+            },function(callback){
+                // when async functions are done send data back
+                res.send(friction_data);
+
+                auth.decreaseMutex();
+
+                if(auth.getMutex() == 0){
+                    mysqlssh.close()
+                }
+                
+            });
+        }).catch(err => {
+            console.log(err)
+        })
+        
     }
 
 };

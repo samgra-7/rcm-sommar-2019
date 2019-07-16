@@ -87,6 +87,11 @@
   <span class="checkmark"></span>
   <a id="jumper" href="#type13">Hoppa</a>
 </label> 
+<label id="prov14" class="container">Nuvarande vägmätningar
+  <input type="checkbox" checked="checked" id="current_friction_data">
+  <span class="checkmark"></span>
+  <a id="jumper" href="#type14">Hoppa</a>
+</label> 
 </div>
     </div>
   </li>
@@ -180,7 +185,11 @@
   <button class ="frictionbuttoncanvas" id="Canvashidebutton" type="button" onclick="hideelements('type13','friction_data')">X</button> 
    <canvas id="myChartFriction"></canvas>
  </div>
-
+ <div id="type14">
+  <button class ="frictionbuttoncanvascurrent" id="Canvashidebutton" type="button" onclick="hideelements('type14','current_friction_data')">X</button> 
+   <canvas id="myChartCurrentFriction"></canvas>
+ </div>
+ 
  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.4.0/Chart.min.js"></script>
  <script src="javascripts/map/stations.js"></script>
  <script src="javascripts/map/countyNames.js"></script>
@@ -194,7 +203,7 @@
 
 //If new chart canvas is added, add chart ID into the array. Used in RunGraphs to clear.
 //Possible change is to maybe go through the page with JavaScript to find all the canvasid instead of manually inserting
-var canvaschartidarray = ['myChart1','myChart2','myChart3','myChart4','myChart5','myChart6','myChart7','myChart8','myChart9','myChart10','myChart11','myChart12','myChartFriction'];
+var canvaschartidarray = ['myChart1','myChart2','myChart3','myChart4','myChart5','myChart6','myChart7','myChart8','myChart9','myChart10','myChart11','myChart12','myChartFriction','myChartCurrentFriction'];
 
 //Get stations from map
 var stationsarrayid = [];
@@ -216,10 +225,17 @@ for (var i=0; i<chosenCounties.length;i++){
 var boundsrect = window.opener.drawnRectLayers;
 var frictiondatafrommap = window.opener.filteredfrictionData;
 
+var frictionarrayid = [];
+var chosenFriction = window.opener.chosenFriction;
+for(var i=0; i < chosenFriction.length; i++){
+	frictionarrayid.push(chosenFriction[i].id);
+}
+
 //Hide the elements at start, We show later after graph load
 hide1("hidebut");
 hide1("province");
 hide1("frictionbuttoncanvas");
+hide1("frictionbuttoncanvascurrent");
 if(stationsarrayid.length<=0){
   for(var i =4;i<=12;i++){
     hidebyid("prov"+i);
@@ -239,6 +255,11 @@ if(chosenCounties.length<=0){
 }
 if(boundsrect.length<=0){
   hidebyid("prov13");
+  hidebyid("type13");
+}
+if(frictionarrayid.length<=0){
+  hidebyid("prov14");
+  hidebyid("type14");
 }
 document.getElementById("myRange1").max = Math.floor(Date.now() / 1000);
 document.getElementById("myRange2").max = Math.floor(Date.now() / 1000);

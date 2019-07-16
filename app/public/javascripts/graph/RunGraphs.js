@@ -18,7 +18,13 @@ async function rungraphs(starttime, stoptime){
       clearcanvasfunc(canvaschartidarray[i]);
     }
   
+
     //functioncalls to get data
+
+    if(frictionarrayid.length > 0){
+      await getLatestFrictionData(frictionarrayid);
+    }
+
     if(boundsrect.length >0){
       let NElat = boundsrect[0]._bounds._northEast.lat;
       let NElon = boundsrect[0]._bounds._northEast.lng;
@@ -69,6 +75,10 @@ async function rungraphs(starttime, stoptime){
     if(boundsrect.length >0){
       await frictiondata();
       show1("frictionbuttoncanvas");
+    }
+    if(frictionarrayid.length >0){
+      await currentfrictiongraph();
+      show1("frictionbuttoncanvascurrent");
     }
   }
 }

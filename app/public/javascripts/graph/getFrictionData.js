@@ -10,3 +10,13 @@ async function getFrictionDataCirc(reporter, lat, lon, radius) {
 		console.log(data)
     });	
 }
+
+
+async function getLatestFrictionData(friction_id) {
+    await $.getJSON("/api/getLatestFrictionData", {friction_id}, function(data) {
+		
+	for(let i = 0; i < data.length; i++){
+		databarchartfrictiondata(data[i])
+		}
+    });	
+}
