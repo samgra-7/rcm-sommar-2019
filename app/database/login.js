@@ -1,5 +1,5 @@
 const mysqlssh = require('mysql-ssh');
-const authorization = require('./authorization');
+const authorization = require('./authorization').pool;
 const {SHA256} = require("sha2");
 
 
@@ -12,36 +12,26 @@ module.exports = {
 
    login : function(req, res){
   
-    let auth = authorization.Authorization;
-    auth.increaseMutex();
-
-
-    // ssh to database server and then connect to db
-    mysqlssh.connect(auth.ssh, auth.database).then(client => {
-        
-        let secret_key = [SHA256("keon135ntaik304ngaop3" + req.body.secret_key).toString("hex")];
-        let sql = 'SELECT * FROM secrets WHERE password = ?';
-        client.query(sql, secret_key, function (err, results) {
+        authorization.getConnection(function(err, conn){
             if (err) throw err
+            
+            let secret_key = [SHA256("keon135ntaik304ngaop3" + req.body.secret_key).toString("hex")];
+            let sql = 'SELECT * FROM secrets WHERE password = ?';
+            conn.query(sql, secret_key, function (err, results) {
+                
 
-            if(results.length > 0) {
-                req.session.loggedin = true;
-                res.redirect('/map');
-            } else {
-                res.send('Incorrect secret!');
-            }
-            res.end();
+                if(results.length > 0) {
+                    req.session.loggedin = true;
+                    res.redirect('/map');
+                } else {
+                    res.send('Incorrect secret!');
+                }
+                res.end();
+                conn.release();
+                
 
-
-            auth.decreaseMutex();
-
-            if(auth.getMutex() == 0){
-                mysqlssh.close()
-            }
+                if (err) throw err
+            });
         });
-
-    }).catch(err => {
-        console.log(err)
-    }) 
-}
+    }
 };

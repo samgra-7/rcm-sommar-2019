@@ -1,6 +1,5 @@
 // const mysqlssh = require('mysql-ssh');
-const mysql = require('mysql');
-const authorization = require('./authorization');
+const authorization = require('./authorization').pool;
 var async = require("async");
 
 
@@ -17,14 +16,13 @@ module.exports = {
     // Check connection to MySQL 
     getFrictionData : function(req, res, next, reporter){
        
-        let auth = authorization.Authorization;
-        auth.increaseMutex();
-
         // ssh to database server and then connect to db
         // mysqlssh.connect(auth.ssh, auth.database).then(client => {
-        mysql.createPool(auth.database).then(client => {
+        
+        authorization.getConnection(function(err, conn){
+            if (err) throw err
             
-            // get all station data that have weather data
+                // get all station data that have weather data
             // const sql =`select * from friction_data LIMIT 10;`
             const sql =`select t.id, t.MeasureTimeUTC, t.ReportTimeUTC, t.lat, t.lon, t.RoadCondition, t.MeasurementType, t.NumberOfMeasurements, t.MeasurementValue, 
             t.MeasurementConfidence, t.MeasurementsVelocity, t.ReporterOrganisation, t.EquipmentType
@@ -35,117 +33,85 @@ module.exports = {
                             WHERE reporterOrganisation = ?
                             group by lat, lon
                         ) tm on t.lat = tm.lat and t.lon = tm.lon and t.id = tm.MaxID;`
+            conn.query(sql, [reporter], function (err, results) {
+                res.send(results);
+                conn.release();
+                if (err) throw err
+            });
 
-                client.query(sql, [reporter], function (err, results) {
-                    if (err) throw err
-
-                    res.send(results);
-                    
-                    auth.decreaseMutex();
-
-                    if(auth.getMutex() == 0){
-                        mysqlssh.close()
-                    }
-                });
-                    
-                
-    
-        }).catch(err => {
-            console.log(err)
-        })
-    },            
+        });
+    },
+        
 
     // Check connection to MySQL 
     getAllFrictionData : function(req, res, next){
-       
-        let auth = authorization.Authorization;
-        auth.increaseMutex();
-
-        // ssh to database server and then connect to db
-        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+            
+        authorization.getConnection(function(err, conn){
+            if (err) throw err
             
             // get all station data that have weather data
             // const sql =`select * from friction_data LIMIT 10;`
             const sql =`select * from friction_data;`
 
             
-            client.query(sql, function (err, results) {
-                if (err) throw err
+            conn.query(sql, function (err, results) {
                 // send data back to client
                 res.send(results);
-
-                auth.decreaseMutex();
-
-                if(auth.getMutex() == 0){
-                    mysqlssh.close()
-                }
+                conn.release();
+                if (err) throw err
+     
             });
 
-        }).catch(err => {
-            console.log(err)
-        }) 
+        });
     },
 
      // Check connection to MySQL 
      getFrictionDataRect : function(req, res, next, reporter, SWlat, NElat, SWlon, NElon){
-       
-        let auth = authorization.Authorization;
-        auth.increaseMutex();
-
-        // ssh to database server and then connect to db
-        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+        
+        authorization.getConnection(function(err, conn){
+            if (err) throw err
             
             // get all station data that have weather data
             // const sql =`select * from friction_data LIMIT 10;`
             const sql =`select * from friction_data where reporterOrganisation = ? and lat between ? and ? and lon between ? and ?;`
             var values = [reporter, SWlat, NElat, SWlon, NElon];
             
-            client.query(sql, values, function (err, results) {
-                if (err) throw err
+            conn.query(sql, values, function (err, results) {
                 // send data back to client
                 res.send(results);
+                conn.release();
 
-                auth.decreaseMutex();
-
-                if(auth.getMutex() == 0){
-                    mysqlssh.close()
-                }
+                if (err) throw err
             });
+        });
 
-        }).catch(err => {
-            console.log(err)
-        }) 
+
+
     },
 
      // Check connection to MySQL 
      getFrictionDataCirc : function(req, res, next, reporter, lat, lon, radius){
        
-        let auth = authorization.Authorization;
-        auth.increaseMutex();
 
-        // ssh to database server and then connect to db
-        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+        authorization.getConnection(function(err, conn){
+            if (err) throw err
+            
             
             // get all station data that have weather data
             // const sql =`select * from friction_data LIMIT 10;`
             const sql =`select * from friction_data WHERE reporter = ? AND lat ;`
 
             
-            client.query(sql, function (err, results) {
-                if (err) throw err
+            conn.query(sql, function (err, results) {
                 // send data back to client
                 res.send(results);
+                conn.release();
 
-                auth.decreaseMutex();
+                if (err) throw err
 
-                if(auth.getMutex() == 0){
-                    mysqlssh.close()
-                }
+
             });
-
-        }).catch(err => {
-            console.log(err)
-        }) 
+        });
     }
 
 };
