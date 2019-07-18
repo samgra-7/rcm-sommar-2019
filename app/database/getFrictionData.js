@@ -110,8 +110,46 @@ module.exports = {
                 if (err) throw err
 
 
+
             });
         });
+    },
+    getLatestFrictionData : function(req, res, next, friction_id){
+        
+
+           authorization.getConnection(function(err, conn){
+            if (err) throw err
+             
+            let friction_data = [];
+    
+            const sql = "SELECT * FROM friction_data WHERE id = ?";
+
+            // do a async loop through the station_id list
+            async.each(friction_id, function(id, callback){
+
+                // get latest row of station weather data
+                const values =  [[id]];
+
+                conn.query(sql, [values], function (err, results) {
+                    
+                    // convert timestamp and windspeed to wanted units
+                    
+                    friction_data.push(results);
+                    callback();
+                    
+                })
+            
+            },function(callback){
+                // when async functions are done send data back
+                res.send(friction_data);
+                conn.release();
+
+              
+                if (err) throw err
+
+                
+            });
+         });
     }
 
 };

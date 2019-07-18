@@ -103,7 +103,6 @@ module.exports = {
                 conn.query(sql, values, function (err, results) {
                     
                     let filtered_result = [];
-                    console.log(results);
                     // calculate the time difference between the first and last result
                     let time_diff = results[results.length - 1].timestamp.getTime() - results[0].timestamp.getTime();
 

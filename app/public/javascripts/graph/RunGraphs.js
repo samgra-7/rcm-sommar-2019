@@ -18,8 +18,20 @@ async function rungraphs(starttime, stoptime){
       clearcanvasfunc(canvaschartidarray[i]);
     }
   
+
     //functioncalls to get data
-    
+
+    if(frictionarrayid.length > 0){
+      await getLatestFrictionData(frictionarrayid);
+    }
+
+    if(boundsrect.length >0){
+      let NElat = boundsrect[0]._bounds._northEast.lat;
+      let NElon = boundsrect[0]._bounds._northEast.lng;
+      let SWlat = boundsrect[0]._bounds._southWest.lat;
+      let SWlon = boundsrect[0]._bounds._southWest.lng;
+      await getFrictionDataRect(frictiondatafrommap[0].ReporterOrganisation, SWlat, NElat, SWlon, NElon);
+    }
     if(stationsarrayid.length>0){
       await getWeatherData(stationsarrayid,starttime,stoptime,stationname);
       await getlatest(stationsarrayid,stationname);
@@ -59,6 +71,14 @@ async function rungraphs(starttime, stoptime){
 
       await currentroadtempgraphprov();
       show1("province");
+    }
+    if(boundsrect.length >0){
+      await frictiondata();
+      show1("frictionbuttoncanvas");
+    }
+    if(frictionarrayid.length >0){
+      await currentfrictiongraph();
+      show1("frictionbuttoncanvascurrent");
     }
   }
 }
