@@ -1,5 +1,5 @@
-const mysqlssh = require('mysql-ssh');
-const authorization = require('./authorization');
+// const mysqlssh = require('mysql-ssh');
+const authorization = require('./authorization').pool;
 var async = require("async");
 
 
@@ -15,12 +15,8 @@ module.exports = {
     // Check connection to MySQL 
     getLatestAverageTempProvince : function(req, res, next){
        
-        let auth = authorization.Authorization;
-
-        auth.increaseMutex();
-        
-        // ssh to database server and then connect to db
-        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+        authorization.getConnection(function(err, conn){
+            if (err) throw err
             
             // select avg temps from stations in county over the last 15 min
             var old_broken_sql =  "SELECT * FROM (\
@@ -50,8 +46,8 @@ module.exports = {
             inner join
             station_data on t.station_id = station_data.id order by station_data.county_number asc`;
 
-            client.query(sql, function (err, results) {
-                if (err) throw err
+            conn.query(sql, function (err, results) {
+                
                 
                 let temperatures = [];
                 
@@ -87,29 +83,21 @@ module.exports = {
                     
                 }
 
-
-                
                 // send data back to client
                 res.send(temperatures);
-
-                auth.decreaseMutex();
-
-                if(auth.getMutex() == 0){
-                    mysqlssh.close()
-                }
+                conn.release();
+                if (err) throw err
 
             });
+        });
+    }, 
+    
+    getAverageTempProvince: function(req, res, next, provinces, start_time, stop_time){
 
-        }).catch(err => {
-            console.log(err)
-        }) 
-    }, getAverageTempProvince: function(req, res, next, provinces, start_time, stop_time){
-        let auth = authorization.Authorization;
-
-        auth.increaseMutex();
+        authorization.getConnection(function(err, conn){
+            if (err) throw err
         
-        // ssh to database server and then connect to db
-        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+
             
             // var sql = "SELECT * FROM weather_data WHERE station_id = ? AND timestamp BETWEEN ? AND ?";
             // "select w.air_temperature, s.county_number from weather_data as w, station_data as s where w.station_id = s.id and s.county_number = 25;"
@@ -129,8 +117,7 @@ module.exports = {
                 
                 let values = [province, start_time, stop_time]
 
-                client.query(sql,values, function (err, results) {
-                    if (err) throw err
+                conn.query(sql,values, function (err, results) {
                     
                     let filtered_result = [];
                     
@@ -213,17 +200,12 @@ module.exports = {
             },function(callback){
                 // when async functions are done send data back
                 res.send(weather_data);
+                conn.release();
+                
+                if (err) throw err
 
-                auth.decreaseMutex();
-
-                if(auth.getMutex() == 0){
-                    mysqlssh.close()
-                }
             });
-
-        }).catch(err => {
-            console.log(err)
-        })
+        });
     }
 };
 

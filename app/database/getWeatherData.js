@@ -1,5 +1,5 @@
 const mysqlssh = require('mysql-ssh');
-const authorization = require('./authorization');
+const authorization = require('./authorization').pool;
 var async = require("async");
 
 /* Functions in the DB class that is usable by other files */
@@ -14,11 +14,11 @@ module.exports = {
     getLatestWeatherData : function(req, res, next, station_id){
         
 
-        let auth = authorization.Authorization;
+       
         let weather_data = [];
-        auth.increaseMutex();
-        // ssh to database server and then connect to db
-        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+        authorization.getConnection(function(err, conn){
+            if (err) throw err
+            
             const sql = "SELECT * FROM weather_data WHERE station_id = ? ORDER BY id DESC LIMIT 1";
 
             // do a async loop through the station_id list
@@ -27,8 +27,7 @@ module.exports = {
                 // get latest row of station weather data
                 const values =  [[id]];
 
-                client.query(sql, [values], function (err, results) {
-                    if (err) throw err
+                conn.query(sql, [values], function (err, results) {
                     
                     // convert timestamp and windspeed to wanted units
                     convertData(results[0])
@@ -41,24 +40,23 @@ module.exports = {
             },function(callback){
                 // when async functions are done send data back
                 res.send(weather_data);
+                conn.release();
 
-                auth.decreaseMutex();
-
-                if(auth.getMutex() == 0){
-                    mysqlssh.close()
-                }
+                if (err) throw err
                 
+                
+
             });
-        }).catch(err => {
-            console.log(err)
-        })
+        });
         
-    },getAllLatestWeatherData : function(req, res, next){ //(req, res, next, length)
-        let auth = authorization.Authorization;
-        auth.increaseMutex();
+    },
+    
+    getAllLatestWeatherData : function(req, res, next){ //(req, res, next, length)
+
         
-        // ssh to database server and then connect to db
-        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+        authorization.getConnection(function(err, conn){
+            if (err) throw err
+
             const sql_old = "SELECT * FROM weather_data ORDER BY id DESC LIMIT ?";
 
             const sql = `select t.station_id, t.id, t.timestamp, t.road_temperature, t.air_temperature, t.precipitation_type, t.precipitation_millimetres, t.air_humidity, t.wind_speed, t.wind_direction
@@ -69,8 +67,7 @@ module.exports = {
                 group by station_id    
             ) tm on t.station_id = tm.station_id and t.id = tm.MaxID`
             
-            client.query(sql, function (err, results) { //   client.query(sql, [[parseInt(length)]], function (err, results) {
-                if (err) throw err
+            conn.query(sql, function (err, results) { //   client.query(sql, [[parseInt(length)]], function (err, results) {
                 
                 // convert timestamp and windspeed to wanted units
                 results.forEach(result => {
@@ -78,30 +75,20 @@ module.exports = {
 
                 });
                 res.send(results);
+                conn.release();
 
-                auth.decreaseMutex();
-
-                if(auth.getMutex() == 0){
-                    mysqlssh.close()
-                }
+                if (err) throw err
 
             });
-            
-        }).catch(err => {
-            console.log(err)
-        })
+        });
         
     },
     // get weather data from given station
     getWeatherData : function(req, res, next, station_id, start_time, stop_time){
        
         
-        let auth = authorization.Authorization;
-        
-        auth.increaseMutex();
-        // ssh to database server and then connect to db
-        mysqlssh.connect(auth.ssh, auth.database).then(client => {
-            
+        authorization.getConnection(function(err, conn){
+            if (err) throw err           
             
             // get weather data between to given timestamps
             var sql = "SELECT * FROM weather_data WHERE station_id = ? AND timestamp BETWEEN ? AND ?";
@@ -113,8 +100,7 @@ module.exports = {
 
                 var values =  [id,start_time, stop_time];
 
-                client.query(sql, values, function (err, results) {
-                    if (err) throw err
+                conn.query(sql, values, function (err, results) {
                     
                     let filtered_result = [];
                     // calculate the time difference between the first and last result
@@ -150,28 +136,18 @@ module.exports = {
             },function(callback){
                 // when async functions are done send data back
                 res.send(weather_data);
+                conn.release();
 
-                auth.decreaseMutex();
-
-                if(auth.getMutex() == 0){
-                    mysqlssh.close()
-                }
+                if (err) throw err
             });
-            
-
-        }).catch(err => {
-            console.log(err)
-        })    
+        });  
     },
     // get avarage weather data from given station
     getAverageWeatherData : function(req, res, next, station_id, start_time, stop_time){
         
         
-        let auth = authorization.Authorization;
-        
-        auth.increaseMutex();
-        // ssh to database server and then connect to db
-        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+        authorization.getConnection(function(err, conn){
+            if (err) throw err           
             
             
             // get weather data between to given timestamps
@@ -179,24 +155,19 @@ module.exports = {
                        FROM weather_data WHERE station_id = ? AND timestamp BETWEEN ? AND ?";
             var values =  [station_id,start_time, stop_time];
             
-            client.query(sql, values, function (err, results) {
-                if (err) throw err
+            conn.query(sql, values, function (err, results) {
 
                 
                 
                 // send data back to client
                 res.send(results);
-                
-                auth.decreaseMutex();
+                conn.release();
 
-                if(auth.getMutex() == 0){
-                    mysqlssh.close()
-                }
-            })
+                if (err) throw err
 
-        }).catch(err => {
-            console.log(err)
-        })    
+
+            });
+        });
     }
 };
 

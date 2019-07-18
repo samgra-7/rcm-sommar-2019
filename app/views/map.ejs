@@ -64,14 +64,22 @@
 
 
     <script>
+      // async function testDBConnection() {
+      //       await $.getJSON("/api/testDbConnection", function(data) {
+      //       console.log(data);
+      //       });
+      //     }
       async function main (){
         await getLatestAvgCountyWeatherData();
         await drawMap();
         await getStations();
         await getAllLatestWeatherData();
         await createLayers(stationsData);
-        // await getAllFrictionData();
-        // await createFrictionLayer(frictionData);
+        await getAllFrictionData();
+        await createFrictionLayer(frictionData);
+
+        // await testDBConnection();
+
 
       }
       main();

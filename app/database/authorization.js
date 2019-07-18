@@ -1,33 +1,14 @@
-const fs = require('fs');
+const mysql = require('mysql');
 
-class Authorization{
-    constructor(){
-        this.database = {
-            host: 'localhost',
-            user: 'java',
-            password: 'password',
-            database: 'db'
-            };
-    
-        this.ssh = {
-            host: 'localhost',
-            user: 'ubuntu',
-            privateKey: fs.readFileSync(process.env.HOME + '/.ssh/id')
-        };
+var pool = mysql.createPool({
+    connectionLimit : 100, 
+    host     : 'rcm-db.chzfmtvm6lcl.us-east-1.rds.amazonaws.com',
+    database : 'db',
+    user     : 'rcm',
+    password : 'uwqodh2819'
+});
 
-        this.mutex = 0;
-    }
-  
-    increaseMutex(){
-        this.mutex++;
-        
-    }
-    decreaseMutex(){
-        this.mutex--;
-    }
-    getMutex(){
-        return this.mutex;
-    }
-}
 
-module.exports.Authorization = new Authorization();
+
+exports.pool = pool;
+
