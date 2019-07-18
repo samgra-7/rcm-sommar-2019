@@ -795,6 +795,155 @@ function daggpunktfunc(){
 	}
 }
 
+/* FRICTION SECTION */
+
+var currentdatafriction = [];
+/**
+ * 
+ * @param {*} datatempvar Data to be put into the datafirst variable used to show it in the graph
+ */
+function generatedataforbarfriction(datatempvar,frictionid){
+	var colorforbar = '#' + Math.random().toString(16).slice(2, 8).toUpperCase();
+    var dataFirst = {
+    label: "123",
+    backgroundColor: colorforbar,
+    borderColor: colorforbar,
+    data: [datatempvar]
+  };
+  currentdatafriction.push(dataFirst);
+	
+
+}
+/**
+ * Collects data and send to generate function
+ * @param {*} frictiondata This is the current frictiondata sent in
+ */
+function databarchartfrictiondata(frictiondata){
+	var datatempvar = frictiondata[0].MeasurementValue;
+	var frictionid = frictiondata[0].id;
+	generatedataforbarfriction(datatempvar,frictionid);
+}
+
+var chartFrictionCurrent = null;
+/**
+ * This function will generate current air temp graph with the data in arrays generated from generatefuctions
+ */
+function currentfrictiongraph(){
+	if(chartFrictionCurrent!=null){
+		chartFrictionCurrent.destroy();
+	}
+	var ctx = document.getElementById('myChartCurrentFriction').getContext('2d');
+	chartFrictionCurrent = new Chart(ctx, {
+	    type: 'bar',
+	    data: {
+		//labels: stations,
+		datasets: currentdatafriction
+	    },
+
+	    options: {
+			title:{
+	display:true,
+	text: "Nuvarande vägmätningar"}
+	}
+	});
+}
+
+
+var datafrictiongraf = [];
+var datagrafrictiontimestamp = [];	
+/**
+ * Collects data and send to generate function
+ * @param {*} frictiondata frictiondata 
+ */
+function datamultieplegraffriction(frictiondata){
+	var datagraffriction = [];
+	for(var i = 0; i < frictiondata.length; i++){
+		datagraffriction.push(frictiondata[i].MeasurementValue);
+		datagrafrictiontimestamp.push(frictiondata[i].MeasureTimeUTC.slice(2,10)+" "+frictiondata[i].MeasureTimeUTC.slice(11,16));
+	}
+	checktruefalse=false;
+	generatedataFriction(datagraffriction)
+}
+
+function generatedataFriction(datagraf){
+		var colorforline = '#' + Math.random().toString(16).slice(2, 8).toUpperCase();
+		var dataFirst = {
+			label: "Friktionsvärde",
+			data: datagraf,
+			lineTension: 0.3,
+			fill: false,
+			borderColor: colorforline,
+			backgroundColor: 'transparent',
+			pointBorderColor: colorforline,
+			pointBackgroundColor: 'lightgreen',
+			pointRadius: 1,
+			pointHoverRadius: 5,
+			pointHitRadius: 2,
+			pointBorderWidth: 1,
+			pointStyle: 'rect'
+		};
+
+		datafrictiongraf.push(dataFirst);
+
+}
+
+
+var lineChartfriction1 = null;
+//function to create air_temp graph
+/**
+ * This function will generate air temp graph with the data in arrays generated from generatefuctions
+ */
+function frictiondata(){
+if(lineChartfriction1 != null){
+	lineChartfriction1.destroy();
+}
+var speedCanvas = document.getElementById("myChartFriction");
+Chart.defaults.global.defaultFontFamily = "Lato";
+Chart.defaults.global.defaultFontSize = 18;
+
+
+
+var speedData = {
+  labels: datagrafrictiontimestamp, 
+  datasets: datafrictiongraf 
+};
+
+var chartOptions = {
+    scales: {
+        xAxes: [{
+            ticks: {
+                fontSize: 15
+            }
+        }]
+    },
+    title:{
+	display:true,
+	text: "Vägmätningar",
+  legend: {
+    display: true,
+    position: 'top',
+    labels: {
+      boxWidth: 80,
+      fontColor: 'black',
+    }
+}
+
+  }
+
+
+};
+
+lineChartfriction1 = new Chart(speedCanvas, {
+  type: 'line',
+  data: speedData,
+  options: chartOptions
+});
+lineChartfriction1.update();
+}
+
+
+
+
 //clear all the arrays
 /**
  * This will clear all the arrays and set the booleans to true
@@ -823,6 +972,8 @@ function cleararrays(){
 	datagraftimestamptempprovnotsliced = [];
 	checktruefalsetempprov=true;
 	currentdaggpunkt = []
+	datafrictiongraf = [];
+	datagrafrictiontimestamp = [];	
 }
 
 
