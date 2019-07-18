@@ -1,4 +1,5 @@
-const mysqlssh = require('mysql-ssh');
+// const mysqlssh = require('mysql-ssh');
+const mysql = require('mysql');
 const authorization = require('./authorization');
 var async = require("async");
 
@@ -20,7 +21,8 @@ module.exports = {
         auth.increaseMutex();
 
         // ssh to database server and then connect to db
-        mysqlssh.connect(auth.ssh, auth.database).then(client => {
+        // mysqlssh.connect(auth.ssh, auth.database).then(client => {
+        mysql.createPool(auth.database).then(client => {
             
             // get all station data that have weather data
             // const sql =`select * from friction_data LIMIT 10;`
