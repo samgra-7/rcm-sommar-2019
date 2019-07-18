@@ -1,4 +1,3 @@
-const mysqlssh = require('mysql-ssh');
 const authorization = require('./authorization').pool;
 var async = require("async");
 
@@ -15,10 +14,11 @@ module.exports = {
         
 
        
-        let weather_data = [];
         authorization.getConnection(function(err, conn){
             if (err) throw err
             
+            let weather_data = [];
+
             const sql = "SELECT * FROM weather_data WHERE station_id = ? ORDER BY id DESC LIMIT 1";
 
             // do a async loop through the station_id list

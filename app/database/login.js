@@ -1,4 +1,3 @@
-const mysqlssh = require('mysql-ssh');
 const authorization = require('./authorization').pool;
 const {SHA256} = require("sha2");
 
