@@ -7,6 +7,19 @@ use quick_xml::Reader;
 use quick_xml::events::Event;
 
 #[derive(Debug)]
+pub struct CameraData {
+
+    pub station_id: String,
+    pub url: String,
+    pub url_thumb: String,
+    pub id: String,
+    pub time: String,
+    pub latitude: String,
+    pub longitude: String,
+    _secret: (), // Disliked the use of pub, will prevent from use of struct elsewere then in this module
+}
+
+#[derive(Debug)]
 pub struct StationData {
     pub id: String,
     pub name:  String,
@@ -28,6 +41,80 @@ pub struct WeatherData {
     pub wind_speed: String,
     pub wind_direction: String,
     _secret: (),
+
+}
+pub fn parse_cameras(xmlfile: &str) -> Vec<CameraData> {
+    let mut xml = Reader::from_file(xmlfile).expect("Failed to open file!");
+    xml.trim_text(true); //remove whitespaces
+
+    let mut camera_data = Vec::new();
+    let mut buf = Vec::new();
+
+    loop {
+        
+        match xml.read_event(&mut buf) {
+            Ok(Event::Start(ref e)) => match e.name() {
+                    b"cameraBaseStationIdentification" => {
+                        let camera = CameraData {
+
+                            station_id: String::new(),
+                            url: String::new(),
+                            url_thumb: String::new(),
+                            id: String::new(),
+                            time: String::new(),
+                            latitude: String::new(),
+                            longitude: String::new(),
+                            _secret: (),
+
+                        };
+                        camera_data.push(camera);
+                        let camera = camera_data.last_mut().unwrap();
+                        camera.station_id = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read camera station_id");
+
+                    }
+                    b"urlLinkAddress" => {
+                        let camera = camera_data.last_mut().unwrap();
+                        camera.url = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read urlLinkAddress");
+                    }                                     
+                    b"urlLinkAddress" => {
+                        let camera = camera_data.last_mut().unwrap();
+                        camera.url_thumb = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read urlLinkAddress thumb");
+                    }
+                    b"cctvCameraIdentification" => {
+                        let camera = camera_data.last_mut().unwrap();
+                        camera.id = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read cctvCameraIdentification");
+                    }
+                    // For some reason latitude and longitude coordinates are stored twice in the XML file
+                    b"cctvCameraRecordVersionTime" => {
+                        let camera = camera_data.last_mut().unwrap();
+                        camera.time = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read cctvCameraRecordVersionTime");
+
+
+                    }
+                    b"latitude" => {
+                        let camera = camera_data.last_mut().unwrap();
+                        camera.latitude = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read camera latitude");
+
+                    }
+                    b"longitude" => {
+                        let camera = camera_data.last_mut().unwrap();
+                        camera.longitude = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read camera longitude");
+
+                    }
+                           
+                    _ => (), // There are several other `Event`s we do not consider here
+
+            }
+            Ok(Event::Eof) => break,  
+            Err(e) => panic!("Error at pos {}: {:?}", xml.buffer_position(), e),
+
+            _ => (),
+        }
+        buf.clear();
+    }
+    // Vec<StationData>
+    camera_data
+
 
 }
 
