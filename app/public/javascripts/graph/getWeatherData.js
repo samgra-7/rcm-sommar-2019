@@ -62,8 +62,10 @@ async function getAverageTempProvince(counties, start_time, stop_time) {
 		}
 		datamultieplegraftempprov(AverageTempProvinceData[imax],countyNames[chosenCounties[imax]]);
 
+		
 		for(var i=0;i<chosenCounties.length;i++){
 			if (i!=imax){
+				console.log("hello");
 				datamultieplegraftempprov(AverageTempProvinceData[i],countyNames[chosenCounties[i]]);
 			}
 			
