@@ -103,6 +103,23 @@ canvas{
   font-size: 16px;
   border-radius: 5px;
 }
+#CanvasDownloadButton{
+  position: absolute;
+  margin: 30px;
+  right: 100px;
+  background-color: #008CBA; 
+  border: none;
+  color: white;
+  padding: 5px 15px;
+  text-align: center;
+  text-decoration: none;
+  display:" inline-block";
+  font-size: 16px;
+  border-radius: 5px;
+}
+#CanvasDownloadButton:hover {
+  cursor: pointer;
+}
 #Canvashidebutton:hover {
   cursor: pointer;
 }
