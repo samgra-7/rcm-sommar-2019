@@ -805,7 +805,7 @@ var currentdatafriction = [];
 function generatedataforbarfriction(datatempvar,frictionid){
 	var colorforbar = '#' + Math.random().toString(16).slice(2, 8).toUpperCase();
     var dataFirst = {
-    label: "123",
+    label: frictionid,
     backgroundColor: colorforbar,
     borderColor: colorforbar,
     data: [datatempvar]
