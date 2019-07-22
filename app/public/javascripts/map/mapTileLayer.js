@@ -287,30 +287,45 @@ const stateChangingButton = L.easyButton({
 
 const toggleFriction = L.control({position: 'topleft'});
 
-toggleFriction.onAdd = function (map) {
-   var div = L.DomUtil.create('div');
-   div.innerHTML = '<select><option>WeatherStationData</option><option>RoadCloud</option><option>Volvo Cars</option><option>NIRA Dynamics</option></select>';
-   div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
-   return div;
-};
-toggleFriction.addTo(map);
 
-$('select').change(function(){
-    $('select option:selected').each(function(){
-        if($(this).text()=="WeatherStationData"){
-            geojson.eachLayer(function (layer) {    
-                layer.setStyle({fillOpacity : 0.7 }) 
-                noColor = false;
-           });
-            info.addTo(map);
-            //temperatureScale.addTo(map);
-            $( "#search-container" ).show();
-            circleGroup = [];
-            createLayers(stationsData);
-        }
-        else{
-            getFrictionData($(this).text());
-        }
+/**
+ * This is wrapped around a function because it is called when the data is fetched from the databases so it loaded at the same time
+ * @param {*} data distinct reportorgs from friction_data;
+ */
+function addtoMAPtoggle(data){
+    let stringreport = '<select><option>WeatherStationData</option>'
+    for(var i=0; i<data.length; i++){
+        stringreport += '<option>'+data[i].reporterorganisation+'</option>';
+    }
+    stringreport += '</select>';
+
+    toggleFriction.onAdd = function (map) {
+       var div = L.DomUtil.create('div');
+       //div.innerHTML = '<select><option>WeatherStationData</option><option>RoadCloud</option><option>Volvo Cars</option><option>NIRA Dynamics</option></select>';
+       div.innerHTML = stringreport;
+       div.firstChild.onmousedown = div.firstChild.ondblclick = L.DomEvent.stopPropagation;
+       return div;
+    };
+    toggleFriction.addTo(map);
+
+    $('select').change(function(){
+        $('select option:selected').each(function(){
+            if($(this).text()=="WeatherStationData"){
+                geojson.eachLayer(function (layer) {    
+                    layer.setStyle({fillOpacity : 0.7 }) 
+                    noColor = false;
+               });
+                info.addTo(map);
+                //temperatureScale.addTo(map);
+                $( "#search-container" ).show();
+                circleGroup = [];
+                createLayers(stationsData);
+            }
+            else{
+                getFrictionData($(this).text());
+            }
+        });
     });
-});
+}
+
 

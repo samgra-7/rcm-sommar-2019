@@ -8,6 +8,13 @@ var weather = require('../database/getWeatherData');
 var province = require('../database/getProvinceData');
 var friction = require('../database/getFrictionData');
 
+
+/* GET DISTINCT REPORTER ORG FROM FRICTION_DATA */
+router.get('/getDistinctReporterorgFriction', function(req, res, next) {
+    friction.getDistinctReporterorgFriction(req,res,next);
+});
+
+
 /* GET LATEST FROM FRICTION_DATA WITH ID */
 router.get('/getLatestFrictionData', function(req, res, next) {
     friction_id = req["query"]["friction_id"];

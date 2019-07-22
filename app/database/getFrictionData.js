@@ -39,7 +39,24 @@ module.exports = {
         });
     },
         
+    getDistinctReporterorgFriction : function(req, res, next){
+            
+        authorization.getConnection(function(err, conn){
+            if (err) throw err
+            
+            const sql =`select distinct reporterorganisation from friction_data;`
 
+            
+            conn.query(sql, function (err, results) {
+                // send data back to client
+                res.send(results);
+                conn.release();
+                if (err) throw err
+     
+            });
+
+        });
+    },
     // Check connection to MySQL 
     getAllFrictionData : function(req, res, next){
             

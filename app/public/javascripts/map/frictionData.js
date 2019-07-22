@@ -14,3 +14,9 @@ async function getFrictionData(reporter) {
     });
     await drawFriction(filteredfrictionData)
 }
+
+async function getDistinctReporterorgFriction() {
+    await $.getJSON("/api/getDistinctReporterorgFriction", function(data) {
+        addtoMAPtoggle(data);
+    });    
+}
