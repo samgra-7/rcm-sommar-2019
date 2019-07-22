@@ -3,7 +3,7 @@ use mysql::OptsBuilder;
 use mysql::chrono::{DateTime, FixedOffset};
 use mysql::from_row;
 
-use crate::parse_xml::{StationData, WeatherData};
+use crate::parse_xml::{StationData, WeatherData, CameraData};
 
 
 pub fn insert_friction_data(mut conn: PooledConn, url: &str) {
@@ -12,6 +12,33 @@ pub fn insert_friction_data(mut conn: PooledConn, url: &str) {
     //LOAD DATA LOCAL INFILE '/home/aron/rcm-sommar-2019/backend/e6.txt' INTO TABLE friction_data LINES TERMINATED BY '\r\n' IGNORE 1 LINES (`id`, `MeasureTimeUTC`, `ReportTimeUTC`, `lat`, `lon`, `RoadCondition`, `MeasurementType`, `NumberOfMeasurements`, `MeasurementValue`, `MeasurementConfidence`, `MeasurementsVelocity`, `ReporterOrganisation`, `EquipmentType`) SET `lat`= REPLACE(`lat`, ',', '.'), `lon`=REPLACE(`lon`, ',', '.');
     //LOAD DATA LOCAL INFILE '/home/aron/rcm-sommar-2019/backend/e6.txt' INTO TABLE friction_data LINES TERMINATED BY '\r\n' IGNORE 1 LINES SET `lat`= REPLACE(`lat`, ',', '.'), `lon`=REPLACE(`lon`, ',', '.'), `MeasurementValue`=REPLACE(`MeasurementValue`, ',', '.');
 
+}
+
+pub fn insert_camera_data(pool: Pool, camera_data: Vec<CameraData>) {
+
+
+
+    let insert_stmt = r"INSERT IGNORE INTO camera_data (id, time, lat, lon, name, station_id, url, url_thumb) 
+                                    VALUES (:id, NULLIF(:time, ''), NULLIF(:latitude, ''), NULLIF(:longitude, ''), NULLIF(:name, ''), :station_id, 
+                                    NULLIF(:url, ''), NULLIF(:url_thumb, ''))
+                                    ON DUPLICATE KEY UPDATE time=:time, lat=:latitude, lon=:longitude, name=:name, url:=url, url_thumb:=url_thumb;";
+
+    for mut stmt in pool.prepare(insert_stmt).into_iter() { 
+        
+        for i in camera_data.iter() {
+            // `execute` takes ownership of `params` so we pass account name by reference.
+            stmt.execute(params!{
+                "id" => i.id.clone(),
+                "time" => i.time.clone(),
+                "latitude" => i.latitude.clone(),
+                "longitude" => i.longitude.clone(),
+                "name" => i.name.clone(),
+                "station_id" => i.station_id.clone(),
+                "url" => i.url.clone(),
+                "url_thumb" => i.url_thumb.clone(),
+            }).expect("Failed to execute statement when reading from camera_data");
+        }
+    }
 }
 
 // Insert the data to MYSQL, TABLE assumed to exist
@@ -128,5 +155,19 @@ pub fn create_mysql_tables(pool: Pool) {
                     ReporterOrganisation VARCHAR(50) DEFAULT NULL,
                     EquipmentType VARCHAR(100) DEFAULT NULL
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: friction_data");
+    pool.prep_exec(r"CREATE TABLE IF NOT EXISTS camera_data (
+                    id INT(8) NOT NULL,
+                    time TIMESTAMP NULL DEFAULT NULL,
+                    lat DECIMAL(10, 8) DEFAULT NULL,
+                    lon DECIMAL(11, 8) DEFAULT NULL,
+                    name VARCHAR(30) DEFAULT NULL,
+                    station_id VARCHAR(50) DEFAULT NULL,
+                    url TEXT DEFAULT NULL,
+                    url_thumb TEXT DEFAULT NULL,
+                    PRIMARY KEY (id)
+                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: camera_data");
+
+
 }
+
 

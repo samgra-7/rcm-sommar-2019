@@ -7,6 +7,20 @@ use quick_xml::Reader;
 use quick_xml::events::Event;
 
 #[derive(Debug)]
+pub struct CameraData {
+
+    pub id: String,
+    pub time: String,
+    pub latitude: String,
+    pub longitude: String,
+    pub name: String,
+    pub station_id: String,
+    pub url: String,
+    pub url_thumb: String,
+    _secret: (), // Disliked the use of pub, will prevent from use of struct elsewere then in this module
+}
+
+#[derive(Debug)]
 pub struct StationData {
     pub id: String,
     pub name:  String,
@@ -28,6 +42,115 @@ pub struct WeatherData {
     pub wind_speed: String,
     pub wind_direction: String,
     _secret: (),
+
+}
+pub fn parse_cameras(xmlfile: &str) -> Vec<CameraData> {
+
+    #[derive(Clone, Copy)]
+    enum State {
+        Root,
+        Name,
+        Url,
+        Thumb,
+
+    };
+    let mut xml = Reader::from_file(xmlfile).expect("Failed to open file!");
+    xml.trim_text(true); //remove whitespaces
+
+    let mut camera_data = Vec::new();
+    let mut buf = Vec::new();
+    let mut state = State::Root;
+
+    loop {
+        
+        match xml.read_event(&mut buf) {
+            Ok(Event::Start(ref e)) => match (state, e.name()) {
+                (State::Root, b"cctvCameraIdentification") => {
+                    let camera = CameraData {
+
+                        id: String::new(),
+                        time: String::new(),
+                        latitude: String::new(),
+                        longitude: String::new(),
+                        name: String::new(),
+                        station_id: String::new(),
+                        url: String::new(),
+                        url_thumb: String::new(),
+                        _secret: (),
+
+                    };
+                    camera_data.push(camera);
+                    let camera = camera_data.last_mut().unwrap();
+                    camera.id = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read camera id");
+
+                }
+            //     _ => {}
+            // }
+            // Ok(Event::Start(ref e)) => {
+                // match (state, e.name()) {
+                    (State::Root, b"cctvCameraRecordVersionTime") => {
+                        let camera = camera_data.last_mut().expect("Failed to get pointer, cctvCameraRecordVersionTime");
+                        camera.time = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read cctvCameraRecordVersionTime");
+
+                    }
+
+                    (State::Root, b"latitude") => {
+                        let camera = camera_data.last_mut().expect("Failed to get pointer, latitude");
+                        camera.latitude = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read camera latitude");
+
+                    }
+                    (State::Root, b"longitude") => {
+                        let camera = camera_data.last_mut().expect("Failed to get pointer, longitude");
+                        camera.longitude = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read camera longitude");
+                    
+                    }
+                    (State::Root, b"cameraBaseStationName") => state = State::Name,
+                    (State::Name, b"value") => {
+                    // (State::Value, b"value") => {
+                        let camera = camera_data.last_mut().expect("Failed to get pointer, cctvCameraSiteLocalDescription");
+                        camera.name = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read cctvCameraSiteLocalDescription");
+
+                    }
+                    (State::Root, b"cameraBaseStationIdentification") => {
+                        let camera = camera_data.last_mut().expect("Failed to get pointer, cctvCameraIdentification");
+                        camera.station_id = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read cctvCameraIdentification");
+                    
+                    } 
+                    (State::Root, b"stillImageUrl") => state = State::Url,
+                    (State::Url, b"urlLinkAddress") => {
+                        let camera = camera_data.last_mut().expect("Failed to get pointer, stillImageUrl");
+                        camera.url = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read urlLinkAddress");
+                    
+                    }
+                    (State::Root, b"orientationImageUrl") => state = State::Thumb,
+                    (State::Thumb, b"urlLinkAddress") => {
+                        let camera = camera_data.last_mut().expect("Failed to get pointer, orientationImageUrl");
+                        camera.url_thumb = xml.read_text(e.name(), &mut Vec::new()).expect("Failed to read urlLinkAddress thumb");
+                    
+                    }
+                    _ => (), // There are several other `Event`s we do not consider here
+
+                // }
+            }
+            Ok(Event::End(ref e)) => {
+                match (state, e.name()) {
+                    (State::Url, b"stillImageUrl") => state = State::Root,
+                    (State::Thumb, b"orientationImageUrl") => state = State::Root,
+                    (State::Name, b"cameraBaseStationName") => state = State::Root,
+
+                    _ => {}
+                }
+            }
+            Ok(Event::Eof) => break,  
+            Err(e) => panic!("Error at pos {}: {:?}", xml.buffer_position(), e),
+
+            _ => (),
+        }
+        buf.clear();
+    }
+    // Vec<CameraData>
+    camera_data
+
 
 }
 
