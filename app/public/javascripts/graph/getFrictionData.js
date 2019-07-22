@@ -6,8 +6,8 @@ async function getFrictionDataRect(reporter, SWlat, NElat, SWlon, NElon ) {
 
 
 async function getFrictionDataCirc(reporter, lat, lon, radius) {		
-	await $.getJSON("/api/getWeatherData", {station_id, start_time, stop_time}, function(data) {
-		console.log(data)
+	await $.getJSON("/api/getFrictionDataCirc", {reporter, lat, lon, radius}, function(data) {
+		datamultieplegraffriction(data);
     });	
 }
 

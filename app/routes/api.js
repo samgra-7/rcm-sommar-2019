@@ -25,6 +25,16 @@ router.get('/getFrictionDataRect', function(req, res, next) {
 
 });
 
+/* GET FROM FRICTION_dATA WITH LAT,LON AND RADIUS AND EVERY THING INSIDE THAT*/
+router.get('/getFrictionDataCirc', function(req,res,next){
+    reporter = req["query"]["reporter"];
+    lat = req["query"]["lat"];
+    lon = req["query"]["lon"];
+    radius = req["query"]["radius"];
+    friction.getFrictionDataCirc(req,res,next,reporter,lat,lon,radius);
+
+});
+
 /* GET FROM FRICTION BY REPORTERORG  */
 router.get('/getFrictionData', function(req, res, next) {
     reporter = req["query"]["reporter"];

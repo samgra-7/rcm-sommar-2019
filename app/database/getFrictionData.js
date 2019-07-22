@@ -21,8 +21,6 @@ module.exports = {
         authorization.getConnection(function(err, conn){
             if (err) throw err
             
-                // get all station data that have weather data
-            // const sql =`select * from friction_data LIMIT 10;`
             const sql =`select t.id, t.MeasureTimeUTC, t.ReportTimeUTC, t.lat, t.lon, t.RoadCondition, t.MeasurementType, t.NumberOfMeasurements, t.MeasurementValue, 
             t.MeasurementConfidence, t.MeasurementsVelocity, t.ReporterOrganisation, t.EquipmentType
                         from friction_data t
@@ -48,8 +46,6 @@ module.exports = {
         authorization.getConnection(function(err, conn){
             if (err) throw err
             
-            // get all station data that have weather data
-            // const sql =`select * from friction_data LIMIT 10;`
             const sql =`select * from friction_data;`
 
             
@@ -70,8 +66,6 @@ module.exports = {
         authorization.getConnection(function(err, conn){
             if (err) throw err
             
-            // get all station data that have weather data
-            // const sql =`select * from friction_data LIMIT 10;`
             const sql =`select * from friction_data where reporterOrganisation = ? and lat between ? and ? and lon between ? and ?;`
             var values = [reporter, SWlat, NElat, SWlon, NElon];
             
@@ -95,13 +89,16 @@ module.exports = {
         authorization.getConnection(function(err, conn){
             if (err) throw err
             
-            
-            // get all station data that have weather data
-            // const sql =`select * from friction_data LIMIT 10;`
-            const sql =`select * from friction_data WHERE reporter = ? AND lat ;`
+            const sql =`SELECT * FROM friction_data a 
+            WHERE (
+                      acos(sin(a.lat * 0.0175) * sin(? * 0.0175) 
+                           + cos(a.lat * 0.0175) * cos(? * 0.0175) *    
+                             cos((? * 0.0175) - (a.lon * 0.0175))
+                          ) * 6371 <= ?
+                  ) and ReporterOrganisation = ?;`
 
-            
-            conn.query(sql, function (err, results) {
+            var variablesql = [lat,lat,lon,(radius/1000),reporter];
+            conn.query(sql, variablesql, function (err, results) {
                 // send data back to client
                 res.send(results);
                 conn.release();
