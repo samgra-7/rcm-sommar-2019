@@ -22,7 +22,7 @@ fn main() {
     database::create_mysql_tables(pool.clone());
     let station_pool = pool.clone();
     let weather_pool = pool.clone();
-    let friction_pool = pool.clone();
+    // let friction_pool = pool.clone();
     let camera_pool = pool.clone();
 
 

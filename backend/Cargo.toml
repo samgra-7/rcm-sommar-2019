@@ -1,6 +1,6 @@
 [package]
 name = "xml_to_mysql"
-version = "0.1.0"
+version = "1.0.0"
 authors = ["Aron Strandberg <arostr-5@student.ltu.se>"]
 edition = "2018"
 license = "MIT"
@@ -14,4 +14,15 @@ keywords = ["xml", "mysql", "parse"]
 reqwest = "0.9.9"
 quick-xml = "0.12.0"
 mysql = "15.1.0"
+
+[package.metadata.deb]
+maintainer = "Aron Strandberg <arostr-5@student.ltu.se>"
+copyright = "2018-2019, Aron Strandberg <arostr-5@student.ltu.se>"
+depends = "$auto, systemd"
+section = "admin"
+priority = "optional"
+assets = [
+    ["target/release/xml_to_mysql", "usr/bin/", "755"],
+    ["README.md", "usr/share/doc/cargo-deb/README", "644"],
+]
 

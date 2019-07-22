@@ -1,7 +1,7 @@
 use mysql::{Pool, Opts, PooledConn};
 use mysql::OptsBuilder;
 use mysql::chrono::{DateTime, FixedOffset};
-use mysql::from_row;
+// use mysql::from_row;
 
 use crate::parse_xml::{StationData, WeatherData, CameraData};
 
