@@ -70,6 +70,7 @@
       //       });
       //     }
       async function main (){
+        await getDistinctReporterorgFriction();
         await getLatestAvgCountyWeatherData();
         await drawMap();
         await getStations();
@@ -84,6 +85,8 @@
       }
       main();
      
+
+      
 
       function openewgraphtab(){
         var w = window.open("/graph");

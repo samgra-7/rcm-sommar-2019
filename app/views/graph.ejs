@@ -132,18 +132,22 @@
 
 <div id="type1">
   <button class="hidebut" id="Canvashidebutton" type="button" onclick="hideelements('type1','airtemp')">X</button> 
+  <button class="hidebut" id="CanvasDownloadButton" type="button" onclick="CSVdownload(datagraftimestampair,datagrafair)">Ladda ner</button> 
   <canvas id="myChart1"></canvas>
 </div>
 <div id="type2">
   <button class="hidebut" id="Canvashidebutton" type="button" onclick="hideelements('type2','Road_temp')">X</button> 
+  <button class="hidebut" id="CanvasDownloadButton" type="button" onclick="CSVdownload(datagraftimestamp,data3graf3)">Ladda ner</button> 
   <canvas id="myChart2"></canvas>
 </div>
 <div id="type3">
   <button class="hidebut" id="Canvashidebutton" type="button" onclick="hideelements('type3','Air_humidity')">X</button> 
+  <button class="hidebut" id="CanvasDownloadButton" type="button" onclick="CSVdownload(datagraftimestamphum,datagrafhum)">Ladda ner</button> 
   <canvas id="myChart3"></canvas>
 </div>
 <div id="type4">
   <button class="hidebut" id="Canvashidebutton" type="button" onclick="hideelements('type4','Wind_speed')">X</button> 
+  <button class="hidebut" id="CanvasDownloadButton" type="button" onclick="CSVdownload(datagraftimestampwindspeed,datagrafwindspeed)">Ladda ner</button> 
   <canvas id="myChart4"></canvas>
 </div>
 <div id="type5">
@@ -178,11 +182,13 @@
 
  <div id="type11">
   <button class ="province" id="Canvashidebutton" type="button" onclick="hideelements('type11','overtime_road_prov')">X</button> 
+  <button class="province" id="CanvasDownloadButton" type="button" onclick="CSVdownload(datagraftimestamptempprov,datagraftempprov)">Ladda ner</button> 
    <canvas id="myChart11"></canvas>
  </div>
 
  <div id="type13">
   <button class ="frictionbuttoncanvas" id="Canvashidebutton" type="button" onclick="hideelements('type13','friction_data')">X</button> 
+  <button class="frictionbuttoncanvas" id="CanvasDownloadButton" type="button" onclick="CSVdownload(datagrafrictiontimestamp,datafrictiongraf)">Ladda ner</button> 
    <canvas id="myChartFriction"></canvas>
  </div>
  <div id="type14">
@@ -231,6 +237,8 @@ for(var i=0; i < chosenFriction.length; i++){
 	frictionarrayid.push(chosenFriction[i].id);
 }
 
+var boundscircle = window.opener.drawnCircleLayers;
+
 //Hide the elements at start, We show later after graph load
 hide1("hidebut");
 hide1("province");
@@ -253,7 +261,7 @@ if(chosenCounties.length<=0){
   hidebyid("type10");
   hidebyid("type11");
 }
-if(boundsrect.length<=0){
+if(boundsrect.length<=0 && boundscircle <=0){
   hidebyid("prov13");
   hidebyid("type13");
 }

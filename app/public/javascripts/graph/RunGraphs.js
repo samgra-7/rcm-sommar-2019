@@ -24,6 +24,12 @@ async function rungraphs(starttime, stoptime){
     if(frictionarrayid.length > 0){
       await getLatestFrictionData(frictionarrayid);
     }
+    if(boundscircle.length > 0){
+      let lat = boundscircle[0]._latlng.lat;
+      let lon = boundscircle[0]._latlng.lng;
+      let radius = boundscircle[0]._mRadius;
+      await getFrictionDataCirc(frictiondatafrommap[0].ReporterOrganisation,lat,lon,radius);
+    }
 
     if(boundsrect.length >0){
       let NElat = boundsrect[0]._bounds._northEast.lat;
@@ -72,7 +78,7 @@ async function rungraphs(starttime, stoptime){
       await currentroadtempgraphprov();
       show1("province");
     }
-    if(boundsrect.length >0){
+    if(boundsrect.length >0 || boundscircle.length >0){
       await frictiondata();
       show1("frictionbuttoncanvas");
     }
@@ -80,6 +86,7 @@ async function rungraphs(starttime, stoptime){
       await currentfrictiongraph();
       show1("frictionbuttoncanvascurrent");
     }
+
   }
 }
 
@@ -91,3 +98,42 @@ function clearcanvasfunc(canvaschart){
   const canvasclearvar1 = document.getElementById(canvaschart).getContext('2d');
   canvasclearvar1.clearRect(0,0, document.getElementById(canvaschart).width, document.getElementById(canvaschart).height);
 }
+
+/**
+ * 
+ * @param {*} timestamp Timestmap from an array in graphs for the csv file
+ * @param {*} data  Data such as temp, windspeed etc from an array in graphs for the csv file
+ */
+function CSVdownload(timestamp,data){
+    var rows = [];
+    let temparray = [];
+    let temparrayfirst = ["Timestamp"];
+    for(var y = 0; y < data.length;y++){
+      temparrayfirst.push(data[y].label);
+    }
+    rows.push(temparrayfirst);
+    temparrayfirst = ["Timestamp"];
+    
+    for(var i = 0; i<timestamp.length;i++){
+        temparray.push(timestamp[i]);
+        for(var x = 0; x < data.length;x++){
+          temparray.push(data[x].data[i]);
+      }
+      rows.push(temparray);
+      temparray=[];
+    }
+    let csvContent = "data:text/csv;charset=utf-8,";
+
+    rows.forEach(function(rowArray) {
+      let row = rowArray.join(",");
+      csvContent += row + "\r\n";
+  });
+
+    var encodedUri = encodeURI(csvContent);
+    var link = document.createElement("a");
+    link.setAttribute("href", encodedUri);
+    link.setAttribute("download", "my_data.csv");
+    document.body.appendChild(link); // Required for FF
+
+    link.click();
+  }
