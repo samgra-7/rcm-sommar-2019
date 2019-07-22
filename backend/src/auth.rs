@@ -13,6 +13,12 @@ pub const ADDR_DB: &'static str = "127.0.0.1";
 pub const NAME_DB: &'static str = "db";
 
 
+// pub const USER_DB: &'static str = "rcm";
+// pub const PASS_DB: &'static str = "uwqodh2819";
+// pub const ADDR_DB: &'static str = "rcm-db.chzfmtvm6lcl.us-east-1.rds.amazonaws.com";
+// pub const NAME_DB: &'static str = "db";
+
+
 
 
 
