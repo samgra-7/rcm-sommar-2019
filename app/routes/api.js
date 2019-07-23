@@ -7,6 +7,12 @@ var station = require('../database/getStationData');
 var weather = require('../database/getWeatherData');
 var province = require('../database/getProvinceData');
 var friction = require('../database/getFrictionData');
+var camera = require('../database/getCameraData');
+
+/* GET dATA CAMERA_DATA */
+router.get('/getCameraData', function(req, res, next) {
+    camera.getCameraData(req,res,next);
+});
 
 
 /* GET DISTINCT REPORTER ORG FROM FRICTION_DATA */
