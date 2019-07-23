@@ -5,9 +5,13 @@
  */
 function addPopup(station, marker,cameraArrayData) {
   let cameraurl = "";
+  let cameraurlbig ="";
+  let timestampcamera = "";
  for(var i=0;i<cameraArrayData.length;i++){
   if(cameraArrayData[i].station_id == station.id){
     cameraurl = cameraArrayData[i].url_thumb;
+    timestampcamera =  cameraArrayData[i].time;
+    cameraurlbig = cameraArrayData[i].url;
   }
  }
   let popupContent = document.createElement("table-data");
@@ -28,7 +32,9 @@ var obj = {
   Nederbördstyp: [latestWeatherData[index]['precipitation_type'],""],
   Nederbördsmängd: [latestWeatherData[index]['precipitation_millimetres'] ," mm"],
   Vindhastighet: [latestWeatherData[index]['wind_speed']," m/s"],
-  Vindriktning: [windDirection(latestWeatherData[index]['wind_direction']),""]
+  Vindriktning: [windDirection(latestWeatherData[index]['wind_direction']),""],
+  Tidväderdata: [latestWeatherData[index]['timestamp'],""],
+  Tidkamera: [timestampcamera,""]
 };
  
   var strings = "";
@@ -51,7 +57,19 @@ var obj = {
 
   }
 
-  
+  if(cameraurl!="" && cameraurl != null && cameraurl != undefined){
+
+    let image =  document.createElement("IMG");
+    image.src = cameraurl;
+    image.className ="imageclasspopup";
+    image.onclick = function() {
+      window.open(cameraurlbig, '_blank');
+    };
+    popupContent.appendChild(image);
+    cameraurl="";
+
+  }
+
   // Leaflet require DOM therefor Jquery is not used
   let button = document.createElement("button");
   button.id = station.id;
@@ -69,14 +87,6 @@ var obj = {
   });
   popupContent.appendChild(button);
 
-
-  if(cameraurl!="" && cameraurl != null && cameraurl != undefined){
-    let image =  document.createElement("IMG");
-    image.src = cameraurl;
-    image.className ="imageclasspopup";
-    popupContent.appendChild(image);
-    cameraurl="";
-  }
 
 
   return popupContent;
