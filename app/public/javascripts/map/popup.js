@@ -69,7 +69,8 @@ var obj = {
   });
   popupContent.appendChild(button);
 
-  if(cameraurl!=""){
+
+  if(cameraurl!="" && cameraurl != null && cameraurl != undefined){
     let image =  document.createElement("IMG");
     image.src = cameraurl;
     image.className ="imageclasspopup";
