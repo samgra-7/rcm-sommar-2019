@@ -24,14 +24,14 @@ async function rungraphs(starttime, stoptime){
     if(frictionarrayid.length > 0){
       await getLatestFrictionData(frictionarrayid);
     }
-    if(boundscircle.length > 0){
+    if(boundscircle.length > 0 && layerGroups.length == 0){
       let lat = boundscircle[0]._latlng.lat;
       let lon = boundscircle[0]._latlng.lng;
       let radius = boundscircle[0]._mRadius;
       await getFrictionDataCirc(frictiondatafrommap[0].ReporterOrganisation,lat,lon,radius);
     }
 
-    if(boundsrect.length >0){
+    if(boundsrect.length >0 && layerGroups.length == 0){
       let NElat = boundsrect[0]._bounds._northEast.lat;
       let NElon = boundsrect[0]._bounds._northEast.lng;
       let SWlat = boundsrect[0]._bounds._southWest.lat;

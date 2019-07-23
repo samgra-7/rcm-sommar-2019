@@ -319,7 +319,7 @@ function addtoMAPtoggle(data){
                 //temperatureScale.addTo(map);
                 $( "#search-container" ).show();
                 circleGroup = [];
-                createLayers(stationsData);
+                createLayers(stationsData,cameraArrayData);
             }
             else{
                 getFrictionData($(this).text());
