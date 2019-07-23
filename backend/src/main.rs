@@ -54,6 +54,7 @@ fn main() {
             fetch::fetch_xml(auth::URL_W, auth::USER_DATEX, auth::PASS_DATEX, "weather_data_cache.xml");
             println!("{:?}: weather file fetched from DATEX II", Local::now().naive_local());
 
+
         });
         // Wait for fetch to complete
         fetch_thread.join().unwrap();
@@ -79,7 +80,7 @@ fn main() {
 
         let station_data = parse_xml::parse_station("station_data_cache.xml");
         database::insert_station_data(station_pool.clone(), station_data);
-        
+
         thread::sleep(Duration::from_secs(86400));
 
     }
