@@ -3,7 +3,13 @@
  * @param {*} station a station data JSON object.
  * @param {*} marker a Leaflet marker representing a specific station.
  */
-function addPopup(station, marker) {
+function addPopup(station, marker,cameraArrayData) {
+  let cameraurl = "";
+ for(var i=0;i<cameraArrayData.length;i++){
+  if(cameraArrayData[i].station_id == station.id){
+    cameraurl = cameraArrayData[i].url_thumb;
+  }
+ }
   let popupContent = document.createElement("table-data");
 
   let index = getLatestWeatherIndex(station);
@@ -62,6 +68,15 @@ var obj = {
     
   });
   popupContent.appendChild(button);
+
+  if(cameraurl!=""){
+    let image =  document.createElement("IMG");
+    image.src = cameraurl;
+    image.className ="imageclasspopup";
+    popupContent.appendChild(image);
+    cameraurl="";
+  }
+
 
   return popupContent;
 }

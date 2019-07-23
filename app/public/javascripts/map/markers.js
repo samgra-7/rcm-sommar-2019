@@ -109,7 +109,7 @@ function createFrictionLayer(filteredfrictionData) {
  * @param {*} station a station data JSON object.
  * @param {*} layerNumber specifies in what layer group the station belongs to.
  */
-function addStationToLayer(station, layerNumber){
+function addStationToLayer(station, layerNumber,cameraArrayData){
     const id = "marker"+station.id;
     var marker = L.marker([station.lat, station.lon],{myCustomId: id});
     marker.setIcon(icon);
@@ -119,10 +119,10 @@ function addStationToLayer(station, layerNumber){
     }
 
     layerGroups[layerNumber].addLayer(marker);    
-    marker.bindPopup(addPopup(station,marker));
+    marker.bindPopup(addPopup(station,marker,cameraArrayData));
     marker.on('click', function(){
         if(marker.getPopup().isOpen()){
-            marker.getPopup().setContent(addPopup(station,marker));
+            marker.getPopup().setContent(addPopup(station,marker,cameraArrayData));
             this.openPopup();
         }else{
             map.closePopup();
@@ -134,12 +134,12 @@ function addStationToLayer(station, layerNumber){
  * Use this method to create the group layers that contains markers.
  * @param {*} stations station data JSON array.
  */
-function createLayers(stations){
+function createLayers(stations,cameraArrayData){
     //map.removeLayer(frictionLayer);
     map.removeLayer(frictionCanvas)
     // add every tenth station to the first layer
     for(var i = 0; i< stations.length; i+=10){
-        addStationToLayer(stations[i], 0);
+        addStationToLayer(stations[i], 0,cameraArrayData);
     }
 
     // add every fifth station to the jth layer
@@ -150,9 +150,9 @@ function createLayers(stations){
 
                 // merge the fourth and fifth layers into one
                 if(j == 4){
-                    addStationToLayer(stations[i], j);
+                    addStationToLayer(stations[i], j,cameraArrayData);
                 }else{
-                    addStationToLayer(stations[i], j+1);
+                    addStationToLayer(stations[i], j+1,cameraArrayData);
                 }   
             }
         }
