@@ -1,5 +1,6 @@
 use std::io;
 use std::fs::File;
+use crate::parse_xml::CameraData;
 
 // Get the XML file from datex using basic auth
 pub fn fetch_xml(url: &str, user: &str, pass: &str, file_name: &str) {
@@ -17,6 +18,26 @@ pub fn fetch_xml(url: &str, user: &str, pass: &str, file_name: &str) {
         .expect("Error creating file, station_data");
     io::copy(&mut response, &mut file)
         .expect("Failed to read response to file");
+
+}
+
+pub fn img(user: &str, pass: &str, camera_data: Vec<CameraData>) {
+
+        let client = reqwest::Client::new();
+
+        // for i in camera_data {
+            // println!("{:?}", camera_data[1].url);
+            let mut response = client.get(&camera_data[1].url)
+                .basic_auth(user, Some(pass))
+                .send()
+                .expect("Couldn't fetch img");
+            assert!(response.status().is_success());
+            let mut file = File::create("test")
+                .expect("Error creating img file");
+            io::copy(&mut response, &mut file)
+                .expect("Failed to read response to img file");
+    
+
 
 }
 
