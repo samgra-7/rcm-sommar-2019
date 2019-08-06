@@ -322,7 +322,7 @@ function addtoMAPtoggle(data){
                 createLayers(stationsData,cameraArrayData);
             }
             else{
-                getFrictionData($(this).text());
+                getFrictionData($(this).text(), $( "#MAPtimeintervallpick1" ).val(), $( "#MAPtimeintervallpick2" ).val());
             }
         });
     });

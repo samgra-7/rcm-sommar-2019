@@ -8,10 +8,11 @@ async function getAllFrictionData() {
     });    
 }
 
-async function getFrictionData(reporter) {
-    await $.getJSON("/api/getFrictionData", {reporter}, function(data) {
+async function getFrictionData(reporter, date1, date2) {
+    await $.getJSON("/api/getFrictionData", {reporter, date1, date2}, function(data) {
         filteredfrictionData = data;
     });
+    console.log(filteredfrictionData);
     await drawFriction(filteredfrictionData)
 }
 

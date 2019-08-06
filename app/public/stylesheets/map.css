@@ -99,7 +99,11 @@
     padding-right: 10px;
     padding-left: 10px;
 }
-
+#datepicker{
+    float:right;
+    position: relative;
+    z-index: 500;
+}
 #obj-list {
     height: 100vh;
     min-width: 20vw;

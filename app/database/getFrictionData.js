@@ -13,7 +13,7 @@ module.exports = {
 
 
     // Check connection to MySQL 
-    getFrictionData : function(req, res, next, reporter){
+    getFrictionData : function(req, res, next, reporter, date1, date2){
        
         // ssh to database server and then connect to db
         // mysqlssh.connect(auth.ssh, auth.database).then(client => {
@@ -28,9 +28,10 @@ module.exports = {
                             select  lat, lon,  max(id) as MaxID
                             from friction_data
                             WHERE reporterOrganisation = ?
+                            AND MeasureTimeUTC BETWEEN ? and ?
                             group by lat, lon
                         ) tm on t.lat = tm.lat and t.lon = tm.lon and t.id = tm.MaxID;`
-            conn.query(sql, [reporter], function (err, results) {
+            conn.query(sql, [reporter, date1, date2], function (err, results) {
                 res.send(results);
                 conn.release();
                 if (err) throw err

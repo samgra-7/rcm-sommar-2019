@@ -20,8 +20,11 @@
     <script src="https://unpkg.com/leaflet-draw@1.0.2/dist/leaflet.draw.js"></script>
 
 
+    
   </head>
   <body>
+  
+
     <div id=map-container class="map-container">
       <div id="mapid" class="map">
       <!-- Search bar -->
@@ -30,6 +33,11 @@
             <div id="suggestion-field"></div>
         </div>
   
+      <div id="datepicker">
+          <input type="date" id="MAPtimeintervallpick1" min="2018-12-01" value="2019-02-01">
+          <input type="date" id="MAPtimeintervallpick2" min="2018-12-01" value="2019-02-04">
+
+      </div>
 
       <!-- Station field to the right and button -->
       <div id="obj-list" class="info"></div>
@@ -86,7 +94,7 @@
 
       }
       main();
-     
+
 
       
 

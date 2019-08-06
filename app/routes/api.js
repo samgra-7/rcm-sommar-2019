@@ -48,10 +48,12 @@ router.get('/getFrictionDataCirc', function(req,res,next){
 
 });
 
-/* GET FROM FRICTION BY REPORTERORG  */
+/* GET FROM FRICTION BY REPORTERORG AND BY DATE  */
 router.get('/getFrictionData', function(req, res, next) {
     reporter = req["query"]["reporter"];
-    friction.getFrictionData(req, res, next, reporter);
+    date1 = req["query"]["date1"];
+    date2 = req["query"]["date2"];
+    friction.getFrictionData(req, res, next, reporter, date1, date2);
 });
 
 /* GET ALL FROM FRICTION DATA */
