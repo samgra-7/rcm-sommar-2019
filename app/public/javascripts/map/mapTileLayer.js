@@ -322,10 +322,23 @@ function addtoMAPtoggle(data){
                 createLayers(stationsData,cameraArrayData);
             }
             else{
-                getFrictionData($(this).text(), $( "#MAPtimeintervallpick1" ).val(), $( "#MAPtimeintervallpick2" ).val());
+                var date1 = new Date(document.getElementById("MAPtimeintervallpick1").value);
+                date1.setHours(parseInt(document.getElementById('MAPtimeinput241').value),parseInt(document.getElementById('MAPtimeinput242').value));
+                var starttimeMAP = new Date(date1.getTime() - (date1.getTimezoneOffset() * 60000)).toISOString();
+                starttimeMAP = (starttimeMAP.substring(0,10)+" "+starttimeMAP.substring(11,19))
+
+                var date2 = new Date(document.getElementById("MAPtimeintervallpick2").value);
+                date2.setHours(parseInt(document.getElementById('MAPtimeinput243').value),parseInt(document.getElementById('MAPtimeinput244').value));
+                var stoptimeMAP = new Date(date2.getTime() - (date2.getTimezoneOffset() * 60000)).toISOString();
+                stoptimeMAP = (stoptimeMAP.substring(0,10)+" "+stoptimeMAP.substring(11,19))
+
+
+                getFrictionData($(this).text(), starttimeMAP, stoptimeMAP);
             }
         });
     });
 }
+//var starttime='2019-06-23 10:00:00';
+
 
 
