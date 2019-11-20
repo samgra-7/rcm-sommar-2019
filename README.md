@@ -22,12 +22,6 @@ cd /rcm-d0020e/app/
 npm install
 npm start
 ```
-### JavaBackend
-
-```
-cd /rcm-d0020e/JavaBackend/src/XML_fetch/
-java -jar Run.java
-```
 
 ### RustBackend
 
