@@ -19,7 +19,7 @@ module.exports = {
             conn.query(sql, secret_key, function (err, results) {
                 
 
-                if(results.length > 0) {
+                if(results && results.length > 0) {
                     req.session.loggedin = true;
                     res.redirect('/map');
                 } else {
