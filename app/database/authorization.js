@@ -2,10 +2,10 @@ const mysql = require('mysql');
 
 var pool = mysql.createPool({
     connectionLimit : 100, 
-    host     : 'rcm-db.chzfmtvm6lcl.us-east-1.rds.amazonaws.com',
+    host     : 'localhost',
     database : 'db',
-    user     : 'read-only_rcm',
-    password : 'aikf39afm'
+    user     : 'root',
+    password : 'root'
 });
 
 
