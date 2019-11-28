@@ -13,7 +13,7 @@ See live [demo](http://130.240.204.191/)
 
 
 ```
-git clone https://github.com/dynematic/rcm-d0020e.git
+git clone https://github.com/hotpucko/rcm-sommar-2019.git
 ```
 
 ### Webserver
