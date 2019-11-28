@@ -71,7 +71,7 @@ pub fn insert_weather_data(pool: Pool, weather_data: Vec<WeatherData>) {
 
     let insert_stmt = r"INSERT IGNORE INTO weather_data 
                         (station_id, timestamp, air_temperature, road_temperature, precipitation_type, precipitation_millimetres, air_humidity, wind_speed, wind_direction) 
-                        VALUES (:station_id, NULLIF(:timestamp, ''), NULLIF(:air_temperature, ''), NULLIF(:road_temperature, ''),
+                        VALUES (:station_id, NULLIF(:timestamp, NULL), NULLIF(:air_temperature, ''), NULLIF(:road_temperature, ''),
                         NULLIF(:precipitation_type, '') ,NULLIF(:precipitation_millimetres, ''),
                         NULLIF(:air_humidity, ''), NULLIF(:wind_speed, ''), NULLIF(:wind_direction, ''));";
     
