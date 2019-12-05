@@ -20,6 +20,6 @@ Projektgruppen kommer inte göra några flera moduler då dem är redan färdiga
 Figuren nedan är ett modul-diagram över nuvarande lösning. Då uppgiften är att förbättra/bygga på denna lösning så kommer den ha samma struktur fast med några ändrade detaljer. Diagrammet beskriver hur en backend kommunicerar med trafikverkets API Datex II och fyller i en databas. APIet är skrivet i programmeringsspråket Rust. Frontend vilket är skrivet i JavaScript kommunicerar med databasen och använder sig av paket som OpenStreetMap för att visa en karta över Sverige.
 
 
-<img src="https://github.com/hotpucko/rcm-sommar-2019/blob/master/ModulDiagram.png"
+<img src="ModulDiagram.png"
      alt="Modul-diagram"
      style="float: left; margin-right: 10px;" />
