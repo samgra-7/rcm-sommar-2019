@@ -1,4 +1,5 @@
 # 1 Inledning
+:steam_locomotive::railway_car::train::train:
 ## 1.1 Bakgrund
 
 Övergripande beskrivning av 
