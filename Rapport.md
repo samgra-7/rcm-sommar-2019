@@ -1,5 +1,7 @@
 # 1 Inledning
-:steam_locomotive::railway_car::train::train:
+:steam_locomotive::railway_car::train::train: 
+
+:man_with_turban::pregnant_woman::baby::place_of_worship::man_pilot::flight_departure::office::office::fire::derelict_house::+1:
 ## 1.1 Bakgrund
 
 Övergripande beskrivning av 
