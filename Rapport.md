@@ -19,4 +19,4 @@ Figuren nedan är ett modul-diagram över nuvarande lösning. Då uppgiften är 
 
 <img src="ModulDiagram.png"
      alt="Modul-diagram"
-     style="float: left; margin-right: 10px>
+     style="float: left; margin-right: 10px;" />
