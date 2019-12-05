@@ -19,7 +19,4 @@ Figuren nedan är ett modul-diagram över nuvarande lösning. Då uppgiften är 
 
 <img src="ModulDiagram.png"
      alt="Modul-diagram"
-     style="float: left; margin-right: 10px;" />
-
-
-Markdown cheatsheet https://github.com/adam-p/markdown-here/wiki/Markdown-Cheatsheet
+     style="float: left; margin-right: 10px>
