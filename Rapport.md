@@ -24,8 +24,28 @@ Figuren nedan är ett modul-diagram över nuvarande lösning. Då uppgiften är 
      alt="Modul-diagram"
      style="float: left; margin-right: 10px;" />
 
-# 4.2.2
-In connection to the updated system design expected regression risks in the system shall for this assignment be estimated and described in Section 4.2.2 of the project report. Examples on expected local, remote and unmasked regression risks shall be specifically discussed in this section of the report using the updated system design as reference. These regression risks are addressed in the second and third lectures given by Ulf (both are available in Canvas).
+# 4.2.2 Regressionsrisker
+En regression är då en av systemets funktioner upphör att fungera i samband med att kod i systemet ändrats. Det finns tre huvudsakliga typer av regression som är aktuella för projektet.
+
+Local, remote och unmasked. 
+
+    Local: När en bugg upptäcks i den kod som uppdateras.
+
+    Remote: När en bugg upptäcks i en annan del än den som blir uppdaterad.
+
+    Unmasked: När en bugg som redan existerar blir ett problem på grund av den nya och uppdaterade koden.
+
+
+Den största och mest uppenbara risken utifall det skulle ske en regression är att systemet havererar. Hemsidan, servern eller databasen kan sluta funktionera som planerat och därmed göra hemsidan obruklig eller ha nedsatt funktionalitet. För att motverka det så bör man fokusera på de följande områdena:
+
+    Kodstycken där problem ofta uppstår 
+
+    Kod som nyligen förändrats.  
+
+    De mest fundamentala delarna av systemet
+
+
+Det här systemets kritiska delar är kartvyn och databasen. Ifall man ej kan se kartan så kommer inte systemet ha möjlighet att förmedla datan till användaren. Det andra känsliga området är databasen, ifall databasen ej lyckas hämta data från Datex så kommer användaren inte ha möjlighet att analysera någon information. I praktiken bör kartvyn fungera utan trafikinformationen men oväntade problem kan eventuellt uppstå.
 
 # 4.2.3
 A strategy for regression testing shall further be described in Section 4.2.3 of the draft project report. The defined strategy shall comment on the possible use of traceability, change analysis, quality risk analysis and cross-functional testing. These strategies for how and what to test are addressed in the third lecture given by Ulf.
