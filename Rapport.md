@@ -24,7 +24,7 @@ Figuren nedan är ett modul-diagram över nuvarande lösning. Då uppgiften är 
      alt="Modul-diagram"
      style="float: left; margin-right: 10px;" />
 
-# 4.2.2 Regressionsrisker
+## 4.2.2 Regressionsrisker
 En regression är då en av systemets funktioner upphör att fungera i samband med att kod i systemet ändrats. Det finns tre huvudsakliga typer av regression som är aktuella för projektet.
 
 Local, remote och unmasked. 
@@ -47,10 +47,12 @@ Den största och mest uppenbara risken utifall det skulle ske en regression är 
 
 Det här systemets kritiska delar är kartvyn och databasen. Ifall man ej kan se kartan så kommer inte systemet ha möjlighet att förmedla datan till användaren. Det andra känsliga området är databasen, ifall databasen ej lyckas hämta data från Datex så kommer användaren inte ha möjlighet att analysera någon information. I praktiken bör kartvyn fungera utan trafikinformationen men oväntade problem kan eventuellt uppstå.
 
-# 4.2.3
+## 4.2.3
 A strategy for regression testing shall further be described in Section 4.2.3 of the draft project report. The defined strategy shall comment on the possible use of traceability, change analysis, quality risk analysis and cross-functional testing. These strategies for how and what to test are addressed in the third lecture given by Ulf.
 
-# 4.2.4
+## 4.2.4
 Finally, two stories (functional descriptions, written in form of test cases) on the development of automated regression testing shall be defined and documented in Section 4.2.4 of the draft project report. These stories shall be defined in terms of test cases and be analyzed and divided into time estimated development tasks (i.e. each story shall have several tasks defined). This may (not mandatory) include approaches for which testing frameworks and tools to use. Although risk assessment as well as suggested priority are typically made by the development group on each story, this is not needed for this assignment.
 
 One story shall be defined for automated unit level testing (e.g. support functions and structure). This testing shall be technology facing and aim at protecting internal quality. The other story shall be defined for automated system level testing (e.g. for part automated testing). This testing shall be business facing and aim at ensuring external quality (preparing for acceptance testing). The second and third lectures given by Ulf provide guidance in defining the two stories.
+
+
