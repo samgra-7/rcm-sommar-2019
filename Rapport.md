@@ -62,6 +62,10 @@ Trafikverket skickar friktions-data månadsvis till individer delaktiga i projek
 #### 4.2.4.1 Unit Testing
 Givet en XML-Fil omvandlar till korrekt SQL-Query. 
 Testet genomförs med en XML-Fil och en förväntad output, detta repeteras för 1 års av friktions-data.
+**Automatisering:** Testet gynnas inte av automatisering, beslutet att göra testet manuelt gjordes.
+**Estimerad test utveckling:** Testet är enkelt och går fort att skapa. 
 
 #### 4.2.4.1 System Testing
-En XML-Fil skickas från en klient till servern och ska sen uppdatera vyn och visa de nya datapunkterna. I detta fall kommer de nya datapunkterna vara friktions datan från tre olika aktörer. De tre olika aktörernas data ska kunna filtreras så att klienten ska kunna välja vilken vy och vilka/vilken aktörs data de vill se. 
+En XML-Fil skickas från en klient till servern och ska sen uppdatera vyn och visa de nya datapunkterna. I detta fall kommer de nya datapunkterna vara friktions datan från tre olika aktörer. De tre olika aktörernas data ska kunna filtreras så att klienten ska kunna välja vilken vy och vilka/vilken aktörs data de vill se.
+**Automatisering:** Då systemtesting är omfattande kan automatisering vara fördelaktikt. 
+**Estimerad test utveckling:** Ett systemtest kan vara omfattande och ta lång tid att utveckla. 
