@@ -24,35 +24,44 @@ Figuren nedan är ett modul-diagram över nuvarande lösning. Då uppgiften är 
      alt="Modul-diagram"
      style="float: left; margin-right: 10px;" />
 
-## 4.2.2 Regressionsrisker
+### 4.2.2 Regressionsrisker
 En regression är då en av systemets funktioner upphör att fungera i samband med att kod i systemet ändrats. Det finns tre huvudsakliga typer av regression som är aktuella för projektet.
 
 Local, remote och unmasked. 
 
-    Local: När en bugg upptäcks i den kod som uppdateras.
+* Local: När en bugg upptäcks i den kod som uppdateras.
 
-    Remote: När en bugg upptäcks i en annan del än den som blir uppdaterad.
+* Remote: När en bugg upptäcks i en annan del än den som blir uppdaterad.
 
-    Unmasked: När en bugg som redan existerar blir ett problem på grund av den nya och uppdaterade koden.
+* Unmasked: När en bugg som redan existerar blir ett problem på grund av den nya och uppdaterade koden.
 
 
 Den största och mest uppenbara risken utifall det skulle ske en regression är att systemet havererar. Hemsidan, servern eller databasen kan sluta funktionera som planerat och därmed göra hemsidan obruklig eller ha nedsatt funktionalitet. För att motverka det så bör man fokusera på de följande områdena:
 
-    Kodstycken där problem ofta uppstår 
+* Kodstycken där problem ofta uppstår 
 
-    Kod som nyligen förändrats.  
+* Kod som nyligen förändrats.  
 
-    De mest fundamentala delarna av systemet
+* De mest fundamentala delarna av systemet
 
 
 Det här systemets kritiska delar är kartvyn och databasen. Ifall man ej kan se kartan så kommer inte systemet ha möjlighet att förmedla datan till användaren. Det andra känsliga området är databasen, ifall databasen ej lyckas hämta data från Datex så kommer användaren inte ha möjlighet att analysera någon information. I praktiken bör kartvyn fungera utan trafikinformationen men oväntade problem kan eventuellt uppstå.
 
-## 4.2.3
+### 4.2.3
 A strategy for regression testing shall further be described in Section 4.2.3 of the draft project report. The defined strategy shall comment on the possible use of traceability, change analysis, quality risk analysis and cross-functional testing. These strategies for how and what to test are addressed in the third lecture given by Ulf.
 
-## 4.2.4
-Finally, two stories (functional descriptions, written in form of test cases) on the development of automated regression testing shall be defined and documented in Section 4.2.4 of the draft project report. These stories shall be defined in terms of test cases and be analyzed and divided into time estimated development tasks (i.e. each story shall have several tasks defined). This may (not mandatory) include approaches for which testing frameworks and tools to use. Although risk assessment as well as suggested priority are typically made by the development group on each story, this is not needed for this assignment.
+### 4.2.4
+Trafikverket skickar friktions-data månadsvis till individer delaktiga i projektet. Datan som skickas ska kunna laddas upp till servern via hemsidan.
 
-One story shall be defined for automated unit level testing (e.g. support functions and structure). This testing shall be technology facing and aim at protecting internal quality. The other story shall be defined for automated system level testing (e.g. for part automated testing). This testing shall be business facing and aim at ensuring external quality (preparing for acceptance testing). The second and third lectures given by Ulf provide guidance in defining the two stories.
+**Krav:** För att testet ska kunna genomföras så ska följande kriterier vara uppfyllda
+* Friktions-data ska kunna presenteras grafiskt
+* Ludds DUST server ska vara uppsatt
+* Trafikverket ska ha skickat Friktions-data
 
 
+#### 4.2.4.1 Unit Testing
+Givet en XML-Fil omvandlar till korrekt SQL-Query. 
+Testet genomförs med en XML-Fil och en förväntad output, detta repeteras för 1 års av friktions-data.
+
+#### 4.2.4.1 System Testing
+En XML-Fil skickas från en klient till servern och ska sen uppdatera vyn och visa de nya datapunkterna. I detta fall kommer de nya datapunkterna vara friktions datan från tre olika aktörer. De tre olika aktörernas data ska kunna filtreras så att klienten ska kunna välja vilken vy och vilka/vilken aktörs data de vill se. 
