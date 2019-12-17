@@ -47,11 +47,10 @@ Den största och mest uppenbara risken utifall det skulle ske en regression är 
 
 Det här systemets kritiska delar är kartvyn och databasen. Ifall man ej kan se kartan så kommer inte systemet ha möjlighet att förmedla datan till användaren. Det andra känsliga området är databasen, ifall databasen ej lyckas hämta data från Datex så kommer användaren inte ha möjlighet att analysera någon information. I praktiken bör kartvyn fungera utan trafikinformationen men oväntade problem kan eventuellt uppstå.
 
-### 4.2.3
-A strategy for regression testing shall further be described in Section 4.2.3 of the draft project report. The defined strategy shall comment on the possible use of traceability, change analysis, quality risk analysis and cross-functional testing. These strategies for how and what to test are addressed in the third lecture given by Ulf.
+### 4.2.3 Strategi för regressiontester 
 
 
-#### 4.2.3.1
+#### 4.2.3.1 
 * Spårbarhet(traceability) handlar om att välja tester beroende på beteendet av systemet. Krav och design tillsammans med dokumenterade kvalitets risker används för att veta vilka funktioner som ska testas. Spårbarhets-analys används för att ha kontroll på vilken del av systemet som täcks upp av ett test. Spårbarhet kan användas i projektet för att säkerställa att våra lösningar har fixat problemet.
 
 * Förändringsanalys (Change impact analysis) är en nödvändig aktivitet för underhåll av mjukvara, där man analyserar vilka funktioner som påverkas av förändringarna i mjukvaran och endast testar det som påverkas. Analysen sker ofta via att man tittar på den strukturella förklaringen (klass- och moduldiagram) av systemet och följer hur förändringar rinner vidare genom systemet.
