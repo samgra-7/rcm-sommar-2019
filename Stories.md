@@ -14,22 +14,22 @@ Se om datan visas (korrekt)
 ## Tasks
 ### Förstå/refaktorera tidigare implementationen.
 * Beskrivning: Bygga en djupare förståelse för hur graferna är implementerade i projektet i sitt nuvarande tillstånd.
-* Referenser: Detta är första steget i storyn därav är den inte beroende av tidigare steg.
+* Beroende: Detta är första steget i storyn därav är den inte beroende av tidigare steg.
 * Tidsuppskattning: 8 timmar
 * Risk: Låg.
 
 
 ### Förstå vad som är fel i tidigare implementation
 * Beskrivning: Debugga de relevanta funktionerna för att ta reda på vilken/vilka funktioner som producerar fel i grafhämtningsprocessen.
-* Referenser: Detta är beroende av Task[1].
-* Tidsuppskattning: 8 timmar
+* Beroende: Detta är beroende av [Förstå/Refaktorera tidigare implementation](#förstårefaktorera-tidigare-implementationen).
+* Tidsuppskattning: 8 timmar.
 * Risk: Låg.
 
 
 ### Lös det
 * Beskrivning: Hitta en lösning på grafhämtningsproccesens fel.
-* Referenser: Detta är beroende av [Förstå vad som är fel i tidigare implementation](#förstårefaktorera-tidigare-implementationen)
-* Tidsuppskattning:8 timmar
+* Beroende: Detta är beroende av [Förstå vad som är fel i tidigare implementation](#förstå-vad-som-är-fel-i-tidigare-implementation).
+* Tidsuppskattning:8 timmar.
 * Risk: Låg.
 
 
@@ -38,7 +38,7 @@ Se om datan visas (korrekt)
 
 ### Implementation av felhantering
 * Beskrivning: Bygga upp ett felhanteringssystem när en användare skapar en graf.
-* Referenser: Detta är beroende av Task[3].
+* Beroende: Detta är beroende av [Lös det](#lös-det).
 * Tidsuppskattning: Detta är en större Task än tidigare och får därmed betydligt mer tid ca 40 timmar där testing är 3 timmar av tiden. 
 * Risk: Problem med den tidigare funktionen då felhanteringen kan förändra hur funktionen är implementerad, denna risk är medel. 
 
@@ -55,17 +55,18 @@ Den bör vara lätt att avläsa, inte förbruka mycket kraft samt att designen �
 
 ## Tasks:
 ### Implementera friktionvärdeskalan visuellt på hemsidan.
-* Referenser: Detta är det allra första steget i storyn och är därmed ej beroende av någon annan task.
+* Beroende: Detta är det allra första steget i storyn och är därmed ej beroende av någon annan task.
 * Tidsuppskattning: Utvecklingstiden ligger på cirka 3 timmar och sen testning ytterligare 1 timme för att säkerställa att det fungerar som det ska i olika vyer. Samt att utvecklaren måste sätta sig in i javascript.
 * Risker: Det är en obefintlig risk att ej hinna med denna task då tiden är relativt låg och det är den första uppgiften. 
 
 
 ### Skapa en knapp som gör det möjligt att dölja temperatur- och friktionvärdeskalan.
-* Referenser: Detta kräver att friktionvärdeskalan, alltså task 1, är utvecklad.
+* Beroende: Detta är beroende av [Implementera friktionsvärdeskalan visuellt på hemsidan](#implementera-friktionvärdeskalan-visuellt-på-hemsidan).
 * Tidsuppskattning: Cirka 4 timmar. Då temperaturskalan redan existerar så krävs det att omarbeta redan existerande kod för att skapa mer modulära css klasser för knappar och skalor. Testning cirka 1 timme, då en knapp är lätt att testa så gäller det mer att söka efter oväntade buggar då man omarbetar koden.
 * Risker: Beroende på hur lätt koden är att omarbeta så kan tiden variera lite grann, men den bör bli färdigutvecklad under sprint 1.
+
 ### Ge lämpliga friktionvärdeintervall till skalan. Innan vi får en friktiondatafil där man kan läsa av vilka de lämpligaste intervallen är så kommer platshållarvärden att användas.
-* Referenser: Detta kräver att task 1 är gjord samt att en friktiondatafil finns tillgänglig.
+* Beroende: Detta är beroende av [Implementera friktionsvärdeskalan visuellt på hemsidan](#implementera-friktionvärdeskalan-visuellt-på-hemsidan).
 * Tidsuppskattning: Under en timme för både implementation och testning. Det tar inte lång tid att ändra enkla värden samt att testa så de visas korrekt.
 * Risker: Då denna task ej kan startas innan friktiondatafilen är tillgänglig så är det svårt exakt när den finns. Så länge filen blir tillgänglig innan sprintens slut så kommer task:en att genomföras.
 
@@ -95,7 +96,7 @@ Det ska finnas en knapp som tar upp en ruta där man kan bläddra och välja en 
 
 ### Modalen
 * Beskrivning: Modalen ska visa en simpel vy där redan uppladdad fil syns samt en knapp “Bläddra” för att öppna ett ytterligare fönster för att välja fil
-* Beroende: Denna story kräver att men ska kunna ta sig till Modalen
+* Beroende: Detta är beroende av [Lägg till en knapp som tar upp en modal(ruta)/navigerar till en ny sida för att ladda upp en lokal XML-fil](#lägg-till-en-knapp-som-tar-upp-en-modalrutanavigerar-till-en-ny-sida-för-att-ladda-upp-en-lokal-xml-fil).
 * Tidsåtgång: 1 dag, ingen av utvecklarna har gjort en Modal i node. 
 * Risk: Medel.
 
@@ -109,14 +110,14 @@ Det ska finnas en knapp som tar upp en ruta där man kan bläddra och välja en 
 ### Välj en lokal XML-fil
 * Beskrivning: En användare ska kunna välja en XML fil, vid knapptryckning på “Bläddra” skall vyn för att manövrera sig i filstrukturen och välja en XML fil visas.
 * Beroende: 
-  * Modalen
-  * Research om lämpligt bibliotek för att kunna ladda upp lokal XML-fil, Task[3]
+  * [Modalen](#modalen)
+  * [Research om lämpligt bibliotek för att kunna ladda upp lokal XML-fil](#research-om-lämpligt-bibliotek-för-att-kunna-ladda-upp-lokal-xml-fil)
 * Tidsåtgång: 4 timmar, 
 * Risk: Låg/Medel, Ifall det inte finns i färdigt i valda bibliotek.
 
 ### Skicka filen till webbservern
 * Beskrivning: När filen har valts så ska den sparas i en variabel på webbservern innan parsing påbörjas. Rimligtvis kommer biblioteket som väljer en lokal fil lösa detta problem.
-* Beroende: Välj en lokal XML-fil, Task[4].
+* Beroende: [Välj en lokal XML-fil](#välj-en-lokal-xml-fil).
 * Tidsåtgång: 0 timmar
 * Risk: Hög då det är osäkert hur detta kommer funka.
 
@@ -127,11 +128,11 @@ Det ska finnas en knapp som tar upp en ruta där man kan bläddra och välja en 
 * Risk: Låg.
 
 
-### Parsa Data
+### Parsa data
 * Beskrivning: Datan i XML-Filen sparas i olika arrays. Använd ett bibliotek för att parsa XML. Om formatet på filen inte matchar vad webbservern förväntar sig så ge ett lämpligt fel.
-* Beroende: Beror på:
-  * Skicka filen till webbservern, Task[5].
-  * Kolla på ett bibliotek för att parsa XML, Task[6].
+* Beroende:
+  * [Skicka filen till webbservern](#skicka-filen-till-webbservern)
+  * [Kolla på ett bibliotek för att parsa XML](#kolla-på-ett-bibliotek-för-att-parsa-xml)
 * Tidsåtgång: 5 timmar.
 * Risk: Låg
 
@@ -140,7 +141,7 @@ Det ska finnas en knapp som tar upp en ruta där man kan bläddra och välja en 
 
 ### Spara i Databasen
 * Beskrivning: Webbservern gör om arraysen till lämpliga SQL-Queries.
-* Beroende: Parse Data Task[7]
+* Beroende: [Parsa data](#parsa-data)
 * Tidsåtgång: 4 timmar, utvecklarna är bekväma med MySQL
 * Risk: Låg
 
