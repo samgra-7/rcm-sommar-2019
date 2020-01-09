@@ -78,19 +78,19 @@ Testet genomförs med en XML-Fil och en förväntad output, detta repeteras för
 Målet med testet är att testa en liten del av systemet. Kontrollera funktionaliteten hos delen externt. 
 
 **Task 1)**
-Handling: Testet väljer en XML fil
-Förväntat Resultat: Testet hittar en XML fil som fungerar.
-Tidsestimering: 1 dag.
+* Handling: Testet väljer en XML fil
+* Förväntat Resultat: Testet hittar en XML fil som fungerar.
+* Tidsestimering: 1 dag.
 
 **Task 2)**
-Handling: Testet parsar XML filen till en array
-Förväntat Resultat: Testet skapar en array med XML filens innehåll.
-Tidsestimering: 1 dag.
+* Handling: Testet parsar XML filen till en array
+* Förväntat Resultat: Testet skapar en array med XML filens innehåll.
+* Tidsestimering: 1 dag.
 
 **Task 3)**
-Handling: Testet omvandlar till en korrekt SQL-Query
-Förväntat Resultat: En SQL-Query ska skapas av testet.
-Tidsestimering: 1 dag.
+* Handling: Testet omvandlar till en korrekt SQL-Query
+* Förväntat Resultat: En SQL-Query ska skapas av testet.
+* Tidsestimering: 1 dag.
 
 
 #### 4.2.4.1 System Testing
@@ -99,20 +99,20 @@ Målet med testet är att testa en stor del av systemt. Kontrollera funktionalit
 
 **Task 1)**
 
-Handling: Testet hämtar en XML fil 
-Förväntat Resultat: Testet tar emot en XML fil.
-Tidsestimering: 1 dag.
+* Handling: Testet hämtar en XML fil 
+* Förväntat Resultat: Testet tar emot en XML fil.
+* Tidsestimering: 1 dag.
 
 **Task 2)**
 
-Handling: Testet uppdaterar vyn med XML filens data.
-Förväntat Resultat: Vyn uppdateras korrekt.
-Tidsestimering: 3 dagar.
+* Handling: Testet uppdaterar vyn med XML filens data.
+* Förväntat Resultat: Vyn uppdateras korrekt.
+* Tidsestimering: 3 dagar.
 
 **Task 3)**
 
-Handling: Testet ska visa de nya datapunkterna från XML filen
-Förväntat Resultat: Datapunkterna visas korrekt.
-Tidsestimering: 2 dagar.
+* Handling: Testet ska visa de nya datapunkterna från XML filen
+* Förväntat Resultat: Datapunkterna visas korrekt.
+* Tidsestimering: 2 dagar.
 
 
