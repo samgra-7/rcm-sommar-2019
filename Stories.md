@@ -46,10 +46,10 @@ Se om datan visas (korrekt)
 Likt den redan existerande temperaturskalan så är friktionvärdeskalans uppgift att ge en visuell översyn, i detta fall över hur friktionsförhållandet mellan bil och väg ser ut över landet. Olika friktionvärdeintervall kommer att representeras utav olika färger i färgskalan.
 Den bör vara lätt att avläsa, inte förbruka mycket kraft samt att designen är enhetlig med den nuvarande designen.
 ## Testfall:
-1. 
+1. Fall 1
 * Handling: Observera friktionvärdeskalan och dess färger och jämför dem med färgerna utritade på kartan.
 * Förväntat Resultat: Friktionsvärdesskalan bör ge en visuell uppfattning om hur friktionsvärdet skiljer sig över landet. Så användaren * lätt kan se var det är kallt och varmt.
-1. 
+1. Fall 2
 * Handling: Tryck på knappen i botten av temperatur- eller friktionvärdeskalan.
 * Förväntat Resultat: Den valda skalan bör minimeras så att endast knappen kvarstår.
 
