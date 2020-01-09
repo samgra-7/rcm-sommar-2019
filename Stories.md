@@ -83,7 +83,7 @@ En användare, Sofia får friktiondata från Trafikverket och ska kunna ladda up
 Det ska finnas en knapp som tar upp en ruta där man kan bläddra och välja en XML-fil att ladda upp. Denna ruta ska ha checkboxes som beskriver vilket format datan har. Datan ska sedan parsas och laddas upp i databasen. Om datan har fel format så ska användaren få ett lämpligt felmeddelande. Då datan som laddas upp är känslig så ska överföringen vara säker.
 
 
-### Totalt: 28 timmar
+### Total tid: 28 timmar
 ## Testfall
 1. Klicka på knappen för att ladda upp ny friktiondata
 1. Välj en XML-fil och rätt format för denna fil.
