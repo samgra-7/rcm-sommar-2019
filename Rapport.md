@@ -76,7 +76,6 @@ Trafikverket skickar friktions-data månadsvis till individer delaktiga i projek
 Givet en XML-Fil omvandlar till korrekt SQL-Query. 
 Testet genomförs med en XML-Fil och en förväntad output, detta repeteras för 1 års av friktions-data.
 Målet med testet är att testa en liten del av systemet. Kontrollera funktionaliteten hos delen externt. 
-**Automatisering:** 
 
 **Task 1)**
 Handling: Testet väljer en XML fil
@@ -97,7 +96,6 @@ Tidsestimering: 1 dag.
 #### 4.2.4.1 System Testing
 En XML-Fil skickas från en klient till servern och ska sen uppdatera vyn och visa de nya datapunkterna. I detta fall kommer de nya datapunkterna vara friktions datan från tre olika aktörer. De tre olika aktörernas data ska kunna filtreras så att klienten ska kunna välja vilken vy och vilka/vilken aktörs data de vill se.
 Målet med testet är att testa en stor del av systemt. Kontrollera funktionaliteten och hastigheten hos delen externt.
-**Automatisering:**
 
 **Task 1)**
 
