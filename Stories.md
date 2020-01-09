@@ -11,6 +11,8 @@ Klicka på “grafer”
 Välja ett tidsintervall
 Se om datan visas (korrekt)
 
+### Total Tid: 56 timmar
+
 ## Tasks
 ### Förstå/refaktorera tidigare implementationen.
 * Beskrivning: Bygga en djupare förståelse för hur graferna är implementerade i projektet i sitt nuvarande tillstånd.
@@ -29,22 +31,23 @@ Se om datan visas (korrekt)
 ### Lös det
 * Beskrivning: Hitta en lösning på grafhämtningsproccesens fel.
 * Beroende: Detta är beroende av [Förstå vad som är fel i tidigare implementation](#förstå-vad-som-är-fel-i-tidigare-implementation).
-* Tidsuppskattning:8 timmar.
-* Risk: Låg.
-
-
+* Tidsuppskattning:16 timmar.
+* Risk: medel.
 
 
 
 ### Implementation av felhantering
 * Beskrivning: Bygga upp ett felhanteringssystem när en användare skapar en graf.
 * Beroende: Detta är beroende av [Lös det](#lös-det).
-* Tidsuppskattning: Detta är en större Task än tidigare och får därmed betydligt mer tid ca 40 timmar där testing är 3 timmar av tiden. 
-* Risk: Problem med den tidigare funktionen då felhanteringen kan förändra hur funktionen är implementerad, denna risk är medel. 
+* Tidsuppskattning: Detta är en större Task än tidigare och får därmed betydligt mer tid ca 20 timmar där testing är 3 timmar av tiden. 
+* Risk: Hög. Problem med den tidigare funktionen då felhanteringen kan förändra hur funktionen är implementerad. 
 
 # Friktionsvärdesskala
 Likt den redan existerande temperaturskalan så är friktionvärdeskalans uppgift att ge en visuell översyn, i detta fall över hur friktionsförhållandet mellan bil och väg ser ut över landet. Olika friktionvärdeintervall kommer att representeras utav olika färger i färgskalan.
 Den bör vara lätt att avläsa, inte förbruka mycket kraft samt att designen är enhetlig med den nuvarande designen.
+
+### Total Tid: 12 timmar
+
 ## Testfall:
 ### Fall 1
 * Handling: Observera friktionvärdeskalan och dess färger och jämför dem med färgerna utritade på kartan.
@@ -56,13 +59,13 @@ Den bör vara lätt att avläsa, inte förbruka mycket kraft samt att designen �
 ## Tasks:
 ### Implementera friktionvärdeskalan visuellt på hemsidan.
 * Beroende: Detta är det allra första steget i storyn och är därmed ej beroende av någon annan task.
-* Tidsuppskattning: Utvecklingstiden ligger på cirka 3 timmar och sen testning ytterligare 1 timme för att säkerställa att det fungerar som det ska i olika vyer. Samt att utvecklaren måste sätta sig in i javascript.
+* Tidsuppskattning: Utvecklingstiden ligger på cirka 4 timmar och sen testning ytterligare 2 timmar för att säkerställa att det fungerar som det ska i olika vyer. Samt att utvecklaren måste sätta sig in i javascript.
 * Risker: Det är en obefintlig risk att ej hinna med denna task då tiden är relativt låg och det är den första uppgiften. 
 
 
 ### Skapa en knapp som gör det möjligt att dölja temperatur- och friktionvärdeskalan.
 * Beroende: Detta är beroende av [Implementera friktionsvärdeskalan visuellt på hemsidan](#implementera-friktionvärdeskalan-visuellt-på-hemsidan).
-* Tidsuppskattning: Cirka 4 timmar. Då temperaturskalan redan existerar så krävs det att omarbeta redan existerande kod för att skapa mer modulära css klasser för knappar och skalor. Testning cirka 1 timme, då en knapp är lätt att testa så gäller det mer att söka efter oväntade buggar då man omarbetar koden.
+* Tidsuppskattning: Cirka 4 timmar. Då temperaturskalan redan existerar så krävs det att omarbeta redan existerande kod för att skapa mer modulära css klasser för knappar och skalor. Testning cirka 2 timmar, då en knapp är lätt att testa så gäller det mer att söka efter oväntade buggar då man omarbetar koden.
 * Risker: Beroende på hur lätt koden är att omarbeta så kan tiden variera lite grann, men den bör bli färdigutvecklad under sprint 1.
 
 ### Ge lämpliga friktionvärdeintervall till skalan. Innan vi får en friktiondatafil där man kan läsa av vilka de lämpligaste intervallen är så kommer platshållarvärden att användas.
@@ -79,6 +82,8 @@ En användare, Sofia får friktiondata från Trafikverket och ska kunna ladda up
 
 Det ska finnas en knapp som tar upp en ruta där man kan bläddra och välja en XML-fil att ladda upp. Denna ruta ska ha checkboxes som beskriver vilket format datan har. Datan ska sedan parsas och laddas upp i databasen. Om datan har fel format så ska användaren få ett lämpligt felmeddelande. Då datan som laddas upp är känslig så ska överföringen vara säker.
 
+
+### Totalt: 28 timmar
 ## Testfall
 1. Klicka på knappen för att ladda upp ny friktiondata
 1. Välj en XML-fil och rätt format för denna fil.
@@ -89,7 +94,7 @@ Det ska finnas en knapp som tar upp en ruta där man kan bläddra och välja en 
 ### Lägg till en knapp som tar upp en modal(ruta)/navigerar till en ny sida för att ladda upp en lokal XML-fil
 * Beskrivning: Knappen tar upp en ruta eller navigerar till en ny sida där användaren sedan ska kunna ladda upp en XML-fil. 
 * Beroende: Då resten av denna story utvecklas på i denna ruta/sida så måste det här göras först. 
-* Tidsåtgång: Då utvecklarna är nybörjare inom detta område så förväntas denna uppgift ta 4 timmar.
+* Tidsåtgång: Då utvecklarna är nybörjare inom detta område så förväntas denna uppgift ta 6 timmar.
 * Risk: Låg.
 
 
@@ -112,7 +117,7 @@ Det ska finnas en knapp som tar upp en ruta där man kan bläddra och välja en 
 * Beroende: 
   * [Modalen](#modalen)
   * [Research om lämpligt bibliotek för att kunna ladda upp lokal XML-fil](#research-om-lämpligt-bibliotek-för-att-kunna-ladda-upp-lokal-xml-fil)
-* Tidsåtgång: 4 timmar, 
+* Tidsåtgång: 5 timmar, 
 * Risk: Låg/Medel, Ifall det inte finns i färdigt i valda bibliotek.
 
 ### Skicka filen till webbservern
@@ -124,7 +129,7 @@ Det ska finnas en knapp som tar upp en ruta där man kan bläddra och välja en 
 ### Kolla på ett bibliotek för att parsa XML
 * Beskrivning: Datan som kommer från en XML-fil måste kunna parsas. En utvecklare måste kolla och välja ett bibliotek som klarar av denna uppgift givet att filen redan finns sparad i en variabel.
 * Beroende: Inget beroende.
-* Tidsåtgång: 1 timme.
+* Tidsåtgång: 2 timme.
 * Risk: Låg.
 
 
@@ -133,10 +138,8 @@ Det ska finnas en knapp som tar upp en ruta där man kan bläddra och välja en 
 * Beroende:
   * [Skicka filen till webbservern](#skicka-filen-till-webbservern)
   * [Kolla på ett bibliotek för att parsa XML](#kolla-på-ett-bibliotek-för-att-parsa-xml)
-* Tidsåtgång: 5 timmar.
+* Tidsåtgång: 7 timmar.
 * Risk: Låg
-
-
 
 
 ### Spara i Databasen
