@@ -28,7 +28,7 @@ Se om datan visas (korrekt)
 
 ### Lös det
 * Beskrivning: Hitta en lösning på grafhämtningsproccesens fel.
-* Referenser: Detta är beroende av Task[2]
+* Referenser: Detta är beroende av [Förstå vad som är fel i tidigare implementation](#förstårefaktorera-tidigare-implementationen)
 * Tidsuppskattning:8 timmar
 * Risk: Låg.
 
