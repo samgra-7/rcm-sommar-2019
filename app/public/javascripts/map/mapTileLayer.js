@@ -285,6 +285,10 @@ const stateChangingButton = L.easyButton({
     ]
 }).addTo(map);
 
+const modalButton = L.easyButton('fa-comment-o', function(btn, map) {
+    $('#exampleModal').modal('show');
+}, 'LADDA UPP NY FRIKTIONSDATA').addTo(map);
+
 const toggleFriction = L.control({position: 'topleft'});
 
 
