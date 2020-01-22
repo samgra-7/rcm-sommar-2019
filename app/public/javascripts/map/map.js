@@ -93,7 +93,7 @@ temperatureScale.onAdd = function (map) {
         labels = [];
     for (var i = 0; i < scales.length; i++) {
         if(i == 0){
-            div.innerHTML +=  '<i style="background:' + getColor(scales[i]) + '"></i> >' + scales[i] + '<br> ';
+            div.innerHTML +=  '<i style="background:' + getColor(scales[i]) + '"></i> >' + scales[i] + '<br>';
         }else if(i == scales.length -1) {
             div.innerHTML +=  '<i style="background:' + getColor(scales[i]) + '"></i> <' + scales[i];
         }else {
