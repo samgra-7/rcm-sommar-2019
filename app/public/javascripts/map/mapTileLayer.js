@@ -251,6 +251,27 @@ const mapChangingButton = L.easyButton({
         }
     ]
 }).addTo(map);
+const mapChangingButton2 = L.easyButton({
+    states:
+    [
+        {
+            stateName: 'Ta-bort-färgmarkering',        
+            icon:      'fas fa-toggle-off',               
+            title:     'Ladda upp fil',      
+            
+            onClick: function(btn, map){
+                console.log("Jag kom hit")
+                $('#myModal').modal('show');
+
+            }
+
+        } 
+
+
+
+    ]
+}).addTo(map);
+
 
 /**
  * This button will change the county color state on click.

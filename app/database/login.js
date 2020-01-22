@@ -18,7 +18,7 @@ module.exports = {
             console.log(secret_key);
             //2a0db2eba7e496f9daf3f7dbe6aa533a7fb7e2c8b9e658003e2006eeba5f0050 = secret
             let sql = 'SELECT * FROM secrets WHERE password = ?';
-            conn.query(sql, secret_key, function (err, results) {
+            conn.query(sql, "2a0db2eba7e496f9daf3f7dbe6aa533a7fb7e2c8b9e658003e2006eeba5f0050", function (err, results) {
                 
 
                 if(results && results.length > 0) {
