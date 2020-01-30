@@ -28,7 +28,7 @@ module.exports = {
        //for(i=0; i<input.length;i++){
           // input = req[i];
           
-          try{
+          /* try{
 
             authorization.getConnection(function(err, pool){
                 if(err){
@@ -50,7 +50,7 @@ module.exports = {
     })
     }catch(error){
         console.log(error)
-    }
+    } */
 
 }
   // }
