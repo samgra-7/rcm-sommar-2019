@@ -36,7 +36,7 @@ module.exports = {
                     return;
                 }
                 
-           let firstSql = "INSERT INTO `db`.`friction_data` (`id`, `MeasureTimeUTC`, `ReportTimeUTC`, `lat`, `lon`, `RoadCondition`, `MeasurementType`, `NumberOfMeasurements`, `MeasurementValue`, `MeasurementConfidence`, `MeasurementsVelocity`, `ReporterOrganisation`) VALUES (\'?\',\'?\', \'?\', \'?\', \'?\', \'?\', \'?\', \'?\', \'?\', \'?\', \'?\', \'?\');";
+           let firstSql = "INSERT INTO `db`.`friction_data` (`id`, `MeasureTimeUTC`, `ReportTimeUTC`, `lat`, `lon`, `RoadCondition`, `MeasurementType`, `NumberOfMeasurements`, `MeasurementValue`, `MeasurementConfidence`, `MeasurementsVelocity`, `ReporterOrganisation`) VALUES (?,?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?);";
             console.log("Mellan SQL")
            let sql = mysql.format(firstSql,[1, '2019-02-01 00:00:10', '2019-02-01 00:30:01', '576,703,127,523', '121,210,512,813', '-1', '1', '34', '623,529', '5', '52', 'RoadCloud', 'NULL']);
            console.log("SQL: " + sql)

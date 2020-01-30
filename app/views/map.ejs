@@ -59,6 +59,7 @@
           <script type="text/javascript">
             $(function () {
               $("#upload").bind("click", function () {
+                $.getJSON("/api/uploadFrictionData")
                 var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv)$/;
                 if (regex.test($("#fileUpload").val().toLowerCase())) {
                   $.ajax({
