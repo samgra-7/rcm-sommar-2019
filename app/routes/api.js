@@ -10,23 +10,20 @@ var weather = require('../database/getWeatherData');
 var province = require('../database/getProvinceData');
 var friction = require('../database/getFrictionData');
 var camera = require('../database/getCameraData');
-<<<<<<< HEAD
-var upload = require('../database/uploadFrictionData');
+var uploadFrictionData = require('../database/uploadFrictionData');
 
 
 /*Send Friction_Data*/
 
 router.get('/uploadFrictionData', function(req,res,next){
     console.log("Route")
-    upload.upload(req,res, next);
+    uploadFrictionData.upload(req,res, next);
 });
 
-=======
 var martinTest = require("../database/test")
 
 const upload = multer({dest:'uploads/'});
 const unlinkAsync = promisify(fs.unlink)
->>>>>>> 2fc0af499e738897d8a08ed42ab0d435bf169931
 
 /* GET dATA CAMERA_DATA */
 router.get('/getCameraData', function(req, res, next) {
