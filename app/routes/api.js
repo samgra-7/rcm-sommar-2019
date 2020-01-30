@@ -10,14 +10,14 @@ var weather = require('../database/getWeatherData');
 var province = require('../database/getProvinceData');
 var friction = require('../database/getFrictionData');
 var camera = require('../database/getCameraData');
-var upload = require('../database/uploadFrictionData');
+var uploadFrictionData = require('../database/uploadFrictionData');
 
 
 /*Send Friction_Data*/
 
 router.get('/uploadFrictionData', function(req,res,next){
     console.log("Route")
-    upload.upload(req,res, next);
+    uploadFrictionData.upload(req,res, next);
 });
 
 var martinTest = require("../database/test")
