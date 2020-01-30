@@ -50,7 +50,7 @@
     <div class="modal-dialog" role="document">
       <div class="modal-content">
         <div class="modal-header">
-          <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+          <h5 class="modal-title" id="exampleModalLabel">Upload new friction data</h5>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close">
             <span aria-hidden="true">&times;</span>
           </button>
@@ -58,6 +58,7 @@
         <div class="modal-body">
           <script type="text/javascript">
             $(function () {
+<<<<<<< HEAD
                 $("#upload").bind("click", function () {
                   $.getJSON("/api/uploadFrictionData")
                     var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.xml)$/;
@@ -104,15 +105,71 @@
                         }
                     } else {
                         alert("Please upload a valid XML file.");
+=======
+              $("#upload").bind("click", function () {
+                var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv)$/;
+                if (regex.test($("#fileUpload").val().toLowerCase())) {
+                  $.ajax({
+                    // Your server script to process the upload
+                    url: '/api/martinTest',
+                    type: 'POST',
+
+                    // Form data
+                    data: new FormData($('form')[0]),
+
+                    // Tell jQuery not to process data or worry about content-type
+                    // You *must* include these options!
+                    cache: false,
+                    contentType: false,
+                    processData: false,
+
+                    // Custom XMLHttpRequest
+                    xhr: function () {
+                      var myXhr = $.ajaxSettings.xhr();
+                      if (myXhr.upload) {
+                        // For handling the progress of the upload
+                        myXhr.upload.addEventListener('progress', function (e) {
+                          if (e.lengthComputable) {
+                            $('progress').attr({
+                              value: e.loaded,
+                              max: e.total,
+                            });
+                          }
+                        }, false);
+                      }
+                      return myXhr;
+>>>>>>> 2fc0af499e738897d8a08ed42ab0d435bf169931
                     }
-                });
+                  });
+                    /* if (typeof (FileReader) != "undefined") {
+                      document.getElementById("loadingParagraph").innerHTML = "Please wait, file is being uploaded."
+                      var reader = new FileReader();
+                      reader.onload = function (e) {
+                          
+                          
+                          // Parse and send request to server to upload friction data to database
+                          uploadFrictionData()
+
+                          document.getElementById("loadingParagraph").innerHTML = "Data sent to uploadFrictionData"
+
+                      }
+                      reader.readAsText($("#fileUpload")[0].files[0]);
+                    } else {
+                        alert("This browser does not support HTML5.");
+                    } */
+                } else {
+                    alert("Please upload a valid CSV file.");
+                }
             });
-        </script>
-        <input type="file" id="fileUpload" />
-        <input type="button" id="upload" value="Upload" />
-        <hr />
-        <div id="dvTable">
-        </div>
+          });
+          </script>
+          <!-- <input type="file" id="fileUpload" />
+          <input type="button" id="upload" value="Upload" /> -->
+          <form enctype="multipart/form-data">
+            <input name="file" type="file" id="fileUpload">
+            <input type="button" value="Upload" id="upload" />
+          </form>
+          <progress></progress>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
@@ -142,6 +199,7 @@
     <script src="javascripts/map/friction.js"></script>
     <script src="javascripts/graph/getFrictionData.js"></script>
     <script src="javascripts/map/cameraData.js"></script>
+    
 
 
 

@@ -1,6 +1,8 @@
 var express = require('express');
 var router = express.Router();
-var async = require("async");
+var multer  = require('multer');
+var fs = require('fs');
+const { promisify } = require('util')
 
 var test = require('../database/testConnection');
 var station = require('../database/getStationData');
@@ -8,6 +10,7 @@ var weather = require('../database/getWeatherData');
 var province = require('../database/getProvinceData');
 var friction = require('../database/getFrictionData');
 var camera = require('../database/getCameraData');
+<<<<<<< HEAD
 var upload = require('../database/uploadFrictionData');
 
 
@@ -18,6 +21,12 @@ router.get('/uploadFrictionData', function(req,res,next){
     upload.upload(req,res, next);
 });
 
+=======
+var martinTest = require("../database/test")
+
+const upload = multer({dest:'uploads/'});
+const unlinkAsync = promisify(fs.unlink)
+>>>>>>> 2fc0af499e738897d8a08ed42ab0d435bf169931
 
 /* GET dATA CAMERA_DATA */
 router.get('/getCameraData', function(req, res, next) {
@@ -141,5 +150,17 @@ router.get('/getAverageWeatherData', function(req, res, next) {
     
     weather.getAverageWeatherData(req,res,next,station_id, start_time, stop_time);
 });
+
+
+
+
+router.post('/martinTest', upload.single('file'), async (req, res, next) => {
+    await martinTest.test(req.file);
+
+    // Delete the file like normal
+    await unlinkAsync(req.file.path)
+    res.end("Upload completed!")
+
+})
 
 module.exports = router;
