@@ -285,9 +285,9 @@ const stateChangingButton = L.easyButton({
     ]
 }).addTo(map);
 
-const modalButton = L.easyButton('fa-comment-o', function(btn, map) {
+const modalButton = L.easyButton('fas fa-upload', function(btn, map) {
     $('#exampleModal').modal('show');
-}, 'LADDA UPP NY FRIKTIONSDATA').addTo(map);
+}, 'Ladda upp ny friktionsdata').addTo(map);
 
 const toggleFriction = L.control({position: 'topleft'});
 
