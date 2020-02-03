@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "start": "nodemon ./bin/www"
+    "start": "nodemon --max-old-space-size=8192 ./bin/www"
   },
   "dependencies": {
     "async": "^2.6.1",

@@ -32,39 +32,95 @@ const parse = (data) => {
   // Papa parse with a worker thread
   papa.parse(data, {
     worker: true,
+    header: false,
     delimiter: ';',
     newline: '\n',
-    complete: (data) => {
-      // Create a nicely structured array to store the parsed data
-      /* const parsedData = new Object()
-      data.meta.fields.forEach(field => parsedData[field] = new Array())
-
-      data.data.forEach(oneLine => {
-        const keys = Object.keys(oneLine)
-        keys.forEach(key => {
-          parsedData[key].push(oneLine[key])
-        })
-      }) */
-      data.data.shift()
-      sendFrictionData(data.data)
-    }
+    skipEmptyLines: true,
+    beforeFirstChunk: (data) => {
+      // Remove header field
+      return data.split('\n').slice(1).join('\n')
+    },
+    complete: async ({ data }) => {
+      try{
+        // Upload the data sequentially in rounds
+        const stepSize = Math.ceil(data.length/50)
+        sendFrictionData(data, stepSize)
+      } catch(error) {
+        console.log(error)
+        throw error
+      }
+    },
   })
 }
 
-const sendFrictionData = (data) => {
-  //console.log(data)
+//  Update the db with the friction data
+const stepFrictionData = async (data, stepSize) => {
+  if(stepSize >= data.length) {
+    await sendFrictionData(data)
+    console.log("REACHED END:" + "STEPSIZE " + stepSize + " ARRAY LENGTH: " + data.length)
+  } else {
+    await sendFrictionData(data.splice(0, stepSize))
+    stepFrictionData(data, stepSize)
+  }
+}
+
+const sendFrictionData = (data,stepSize) => {
+  const delay = ms => new Promise(res => setTimeout(res, ms))
+  console.log(data.length)
   // Make sql query to insert frictiondata
-  authorization.getConnection(function(err, pool){
+  authorization.getConnection(async function(err, pool){
     if(err){
       throw (err)
     }
     
-    let sql = "INSERT INTO `db`.`friction_data` (`Id`, `MeasureTimeUTC`, `ReportTimeUTC`, `Latitude`, `Longitude`, `RoadCondition`, `MeasurementType`, `NumberOfMeasurements`, `MeasurementValue`, `MeasurementConfidence`, `MeasurementsVelocity`, `ReporterOrganisation`) VALUES ?;";
-    pool.query(sql, [data],(err, response) => {
-      console.log(response)
-      if(err) {
-          throw (err)
-      }
-    })
+    let sql = `
+      INSERT INTO db.friction_data (
+        Id,
+        MeasureTimeUTC,
+        ReportTimeUTC,
+        Latitude,
+        Longitude,
+        RoadCondition,
+        MeasurementType,
+        NumberOfMeasurements,
+        MeasurementValue,
+        MeasurementConfidence,
+        MeasurementsVelocity,
+        ReporterOrganisation)
+      VALUES ?
+      ON DUPLICATE KEY UPDATE MeasureTimeUTC=VALUES(MeasureTimeUTC),
+        ReportTimeUTC=VALUES(ReportTimeUTC),
+        Latitude=VALUES(Latitude),
+        Longitude=VALUES(Longitude),
+        RoadCondition=VALUES(RoadCondition),
+        MeasurementType=VALUES(MeasurementType),
+        NumberOfMeasurements=VALUES(NumberOfMeasurements),
+        MeasurementValue=VALUES(MeasurementValue),
+        MeasurementConfidence=VALUES(MeasurementConfidence),
+        MeasurementsVelocity=VALUES(MeasurementsVelocity),
+        ReporterOrganisation=VALUES(ReporterOrganisation)
+      ;`
+
+    // CASE: the data left to add to DB is less then stepSize, no need to splice just add the data and we are done
+    if(stepSize >= data.length) {
+      console.log("StepSize: " + stepSize + " data.length: " + data.length)
+      await pool.query(sql, [data],(err, response) => {
+        console.log("Upload Finished")
+        if(err) {
+          //console.log(err.sqlMessage)
+            throw (err)
+        }
+      })
+    } else {
+      // CASE: part of the data is uploaded to db, after this request is done start to upload new part.
+      await pool.query(sql, [data.splice(0, stepSize)], async (err, response) => {
+        await delay(250)
+        sendFrictionData(data, stepSize)
+        if(err) {
+          //console.log(err.sqlMessage)
+            throw (err)
+        }
+      })
+    }
   })
 }
