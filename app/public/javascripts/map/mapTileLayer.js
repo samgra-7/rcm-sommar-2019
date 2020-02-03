@@ -251,27 +251,6 @@ const mapChangingButton = L.easyButton({
         }
     ]
 }).addTo(map);
-const mapChangingButton2 = L.easyButton({
-    states:
-    [
-        {
-            stateName: 'Ta-bort-färgmarkering',        
-            icon:      'fas fa-toggle-off',               
-            title:     'Ladda upp fil',      
-            
-            onClick: function(btn, map){
-                console.log("Jag kom hit")
-                $('#myModal').modal('show');
-
-            }
-
-        } 
-
-
-
-    ]
-}).addTo(map);
-
 
 /**
  * This button will change the county color state on click.
@@ -306,11 +285,9 @@ const stateChangingButton = L.easyButton({
     ]
 }).addTo(map);
 
-const modalButton = L.easyButton('fa-comment-o', function(btn, map) {
+const modalButton = L.easyButton('fas fa-upload', function(btn, map) {
     $('#exampleModal').modal('show');
-
-
-}, 'LADDA UPP NY FRIKTIONSDATA').addTo(map);
+}, 'Ladda upp ny friktionsdata').addTo(map);
 
 const toggleFriction = L.control({position: 'topleft'});
 

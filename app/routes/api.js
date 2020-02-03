@@ -12,16 +12,6 @@ var friction = require('../database/getFrictionData');
 var camera = require('../database/getCameraData');
 var uploadFrictionData = require('../database/uploadFrictionData');
 
-
-/*Send Friction_Data*/
-
-router.get('/uploadFrictionData', function(req,res,next){
-    console.log("Route")
-    uploadFrictionData.upload(req,res, next);
-});
-
-var martinTest = require("../database/test")
-
 const upload = multer({dest:'uploads/'});
 const unlinkAsync = promisify(fs.unlink)
 
@@ -148,13 +138,11 @@ router.get('/getAverageWeatherData', function(req, res, next) {
     weather.getAverageWeatherData(req,res,next,station_id, start_time, stop_time);
 });
 
+/* POST frictiondata to db. Request contains a .csv file. */
+router.post('/uploadFrictionData', upload.single('file'), async (req, res, next) => {
+    await uploadFrictionData.uploadFrictionData(req.file)
 
-
-
-router.post('/martinTest', upload.single('file'), async (req, res, next) => {
-    await martinTest.test(req.file);
-
-    // Delete the file like normal
+    // Delete the file
     await unlinkAsync(req.file.path)
     res.end("Upload completed!")
 

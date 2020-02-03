@@ -59,12 +59,11 @@
           <script type="text/javascript">
             $(function () {
               $("#upload").bind("click", function () {
-                $.getJSON("/api/uploadFrictionData")
                 var regex = /^([a-zA-Z0-9\s_\\.\-:])+(.csv)$/;
                 if (regex.test($("#fileUpload").val().toLowerCase())) {
                   $.ajax({
                     // Your server script to process the upload
-                    url: '/api/martinTest',
+                    url: '/api/uploadFrictionData',
                     type: 'POST',
 
                     // Form data
@@ -93,39 +92,24 @@
                       return myXhr;
                     }
                   });
-                    /* if (typeof (FileReader) != "undefined") {
-                      document.getElementById("loadingParagraph").innerHTML = "Please wait, file is being uploaded."
-                      var reader = new FileReader();
-                      reader.onload = function (e) {
-                          
-                          
-                          // Parse and send request to server to upload friction data to database
-                          uploadFrictionData()
-
-                          document.getElementById("loadingParagraph").innerHTML = "Data sent to uploadFrictionData"
-
-                      }
-                      reader.readAsText($("#fileUpload")[0].files[0]);
-                    } else {
-                        alert("This browser does not support HTML5.");
-                    } */
                 } else {
-                    alert("Please upload a valid CSV file.");
+                    alert("Filen kunde inte tolkas som en lämplig .csv fil.");
                 }
             });
           });
           </script>
-          <!-- <input type="file" id="fileUpload" />
-          <input type="button" id="upload" value="Upload" /> -->
+          <div>
+            Ladda upp ny friktionsdata genom att välja en .csv fil från disk och vänta tills att uppladdningen är klar. Efter att uppladdningen är gjord från användare till server måste även servern ladda upp friktionsdatan till databasen, detta kan ta några minuter.
+          </div>
+          <hr>
           <form enctype="multipart/form-data">
-            <input name="file" type="file" id="fileUpload">
-            <input type="button" value="Upload" id="upload" />
+            <input name="file" type="file" id="fileUpload" style="margin:5px">
+            <input type="button" value="Upload" id="upload" style="margin:5px"/>
           </form>
           <progress></progress>
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-          <button type="button" class="btn btn-primary">Save changes</button>
         </div>
       </div>
     </div>
