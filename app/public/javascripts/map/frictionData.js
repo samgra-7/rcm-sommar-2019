@@ -20,5 +20,3 @@ async function getDistinctReporterorgFriction() {
         addtoMAPtoggle(data);
     });    
 }
-
-

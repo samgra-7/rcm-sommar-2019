@@ -13,7 +13,8 @@ module.exports = {
 
 
     // Check connection to MySQL 
-    testConnection : function(req, res, next){        
+    testConnection : function(req, res, next){
+            
      
         authorization.getConnection(function(err, conn){
             if (err) throw err
