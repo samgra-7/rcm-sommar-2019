@@ -20,7 +20,7 @@ module.exports = {
         
         authorization.getConnection(function(err, conn){
             if (err) throw err
-            
+
             const sql =`
                 SELECT
                     t.id,
