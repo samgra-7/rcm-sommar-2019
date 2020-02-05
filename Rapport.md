@@ -24,6 +24,53 @@ Figuren nedan är ett modul-diagram över nuvarande lösning. Då uppgiften är 
      alt="Modul-diagram"
      style="float: left; margin-right: 10px;" />
 
+
+### 3.2 Arbetstillvägagång
+
+Vi har först suttit tillsammans i grupp och skrivit ihop stories och medföljande tasks efter vad vår produktägare Sofie har begärt. Därefter har vi delegerat ut dem efter intresse så att alla känt sig nöjda. Då vi är ett udda antal i gruppen så delade vi upp oss 2-2-1 då vi hade två stora stories och en mindre. Detta har lett till en ökad flexibilitet då vi har haft möjligheten att omfördela arbetsuppgifter efter behov.  Till nästa sprint kanske vi sitter 2 och 3 istället för att öka robustheten i projektet ifall någon skulle bli sjuk eller dylikt.
+
+Vi har jobbat effektivt med våra stories, både jobbat hemifrån och sen träffats och skrivit tillsammans i grupp. Två gånger i veckan, i starten och slutet, så har vi genomfört scrum-möten där vi gått igenom vad vi gjort på våra stories, eventuella svårigheter och sedan bestämt vad som skall göras inför nästa möte. Det har fungerat bra och vi har fått en bra översikt vad alla gör under sprinten. 
+
+Det vi kan förbättra till nästa sprint är kanske att jobba mer tillsammans i grupp, då kan vi lättare diskutera problem och få ännu bättre insikt i vad alla i gruppen gör. Vi bör även vara mer gedigna med att begära och slutföra pull-requests så att vi snabbare kan hitta eventuella problem och även merge:a våra branches med master-branchen.
+
+### 3.2.1 Sprint 1
+
+Temat för sprint 1 är Friktionsdata, efter vårt möte med Sofia Sollén(expert) fick vi insikt på vilka funktioner som önskades. Friktionsdatan som förses av Trafikverket ska kunnas laddas upp till sidan och sedan visualiseras. Visualisering ska bestå av en övergripande färgskalad vy, och en mer detaljerad informationsruta vid varje datapunkt. 
+
+Den andra funktionen som efterfrågades var en reparation och utökande av det redan existerande graf-verktyget. En väderstation eller region ska kunna väljas och graf av vald datatyp ska visas över tid, tidsintervallet ska kunna ändras. 
+
+Tre Stories gjordes för sprint 1 
+
+  *  Datagrafer
+
+  *  Friktionsvärdesskala 
+
+  *  Uppladdning av XML Fil
+
+
+**Datagrafer**
+
+**Friktionsvärdesskala**
+
+Utförandet har gått bra i allmänhet även om det tog längre tid än beräknat. Eftersom vi har övertagit redan existerande kod så tog det lite tid att avgöra var koden bör skrivas. Samt att skalorna använde sig av ett Leaftlet API och inte ren javascript, vilket krävde ytterligare inlärning som ej var förväntad. Detta kan förbättras till nästa sprint genom att ta reda på exakt vad som krävs och därmed kan man göra en mer träffsäker tidsestimering.
+
+**Uppladdning av XML fil**
+
+Tasks följdes i sin ordning, den större skillnaden som gjordes var att formatet på filen inte var XML utan CSV (Comma Separated Values) detta fick tas i hänsyn vid parsing samt val av bibliotek. Vid uppladdning av mycket stora filer med filstorlek>300mb så fick “heapsize” ökas, samt att filen sparas på disk innan parsing. 
+
+Tiden det tog att utföra Storien var längre än förutsatt vilken inte var helt oväntat då utvecklarna var nya till att arbeta med strukturen som implementerats av tidigare utvecklare.
+
+Tidsfördelning i storleksordning
+
+  *  Planerade tasks 
+
+  *  Oplanerade tasks
+
+  *  Diskussion och omdesign
+
+  *  Fixa bugs
+
+
 ### 4.2.2 Regressionsrisker
 En regression är då en av systemets funktioner upphör att fungera i samband med att kod i systemet ändrats. Det finns tre huvudsakliga typer av regression som är aktuella för projektet.
 
