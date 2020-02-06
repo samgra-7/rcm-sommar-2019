@@ -32,7 +32,6 @@ fn main() {
     let station_data = parse_xml::parse_station("station_data_cache.xml");
     database::insert_station_data(station_pool.clone(), station_data);
 
-    database::insert_friction_data2(friction_pool);
 
     
     thread::spawn(move || loop {

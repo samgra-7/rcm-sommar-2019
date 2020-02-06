@@ -5,13 +5,6 @@ use mysql::chrono::{DateTime, FixedOffset};
 
 use crate::parse_xml::{StationData, WeatherData, CameraData};
 
-pub fn insert_friction_data2(pool: Pool){
-
-    let insert_stmt = r"LOAD DATA LOCAL INFILE '/Users/samuelgraden/Documents/Projectrcm-sommar-2019/backend/e6.txt' INTO TABLE friction_data LINES TERMINATED BY '\r\n' IGNORE 1 LINES (`id`, `MeasureTimeUTC`, `ReportTimeUTC`, `lat`, `lon`, `RoadCondition`, `MeasurementType`, `NumberOfMeasurements`, `MeasurementValue`, `MeasurementConfidence`, `MeasurementsVelocity`, `ReporterOrganisation`, `EquipmentType`) SET `lat`= REPLACE(`lat`, ',', '.'), `lon`=REPLACE(`lon`, ',', '.');)";
-    let stmt = pool.prepare(insert_stmt).unwrap();
-    stmt.execute(params!{});
-}
-
 pub fn insert_friction_data(mut conn: PooledConn, url: &str) {
     //conn.query(r"LOAD DATA LOCAL INFILE ".to_owned() + "'" + url + "'" + " INTO TABLE friction_data LINES TERMINATED BY '\r\n' IGNORE 1 LINES SET `lat`= REPLACE(`lat`, ',', '.'), `lon`=REPLACE(`lon`, ',', '.'), `MeasurementValue`=REPLACE(`MeasurementValue`, ',', '.');").unwrap();
     conn.query(r"LOAD DATA LOCAL INFILE '/Users/samuelgraden/Documents/Projectrcm-sommar-2019/backend/e6.txt' INTO TABLE friction_data LINES TERMINATED BY '\r\n' IGNORE 1 LINES (`id`, `MeasureTimeUTC`, `ReportTimeUTC`, `lat`, `lon`, `RoadCondition`, `MeasurementType`, `NumberOfMeasurements`, `MeasurementValue`, `MeasurementConfidence`, `MeasurementsVelocity`, `ReporterOrganisation`, `EquipmentType`) SET `lat`= REPLACE(`lat`, ',', '.'), `lon`=REPLACE(`lon`, ',', '.');)").unwrap();
@@ -20,7 +13,6 @@ pub fn insert_friction_data(mut conn: PooledConn, url: &str) {
     //LOAD DATA LOCAL INFILE '/home/aron/rcm-sommar-2019/backend/e6.txt' INTO TABLE friction_data LINES TERMINATED BY '\r\n' IGNORE 1 LINES SET `lat`= REPLACE(`lat`, ',', '.'), `lon`=REPLACE(`lon`, ',', '.'), `MeasurementValue`=REPLACE(`MeasurementValue`, ',', '.');
 
 }
-
 pub fn insert_camera_data(pool: Pool, camera_data: Vec<CameraData>) {
 
 
@@ -147,21 +139,22 @@ pub fn create_mysql_tables(pool: Pool) {
                     KEY station_id (station_id),
                     FOREIGN KEY (station_id) REFERENCES station_data (id)
                     ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: weather_data");
-    pool.prep_exec(r"CREATE TABLE IF NOT EXISTS friction_data (
-                    id INT(7) NOT NULL,
-                    MeasureTimeUTC TIMESTAMP NULL DEFAULT NULL,
-                    ReportTimeUTC TIMESTAMP NULL DEFAULT NULL,
-                    lat TEXT DEFAULT NULL,
-                    lon TEXT DEFAULT NULL,
-                    RoadCondition INT DEFAULT NULL,
-                    MeasurementType INT DEFAULT NULL,
-                    NumberOfMeasurements INT DEFAULT NULL,
-                    MeasurementValue TEXT DEFAULT NULL,
-                    MeasurementConfidence INT DEFAULT NULL,
-                    MeasurementsVelocity INT DEFAULT NULL,
-                    ReporterOrganisation VARCHAR(50) DEFAULT NULL,
-                    EquipmentType VARCHAR(100) DEFAULT NULL
-                    ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: friction_data");
+    pool.prep_exec(r"create table if not exists friction_data 
+    (
+        Id                    int         not null
+            primary key,
+        MeasureTimeUTC        timestamp   null,
+        ReportTimeUTC         timestamp   null,
+        Latitude              text        null,
+        Longitude             text        null,
+        RoadCondition         int         null,
+        MeasurementType       int         null,
+        NumberOfMeasurements  int         null,
+        MeasurementValue      text        null,
+        MeasurementConfidence int         null,
+        MeasurementsVelocity  int         null,
+        ReporterOrganisation  varchar(50) null
+    )ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 ROW_FORMAT=COMPACT;", ()).expect("Failed to create table: friction_data");
     pool.prep_exec(r"CREATE TABLE IF NOT EXISTS camera_data (
                     id INT(8) NOT NULL,
                     time TIMESTAMP NULL DEFAULT NULL,
